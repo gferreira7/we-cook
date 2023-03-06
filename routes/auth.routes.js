@@ -17,7 +17,7 @@ const User = require('../models/User.model')
 
 // Require necessary (isLoggedOut and isLiggedIn) middleware in order to control access to specific routes
 const isLoggedOut = require('../middleware/isLoggedOut')
-const isLoggedIn = require('../middleware/isLoggedIn')
+const isLoggedIn = require('../middleware/route-guard')
 
 // GET /auth/signup
 router.get('/signup', isLoggedOut, (req, res) => {
@@ -90,60 +90,63 @@ router.post('/signup', isLoggedOut, (req, res) => {
 // })
 
 router.get(
-  "/login",
-  passport.authenticate("auth0", {
-    scope: "openid email profile"
+  '/login',
+  passport.authenticate('auth0', {
+    scope: 'openid email profile',
   }),
   (req, res) => {
-    res.redirect("/");
+    res.redirect('/')
   }
-);
+)
 
-router.get("/callback", (req, res, next) => {
-  passport.authenticate("auth0", (err, user, info) => {
+router.get('/callback', (req, res, next) => {
+  passport.authenticate('auth0', (err, user, info) => {
     if (err) {
-      return next(err);
+      return next(err)
     }
     if (!user) {
-      return res.redirect("/login");
+      return res.redirect('/login')
     }
     req.logIn(user, (err) => {
       if (err) {
-        return next(err);
+        return next(err)
       }
-      const returnTo = req.session.returnTo;
-      delete req.session.returnTo;
-      res.redirect(returnTo || "/");
-    });
-  })(req, res, next);
-});
+      const returnTo = req.session.returnTo
+      delete req.session.returnTo
+      res.redirect(returnTo || '/')
+    })
+  })(req, res, next)
+})
 
+router.get('/logout', (req, res, next) => {
+  req.logOut( (err) =>{
+    if (err) {
+      return next(err)
+    }
+    
+    console.log('user is in: ', req.user, req.session.currentUser)
+    req.session.destroy()
+    let returnTo = req.protocol + '://' + req.hostname
+    const port = req.connection.localPort
 
-router.get("/logout", (req, res) => {
-  req.logOut();
+    if (port !== undefined && port !== 80 && port !== 443) {
+      returnTo =
+        process.env.NODE_ENV === 'production'
+          ? `${returnTo}/`
+          : `${returnTo}:${port}/`
+    }
 
-  let returnTo = req.protocol + "://" + req.hostname;
-  const port = req.connection.localPort;
+    const logoutURL = new URL(`https://${process.env.AUTH0_DOMAIN}/v2/logout`)
 
-  if (port !== undefined && port !== 80 && port !== 443) {
-    returnTo =
-      process.env.NODE_ENV === "production"
-        ? `${returnTo}/`
-        : `${returnTo}:${port}/`;
-  }
+    const searchString = querystring.stringify({
+      client_id: process.env.AUTH0_CLIENT_ID,
+      returnTo: returnTo,
+    })
+    logoutURL.search = searchString
 
-  const logoutURL = new URL(
-    `https://${process.env.AUTH0_DOMAIN}/v2/logout`
-  );
-
-  const searchString = querystring.stringify({
-    client_id: process.env.AUTH0_CLIENT_ID,
-    returnTo: returnTo
-  });
-  logoutURL.search = searchString;
-
-  res.redirect(logoutURL);
-});
+    res.redirect(logoutURL)
+  })
+})
 // // POST /auth/login - temp turned off to test passport JS
 // router.post('/login', isLoggedOut, (req, res, next) => {
 //   const { username, email, password } = req.body
