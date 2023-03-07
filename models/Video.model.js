@@ -20,16 +20,15 @@ const videoSchema = new Schema(
         tags: [String],
         views : {
             type:Number,
-            required: true,
+            // required: true,
         },
         likes : {
             type:Number,
-            required: true,
-
+            // required: true,
         },
         dislikes:{
             type:Number,
-            required: true,
+            // required: true,
 
         },
         recipe : [String],

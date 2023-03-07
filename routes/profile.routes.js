@@ -21,12 +21,12 @@ router.get("/profilePage", secured, (req, res, next) => {
 
 router.post("/profilePage", secured, (req, res, next) => {
   
-  const {title, description, videoURL} = req.body
+  const {title, description, url} = req.body
    
   Video.create({
     title,
     description,
-    videoURL
+    url
   }).then(video => res.redirect('/profilePage')
   ).catch(err => next(err))
 });
