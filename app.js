@@ -13,6 +13,7 @@ const express = require("express");
 // https://www.npmjs.com/package/hbs
 const hbs = require("hbs");
 
+//hbs.registerPartials(__dirname + '/views/videos');
 
 
 
@@ -36,6 +37,8 @@ app.use("/", authRoutes);
 
 const profileRoutes = require("./routes/profile.routes");
 app.use("/", profileRoutes);
+const videoRoutes = require("./routes/video.routes");
+app.use("/", videoRoutes);
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
