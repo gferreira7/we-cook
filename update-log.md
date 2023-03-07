@@ -17,3 +17,6 @@
     adding bootstrap - simple navabar to test
     https://app.logo.com/ideas - Created a test logo
 
+    => Profile page 
+    - upload new video form
+    - needs model to add to database

@@ -15,74 +15,73 @@ const saltRounds = 10
 // Require the User model in order to interact with the database
 const User = require('../models/User.model')
 
-// Require necessary (isLoggedOut and isLiggedIn) middleware in order to control access to specific routes
-const isLoggedOut = require('../middleware/isLoggedOut')
-const isLoggedIn = require('../middleware/route-guard')
+// Require necessary middleware in order to control access to specific routes
+const secured = require('../middleware/route-guard')
 
-// GET /auth/signup
-router.get('/signup', isLoggedOut, (req, res) => {
-  res.render('auth/signup')
-})
+// // GET /auth/signup
+// router.get('/signup', isLoggedOut, (req, res) => {
+//   res.render('auth/signup')
+// })
 
-// POST /auth/signup
-router.post('/signup', isLoggedOut, (req, res) => {
-  const { username, email, password } = req.body
+// // POST /auth/signup
+// router.post('/signup', isLoggedOut, (req, res) => {
+//   const { username, email, password } = req.body
 
-  // Check that username, email, and password are provided
-  if (username === '' || email === '' || password === '') {
-    res.status(400).render('auth/signup', {
-      errorMessage:
-        'All fields are mandatory. Please provide your username, email and password.',
-    })
+//   // Check that username, email, and password are provided
+//   if (username === '' || email === '' || password === '') {
+//     res.status(400).render('auth/signup', {
+//       errorMessage:
+//         'All fields are mandatory. Please provide your username, email and password.',
+//     })
 
-    return
-  }
+//     return
+//   }
 
-  if (password.length < 6) {
-    res.status(400).render('auth/signup', {
-      errorMessage: 'Your password needs to be at least 6 characters long.',
-    })
+//   if (password.length < 6) {
+//     res.status(400).render('auth/signup', {
+//       errorMessage: 'Your password needs to be at least 6 characters long.',
+//     })
 
-    return
-  }
+//     return
+//   }
 
-  //   ! This regular expression checks password for special characters and minimum length
-  /*
-  const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
-  if (!regex.test(password)) {
-    res
-      .status(400)
-      .render("auth/signup", {
-        errorMessage: "Password needs to have at least 6 chars and must contain at least one number, one lowercase and one uppercase letter."
-    });
-    return;
-  }
-  */
+//   //   ! This regular expression checks password for special characters and minimum length
+//   /*
+//   const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
+//   if (!regex.test(password)) {
+//     res
+//       .status(400)
+//       .render("auth/signup", {
+//         errorMessage: "Password needs to have at least 6 chars and must contain at least one number, one lowercase and one uppercase letter."
+//     });
+//     return;
+//   }
+//   */
 
-  // Create a new user - start by hashing the password
-  bcrypt
-    .genSalt(saltRounds)
-    .then((salt) => bcrypt.hash(password, salt))
-    .then((hashedPassword) => {
-      // Create a user and save it in the database
-      return User.create({ username, email, password: hashedPassword })
-    })
-    .then((user) => {
-      res.redirect('/auth/login')
-    })
-    .catch((error) => {
-      if (error instanceof mongoose.Error.ValidationError) {
-        res.status(500).render('auth/signup', { errorMessage: error.message })
-      } else if (error.code === 11000) {
-        res.status(500).render('auth/signup', {
-          errorMessage:
-            'Username and email need to be unique. Provide a valid username or email.',
-        })
-      } else {
-        next(error)
-      }
-    })
-})
+//   // Create a new user - start by hashing the password
+//   bcrypt
+//     .genSalt(saltRounds)
+//     .then((salt) => bcrypt.hash(password, salt))
+//     .then((hashedPassword) => {
+//       // Create a user and save it in the database
+//       return User.create({ username, email, password: hashedPassword })
+//     })
+//     .then((user) => {
+//       res.redirect('/auth/login')
+//     })
+//     .catch((error) => {
+//       if (error instanceof mongoose.Error.ValidationError) {
+//         res.status(500).render('auth/signup', { errorMessage: error.message })
+//       } else if (error.code === 11000) {
+//         res.status(500).render('auth/signup', {
+//           errorMessage:
+//             'Username and email need to be unique. Provide a valid username or email.',
+//         })
+//       } else {
+//         next(error)
+//       }
+//     })
+// })
 
 // GET /auth/login - turned off to test passpor
 // router.get('/login', isLoggedOut, (req, res) => {

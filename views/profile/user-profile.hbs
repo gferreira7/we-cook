@@ -1,9 +1,113 @@
 {{#if userProfile}}
-<h2>Welcome, {{ userProfile.name.givenName }}!</h2>
-<p>This is your profile page my friend!</p>
-<button class="btn btn-primary">
-  {{!-- <a class="text-light" href="/userProfile">Reload the page</a> --}}
-</button>
+  <h2>Hi {{userProfile.name.givenName}}!</h2>
+  <p>This is your profile page my friend!</p>
+
+  <div
+    class='modal fade'
+    id='exampleModalToggle'
+    aria-hidden='true'
+    aria-labelledby='exampleModalToggleLabel'
+    tabindex='-1'
+  >
+    <div class='modal-dialog modal-dialog-centered'>
+      <div class='modal-content'>
+        <div class='modal-header'>
+          <h1 class='modal-title fs-5' id='exampleModalToggleLabel'>Modal 1</h1>
+          <button
+            type='button'
+            class='btn-close'
+            data-bs-dismiss='modal'
+            aria-label='Close'
+          ></button>
+        </div>
+        <form id='upload-video' action='/profilePage' method='post'>
+          <div class='modal-body'>
+            <div class='input-group mb-3'>
+              <span class='input-group-text'>Title</span>
+              <input
+                name='title'
+                type='text'
+                class='form-control'
+                placeholder='Video tile'
+              />
+            </div>
+
+            <div class='input-group mb-3'>
+              <span class='input-group-text'>Video URL</span>
+              <textarea name="videoURL" class='form-control'></textarea>
+            </div>
+
+            <div class='input-group mb-3'>
+              <span class='input-group-text'>Description</span>
+              <textarea name="description" class='form-control'></textarea>
+            </div>
+
+            <div class='form-text'> Later this will be file upload </div>
+
+          </div>
+          <div class='modal-footer'>
+            <button
+              class='btn btn-success'
+              data-bs-target='#exampleModalToggle2'
+              data-bs-toggle='modal'
+              type='submit'
+            >Upload</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div
+    class='modal fade'
+    id='exampleModalToggle2'
+    aria-hidden='true'
+    aria-labelledby='exampleModalToggleLabel2'
+    tabindex='-1'
+  >
+    <div class='modal-dialog modal-dialog-centered'>
+      <div class='modal-content'>
+        <div class='modal-header'>
+          <h1 class='modal-title fs-5' id='exampleModalToggleLabel2'>Modal 2</h1>
+          <button
+            type='button'
+            class='btn-close'
+            data-bs-dismiss='modal'
+            aria-label='Close'
+          ></button>
+        </div>
+        <div class='modal-body'>
+          Video Uploaded
+        </div>
+        <div class='modal-footer'>
+          <button
+          id="close-upload-modal"
+            type='button'
+            class='btn btn-secondary'
+            data-bs-dismiss='modal'
+          >Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button
+    class='btn btn-primary'
+    data-bs-target='#exampleModalToggle'
+    data-bs-toggle='modal'
+  >Upload Video</button>
+
 {{else}}
-<p>Still no logged in user, sorry!</p>
+  <p>Still no logged in user, sorry!</p>
 {{/if}}
+
+<script>
+
+  const form = document.getElementById('upload-video') 
+  const closedModal = document.getElementById('close-upload-modal')
+  form.onsubmit = (e) => {
+    e.preventDefault() 
+
+    closedModal.onclick = (e) => {
+      form.submit()
+    }
+  }
+</script>
