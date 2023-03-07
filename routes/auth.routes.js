@@ -16,9 +16,9 @@ const saltRounds = 10
 const User = require('../models/User.model')
 
 // Require necessary (isLoggedOut and isLiggedIn) middleware in order to control access to specific routes
-const isLoggedOut = require('../middleware/isLoggedOut')
-const isLoggedIn = require('../middleware/route-guard')
-
+//const isLoggedOut = require('../middleware/isLoggedOut')
+const secured = require('../middleware/route-guard')
+/*
 // GET /auth/signup
 router.get('/signup', isLoggedOut, (req, res) => {
   res.render('auth/signup')
@@ -47,7 +47,7 @@ router.post('/signup', isLoggedOut, (req, res) => {
   }
 
   //   ! This regular expression checks password for special characters and minimum length
-  /*
+
   const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
   if (!regex.test(password)) {
     res
@@ -57,7 +57,7 @@ router.post('/signup', isLoggedOut, (req, res) => {
     });
     return;
   }
-  */
+  
 
   // Create a new user - start by hashing the password
   bcrypt
@@ -82,7 +82,7 @@ router.post('/signup', isLoggedOut, (req, res) => {
         next(error)
       }
     })
-})
+})  */ 
 
 // GET /auth/login - turned off to test passpor
 // router.get('/login', isLoggedOut, (req, res) => {
