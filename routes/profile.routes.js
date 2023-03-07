@@ -33,5 +33,3 @@ router.post("/profilePage", secured, (req, res, next) => {
 
 module.exports = router
 
-
-RTCRtpSender
