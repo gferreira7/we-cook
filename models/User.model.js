@@ -16,10 +16,8 @@ const userSchema = new Schema(
       trim: true,
       lowercase: true,
     },
-    password: {
-      type: String,
-      required: true,
-    },
+    // id from Auth0 
+    authId: String,
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

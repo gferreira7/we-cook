@@ -37,6 +37,7 @@ app.use("/", authRoutes);
 
 const profileRoutes = require("./routes/profile.routes");
 app.use("/", profileRoutes);
+
 const videoRoutes = require("./routes/video.routes");
 app.use("/", videoRoutes);
 

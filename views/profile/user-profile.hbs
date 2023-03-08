@@ -12,7 +12,7 @@
     <div class='modal-dialog modal-dialog-centered'>
       <div class='modal-content'>
         <div class='modal-header'>
-          <h1 class='modal-title fs-5' id='exampleModalToggleLabel'>Modal 1</h1>
+          <h1 class='modal-title fs-5' id='exampleModalToggleLabel'>WeCook</h1>
           <button
             type='button'
             class='btn-close'
@@ -20,7 +20,12 @@
             aria-label='Close'
           ></button>
         </div>
-        <form id='upload-video' action='/profilePage' method='post'>
+        <form
+          id='upload-video'
+          action='/upload'
+          method='post'
+          enctype='multipart/form-data'
+        >
           <div class='modal-body'>
             <div class='input-group mb-3'>
               <span class='input-group-text'>Title</span>
@@ -32,17 +37,32 @@
               />
             </div>
 
+            <div class='mb-3'>
+              <label for='formFile' class='form-label'>Add from device storage</label>
+              <input
+                class='form-control-file'
+                name='video'
+                type='file'
+                id='formFile'
+              />
+            </div>
+
+           
             <div class='input-group mb-3'>
               <span class='input-group-text'>Video URL</span>
-              <textarea name="url" class='form-control'></textarea>
+              <textarea name='url' class='form-control'></textarea>
             </div>
+
+            <div class='form-text'>OR</div>
 
             <div class='input-group mb-3'>
               <span class='input-group-text'>Description</span>
-              <textarea name="description" class='form-control'></textarea>
+              <textarea name='description' class='form-control'></textarea>
             </div>
 
-            <div class='form-text'> Later this will be file upload </div>
+            <div class='form-text'>Please make sure you're uploading original
+              content
+            </div>
 
           </div>
           <div class='modal-footer'>
@@ -80,7 +100,7 @@
         </div>
         <div class='modal-footer'>
           <button
-          id="close-upload-modal"
+            id='close-upload-modal'
             type='button'
             class='btn btn-secondary'
             data-bs-dismiss='modal'
@@ -101,13 +121,7 @@
 
 <script>
 
-  const form = document.getElementById('upload-video') 
-  const closedModal = document.getElementById('close-upload-modal')
-  form.onsubmit = (e) => {
-    e.preventDefault() 
-
-    closedModal.onclick = (e) => {
-      form.submit()
-    }
-  }
+  const form = document.getElementById('upload-video') const closedModal =
+  document.getElementById('close-upload-modal') form.onsubmit = (e) => {
+  e.preventDefault() closedModal.onclick = (e) => { form.submit() } }
 </script>

@@ -1,15 +1,46 @@
-<div class="card-group">
-   {{#each video}}
-     <div class="card">
-    <img src="{{url}}" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">{{title}}</h5>
-      <p class="card-text">{{description}}</p>
-      <small class="text-muted">{{views}} views</small>
+<div class='card-group'>
+  {{#each video}}
+    <div class='card'>
+      <div class='card-body'>
+        <h5 class='card-title'>{{title}}</h5>
+        <p class='card-text'>{{description}}</p>
+        <video
+          videoId={{cloudId}}
+          class='video-tag'
+          width='320'
+          height='240'
+          controls
+        >
+          <source src='{{url}}' type='video/mp4' />
+        </video>
+        <small class='text-muted'>{{views}} views</small>
+      </div>
+      <div class='card-footer'>
+        <small class='text-muted'>{{createdAt}}</small>
+      </div>
     </div>
-    <div class="card-footer">
-      <small class="text-muted">{{createdAt}}</small>
-    </div>
-  </div>
-    {{/each}}
+  {{/each}}
 </div>
+
+<script>
+
+  window.onload = () => { 
+  
+    const videoTag = document.querySelectorAll('video[videoId]') 
+    videoTag.forEach(video =>{
+
+       video.addEventListener('play', function() {
+        video.hasSentViewCount = false
+        })
+      video.addEventListener('timeupdate', () =>{ 
+        let videoId = video.getAttribute('videoId')
+        if(video.currentTime >=5 && !video.hasSentViewCount){
+
+          {{!-- updateViewCount(videoId) --}}
+          video.hasSentViewCount = true
+        }
+
+      })
+    }) git 
+  }
+</script>

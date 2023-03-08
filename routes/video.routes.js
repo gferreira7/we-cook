@@ -14,7 +14,7 @@ router.get("/home", secured, (req, res, next) => {
 
   Video.find()
   .then(video => {
-    console.log('Retrieved video from DB:', video);
+    // console.log('Retrieved video from DB:', video);
     res.render("videos/videos-list", {
         title: "Home",
         userProfile: userProfile,
