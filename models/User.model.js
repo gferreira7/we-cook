@@ -18,6 +18,8 @@ const userSchema = new Schema(
     },
     // id from Auth0 
     authId: String,
+    // image url
+    profilePic: String,
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

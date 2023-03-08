@@ -198,3 +198,9 @@ span {
     width: 25rem;
   }
 }
+
+/* UserProfile Page */
+
+#profile-page-pic{
+  width: 10vw;
+}

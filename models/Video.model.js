@@ -37,7 +37,12 @@ const videoSchema = new Schema(
       // required: true,
       trim: true,
     },
-
+    thumbnail: {
+      //image url to store in cloudinary
+      type: String,
+      // required: true,
+      trim: true,
+    },
     author: {
       type: Schema.Types.ObjectId,
       ref: 'User',

@@ -20,3 +20,13 @@
     => Profile page 
     - upload new video form
     - needs model to add to database
+
+
+## Mar 8 - Gui
+
+- Home Page
+    a home page estava "secured" acho que nao era preciso
+    se nao ha user - fica Guest e ve random shit
+
+- Layouts 
+    apaguei os layouts todos menos o teu, fiz uma pasta "layouts" e pus essa como default no app.js

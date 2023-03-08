@@ -22,7 +22,6 @@ router.get('/profilePage', secured, (req, res, next) => {
   res.render('profile/user-profile', {
     title: 'Profile',
     userProfile: userProfile,
-    layout: 'loggedIn-layout.hbs',
   })
 })
 
