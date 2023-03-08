@@ -4,7 +4,14 @@
   {{#each video}}
     <div class="video">
       <div class="thumbnail">
-       <a href="/watch/{{_id}}">  <img   src="{{url}}" alt="" /> </a>
+       <a href="/watch/{{_id}}"> 
+         <video  width="270"  width="100" >
+       <!--   <source src="{{url}}" type="video/mp4"> -->
+    
+        <img id="thumbnail" url="{{url}}"> 
+        </video>
+       
+       </a>
       </div>
 
       <div class="details">
@@ -23,12 +30,9 @@
 </div>
 
 <script>
-
   window.onload = () => { 
-  
-    const videoTag = document.querySelectorAll('video[videoId]') 
+    /*const videoTag = document.querySelectorAll('video[videoId]') 
     videoTag.forEach(video =>{
-
        video.addEventListener('play', function() {
         video.hasSentViewCount = false
         })
@@ -41,6 +45,12 @@
         }
 
       })
-    }) 
+    })  */
+
+ 
+
+    
   }
+
+
 </script>

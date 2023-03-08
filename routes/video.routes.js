@@ -12,6 +12,8 @@ const mongoose = require("mongoose"); // <== has to be added
 router.get("/home", secured, (req, res, next) => {
   const { _raw, _json, ...userProfile } = req.user;
 
+  //getVideo()
+  
   Video.find()
   .then(video => {
     // console.log('Retrieved video from DB:', video);
