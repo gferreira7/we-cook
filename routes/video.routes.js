@@ -9,17 +9,14 @@ const Video = require('../models/Video.model.js')
 const mongoose = require('mongoose') // <== has to be added
 
 router.get('/home', (req, res, next) => {
-  
+  let currentUserInfo = { name: { givenName: '' } }
+  if (req.user === undefined) {
+    currentUserInfo.name.givenName = 'Guest'
+  } else {
+    const { _raw, _json, ...userProfile } = req.user
+    currentUserInfo = userProfile
+  }
 
-    let currentUserInfo = {}
-    if(req.user === undefined){
-      currentUserInfo.name.givenName = 'Guest'
-    } else{
-      const { _raw, _json, ...userProfile } = req.user
-      currentUserInfo = userProfile
-    }
-  
-    
   Video.find()
     .then((video) => {
       // console.log('Retrieved video from DB:', video);
@@ -47,14 +44,13 @@ router.get('/home', (req, res, next) => {
 router.get('/watch/:id', (req, res, next) => {
   let Id = req.params.id
 
-  let currentUserInfo = {}
-    if(req.user === undefined){
-      currentUserInfo.name.givenName = 'Guest'
-    } else{
-      const { _raw, _json, ...userProfile } = req.user
-      currentUserInfo = userProfile
-    }
-  
+  let currentUserInfo = { name: { givenName: '' } }
+  if (req.user === undefined) {
+    currentUserInfo.name.givenName = 'Guest'
+  } else {
+    const { _raw, _json, ...userProfile } = req.user
+    currentUserInfo = userProfile
+  }
 
   Video.findById(Id)
     .then((videoInfo) => {
