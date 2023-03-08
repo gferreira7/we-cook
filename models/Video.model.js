@@ -18,11 +18,6 @@ const videoSchema = new Schema(
       type: String,
       required: false,
     },
-    author: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-    },
     tags: [String],
     views: {
       type: Number,
@@ -30,11 +25,11 @@ const videoSchema = new Schema(
     },
     likes: {
       type: Number,
-      // required: true,
+      default: 0,
     },
     dislikes: {
       type: Number,
-      // required: true,
+      default: 0,
     },
     recipe: [String],
     url: {
@@ -42,6 +37,13 @@ const videoSchema = new Schema(
       // required: true,
       trim: true,
     },
+
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+
     cloudId: { type: String },
     duration: { type: Number },
     format: { type: String },

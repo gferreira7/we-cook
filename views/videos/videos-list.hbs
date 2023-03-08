@@ -1,24 +1,24 @@
-<div class='card-group'>
+
+<div class="videos">
+  <!-- a video starts -->
   {{#each video}}
-    <div class='card'>
-      <div class='card-body'>
-        <h5 class='card-title'>{{title}}</h5>
-        <p class='card-text'>{{description}}</p>
-        <video
-          videoId={{cloudId}}
-          class='video-tag'
-          width='320'
-          height='240'
-          controls
-        >
-          <source src='{{url}}' type='video/mp4' />
-        </video>
-        <small class='text-muted'>{{views}} views</small>
+    <div class="video">
+      <div class="thumbnail">
+       <a href="/watch/{{_id}}">  <img   src="{{url}}" alt="" /> </a>
       </div>
-      <div class='card-footer'>
-        <small class='text-muted'>{{createdAt}}</small>
+
+      <div class="details">
+        <div class="author">
+          <img
+            src="../../images/icons/account.png"
+            alt="" />
+        </div>
+        <div class="title">   <h3> {{title}}   </h3>
+          <a href=""> {{owner}} </a>
+          <span> {{views}} Views • 3 {{createdAt}} </span>
+        </div>
       </div>
-    </div>
+  </div>
   {{/each}}
 </div>
 
@@ -41,6 +41,6 @@
         }
 
       })
-    }) git 
+    }) 
   }
 </script>
