@@ -1,0 +1,35 @@
+<div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="col">
+        <div class="card">
+            <img src="{{video.url}}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">{{video.title}}</h5>
+                <p class="card-text">{{video.description}}</p>
+                <p class="card-text"><small class="text-muted">{{video.createdAt}}</small></p>
+                {{#each video.tags}}
+                <small class="text-muted">#{{this}}</small>
+                {{/each}}
+            </div>
+        </div>
+        <h6>Reviews:</h6>
+        {{#each video.reviews}}
+        <p class="card-text"><small class="text-muted">{{this}}</small></p>
+        {{/each}}
+    </div>
+
+    <div class="col">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">recipe</h5>
+                {{#each video.recipe}}
+                <p class="card-text"><small class="text-muted">{{this}}</small></p>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+</div>

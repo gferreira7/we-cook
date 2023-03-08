@@ -1,15 +1,23 @@
-<div class="card-group">
-   {{#each video}}
-     <div class="card">
-    <img src="{{url}}" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">{{title}}</h5>
-      <p class="card-text">{{description}}</p>
-      <small class="text-muted">{{views}} views</small>
-    </div>
-    <div class="card-footer">
-      <small class="text-muted">{{createdAt}}</small>
-    </div>
+
+<div class="videos">
+  <!-- a video starts -->
+  {{#each video}}
+    <div class="video">
+      <div class="thumbnail">
+       <a href="/watch/{{_id}}">  <img   src="{{url}}" alt="" /> </a>
+      </div>
+
+      <div class="details">
+        <div class="author">
+          <img
+            src="../../images/icons/account.png"
+            alt="" />
+        </div>
+        <div class="title">   <h3> {{title}}   </h3>
+          <a href=""> {{owner}} </a>
+          <span> {{views}} Views • 3 {{createdAt}} </span>
+        </div>
+      </div>
   </div>
-    {{/each}}
+  {{/each}}
 </div>
