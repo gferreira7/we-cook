@@ -1,40 +1,3 @@
-<style type="text/css">
-  #video-demo-container {
-    width: 400px;
-    margin: 40px auto;
-  }
-
-  #main-video {
-    display: none;
-    max-width: 400px;
-  }
-
-  #thumbnail-container {
-    display: none;
-  }
-
-  #get-thumbnail {
-    display: none;
-  }
-
-  #video-canvas {
-    display: none;
-  }
-
-  #upload-button {
-    width: 150px;
-    display: block;
-    margin: 20px auto;
-  }
-
-  #formFile {
-    display: none;
-  }
-  #selected-thumbnail{
-     display: none;
-  }
-</style>
-
 
 
 <div class='modal fade bd-example-modal-lg' id='exampleModalToggle' aria-hidden='true' aria-labelledby='exampleModalToggleLabel' tabindex='-1'>
@@ -107,28 +70,3 @@
 </div>
 <button class='btn btn-primary' data-bs-target='#exampleModalToggle' data-bs-toggle='modal'>Upload Video</button>
 
-
-
-<script>
-
-  var _CANVAS = document.querySelector("#video-canvas"),
-    _CTX = _CANVAS.getContext("2d"),
-    _VIDEO = document.querySelector("#main-video");
-
-  // Upon click this should should trigger click on the #formFile file input element
-  // This is better than showing the not-good-looking file input element
-  document.querySelector("#upload-button").addEventListener('click', function () {
-    document.querySelector("#formFile").click();
-  });
-
-  // When user chooses a MP4 file
-  document.querySelector("#formFile").addEventListener('change', function () {
-    // Validate whether MP4
-    if (['video/mp4'].indexOf(document.querySelector("#formFile").files[0].type) == -1) {
-      alert('Error : Only MP4 format allowed');
-      return;
-    }
-
- 
-
-</script>
