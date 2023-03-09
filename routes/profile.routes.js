@@ -39,27 +39,38 @@ router.get('/profilePage', secured, async (req, res, next) => {
 
 })
 
-router.post('/upload', upload.single('video'), async (req, res) => {
+router.post('/upload', upload.fields([ {name :'video', maxCount:1 }, {name : 'image',maxCount:1 } ]), async (req, res) => {
   try {
     // Get the uploaded video file
-    const file = req.file
+    const video = req.files.video[0]
+    const image = req.files.image[0]
+
+
     // Get the other form fields
     const title = req.body.title
     const description = req.body.description
     // const tags = req.body.tags.split(",");
     // Read the uploaded file from disk using fs
-    const buffer = fs.readFileSync(file.path)
-    // Upload the file to Cloudinary using the uploadVideo function
-    const imgLink = "https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg"    
-      const uploadedImage = await uploadImg(imgLink)
-    console.log(uploadedImage);
 
+    console.log("video:",video)
+    const buffer = fs.readFileSync(video.path.toString())
     const uploadedVideo = await uploadVideo(buffer)
-   console.log(uploadedVideo)
-
-    // Delete the uploaded file from disk using fs
-    fs.unlinkSync(file.path)
+    fs.unlinkSync(video.path.toString())
+  
+    console.log("VIDEO COMPLETED")
+  
+    // Upload the file to Cloudinary using the uploadVideo function
+    console.log("IMAGE:",image)
+   // const bufferImg = fs.readFileSync(image.path.toString())
+   //  const uploadedImage = await uploadImg(bufferImg)
     
+     console.log("image COMPLETED")
+     const uploadedImage = await uploadImg(image.path);
+     fs.unlinkSync(image.path.toString())
+
+
+
+
     let userIdFromDB = await User.findOne({authId: req.user.id}).exec()
     console.log(userIdFromDB)
 
@@ -68,7 +79,7 @@ router.post('/upload', upload.single('video'), async (req, res) => {
       //assigned by Cloudinary - needed to fetch it later and update
       cloudId: uploadedVideo.public_id,
       url: uploadedVideo.secure_url,
-      thumbnail: uploadedImage,
+     thumbnail: uploadedImage,
       title,
       description,
       format: uploadedVideo.format,
@@ -78,7 +89,7 @@ router.post('/upload', upload.single('video'), async (req, res) => {
     }
     await Video.create(videoToDB)
 
-
+    res.redirect("/profilePage")
       // Use the uploaded file's name as the asset's public ID and 
       // allow overwriting the asset with new versions
 
