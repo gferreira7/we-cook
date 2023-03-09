@@ -5,11 +5,7 @@
     <div class="video">
       <div class="thumbnail">
        <a href="/watch/{{_id}}"> 
-       <!--  <video  width="270"  width="100" >
-          <source src="{{url}}" type="video/mp4"> 
-        </video>-->
-          <img id="thumbnail" src="{{thumbnail}}"> 
-
+        <img id="thumbnail" src="{{thumbnail}}"> 
        </a>
       </div>
 
@@ -27,29 +23,3 @@
   </div>
   {{/each}}
 </div>
-
-<script>
-  window.onload = () => { 
-    /*const videoTag = document.querySelectorAll('video[videoId]') 
-    videoTag.forEach(video =>{
-       video.addEventListener('play', function() {
-        video.hasSentViewCount = false
-        })
-      video.addEventListener('timeupdate', () =>{ 
-        let videoId = video.getAttribute('videoId')
-        if(video.currentTime >=5 && !video.hasSentViewCount){
-
-          {{!-- updateViewCount(videoId) --}}
-          video.hasSentViewCount = true
-        }
-
-      })
-    })  */
-
- 
-
-    
-  }
-
-
-</script>

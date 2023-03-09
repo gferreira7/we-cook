@@ -4,6 +4,10 @@ https://1drv.ms/o/s!AiGNjVfLz_FWgkct5CY4w79wVFUS?e=71SM6W
 # Excalidraw
 https://excalidraw.com/#room=124786937d446dc9371b,aubeylcGJCvafpJaFyW1gQ
 
+# Layouts to steal
+- https://codepen.io/TurkAysenur/pen/LYRKpWe
+- https://codepen.io/TurkAysenur/pen/abvrNgx
+
 # Git shortcts
 
 Create new branch for a new feature - git branch <branch-name>

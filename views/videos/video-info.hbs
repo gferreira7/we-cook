@@ -1,10 +1,18 @@
+{{#with video}}
+
 <div class="row row-cols-1 row-cols-md-2 g-4">
+            <video class="" videoId="{{_id}}" width="320" height="240" controls>
+                <source src="{{url}}" type="video/mp4">
+                <source src="{{url}}" type="video/ogg">
+                Your browser does not support the video tag.
+            </video>
     <div class="col">
         <div class="card">
-            <img src="{{video.url}}" class="card-img-top" alt="...">
+      
             <div class="card-body">
                 <h5 class="card-title">{{video.title}}</h5>
                 <p class="card-text">{{video.description}}</p>
+                <p views class="card-text">{{video.views}}</p>
                 <p class="card-text"><small class="text-muted">{{video.createdAt}}</small></p>
                 {{#each video.tags}}
                 <small class="text-muted">#{{this}}</small>
@@ -33,3 +41,53 @@
 
 
 </div>
+
+{{/with }}
+
+
+<script>
+
+
+window.onload = () => { 
+    
+
+
+
+        
+        const video = document.querySelector('video[videoId]') 
+    
+       video.addEventListener('play', function() {
+
+        video.hasSentViewCount = false
+
+        })
+
+
+        video.addEventListener('timeupdate', () =>{ 
+
+        let videoId = video.getAttribute('videoId')
+
+        if(video.currentTime >=5 && !video.hasSentViewCount){
+
+            
+            axios.post(`/video/${videoId}/update`, {views:1}, {
+            headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+        .then((response) => {
+            console.log('RES:',response);
+        })
+        .catch(function (error) {
+                console.log('ERROR',error);
+            });
+            video.hasSentViewCount = true
+            }
+    
+    })  
+
+ 
+
+    
+  }
+</script>

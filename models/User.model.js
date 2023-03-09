@@ -6,6 +6,12 @@ const userSchema = new Schema(
     username: {
       type: String,
       required: false,
+      unique: false,
+      trim: true,
+    },
+    channelName: {
+      type: String,
+      required: true,
       unique: true,
       trim: true,
     },
