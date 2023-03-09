@@ -56,6 +56,17 @@ main {
   padding: 0 7px;
   cursor: pointer;
  }
+
+ .right {
+  display: flex;
+  align-items: center;
+ }
+ 
+ .right #menu {
+  padding: 0 7px;
+  cursor: pointer;
+ }
+
  .search {
   display: flex;
  }
@@ -145,6 +156,9 @@ hr {
 .video {
   width: 270px;
   margin-bottom: 30px;
+  border: 1px solid blue;
+  margin: 2px;
+  border-radius: 5px;
 }
 .thumbnail {
   width: 100%;
@@ -203,4 +217,10 @@ span {
 
 #profile-page-pic{
   width: 10vw;
+}
+
+.profile-videos-list {
+  display: flex;
+  justify-content: left;
+  flex-wrap: wrap;
 }

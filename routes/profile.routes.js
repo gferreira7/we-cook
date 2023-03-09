@@ -16,13 +16,27 @@ const Video = require('../models/Video.model')
 const mongoose = require('mongoose') // <== has to be added
 const User = require('../models/User.model')
 
-router.get('/profilePage', secured, (req, res, next) => {
+router.get('/profilePage', secured, async (req, res, next) => {
   const { _raw, _json, ...userProfile } = req.user
 
-  res.render('profile/user-profile', {
-    title: 'Profile',
-    userProfile: userProfile,
-  })
+  let userIdFromDB = await User.findOne({ authId: req.user.id }).exec()
+
+  Video.find({ author: userIdFromDB })
+    .then((videos) => {
+      // console.log('Retrieved video from DB:', video);
+      res.render('profile/user-profile', {
+        title: 'Profile',
+        userProfile,
+        videos,
+      })
+    })
+    .catch((error) => {
+      console.log('Error while getting the videos from the DB: ', error)
+
+      // Call the error-middleware to display the error page to the user
+      next(error)
+    })
+
 })
 
 router.post('/upload', upload.single('video'), async (req, res) => {
@@ -57,8 +71,8 @@ router.post('/upload', upload.single('video'), async (req, res) => {
       description,
       format: uploadedVideo.format,
       // tags,
-      duration:uploadedVideo.duration,
-      author: userIdFromDB._id
+      duration: uploadedVideo.duration,
+      author: userIdFromDB._id,
     }
     Video.create(videoToDB)
 
@@ -68,7 +82,7 @@ router.post('/upload', upload.single('video'), async (req, res) => {
 
     // Return the URL of the uploaded video and the other form fields
     // res.status(200).json({ videoUrl, title, description });
-    res.redirect('/home')
+    
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: 'Failed to upload video' })
