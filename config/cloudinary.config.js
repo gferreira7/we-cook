@@ -11,11 +11,7 @@ cloudinary.config({
 async function uploadVideo(buffer) {
     return new Promise((resolve, reject) => {
       // Create a read stream from the buffer
-      const stream = cloudinary.uploader.upload_stream(
-        {
-          resource_type: "video",
-          folder: "video_uploads",
-        },
+      const stream = cloudinary.uploader.upload_stream(  {  resource_type: "video", folder: "video_uploads",},
         (error, result) => {
           if (error) {
             reject(error);
@@ -41,9 +37,26 @@ async function getVideo(videoId) {
     return null;
   }
 }
+/* not working well
+async function uploadImg() {
+    // Create a read stream from the buffer
+    try {
+       cloudinary.uploader.upload("https://img.freepik.com/free-photo/penne-pasta-tomato-sauce-with-chicken-tomatoes-wooden-table_2829-19744.jpg?w=900&t=st=1678319503~exp=1678320103~hmac=94dced47df428e3c12eb42c6e0d999758e774f117cf4a8ba3b503acc62ae9832").
+    then(result=> {
+      return result
+    });
+  }catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+*/
+
 
 // Export the functions for use in other modules
 module.exports = {
   uploadVideo,
   getVideo,
+ // uploadImg
 };
