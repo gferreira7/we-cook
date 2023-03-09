@@ -37,6 +37,8 @@ router.get('/callback', (req, res, next) => {
       return res.redirect('/login')
     }
     req.logIn(user, async (err) => {
+
+      console.log(user)
       if (err) {
         return next(err)
       }
@@ -51,12 +53,15 @@ router.get('/callback', (req, res, next) => {
         dbUser =  await User.create({
           authId: user.id,
           username: user.displayName,
+          channelName: user.nickname,
           email: user.emails[0].value,
         })
       } else {
         // If the user already exists, update the user document
         dbUser.username = user.displayName
         dbUser.email = user.emails[0].value
+        channelName = user.nickname,
+
         await dbUser.save()
       }
 

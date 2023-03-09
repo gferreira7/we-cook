@@ -11,8 +11,14 @@ const express = require("express");
 
 // Handles the handlebars
 // https://www.npmjs.com/package/hbs
+
+const path = require('path')
 const hbs = require("hbs");
-hbs.registerPartials(__dirname + '/views/partials');
+const partialsDir = path.join(__dirname, 'views', 'partials');
+
+hbs.registerPartials(partialsDir);
+hbs.registerPartials(path.join(partialsDir, 'currentUserPage'));
+
 const app = express();
 
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
@@ -35,8 +41,8 @@ app.use("/", indexRoutes);
 const authRoutes = require("./routes/auth.routes");
 app.use("/", authRoutes);
 
-const profileRoutes = require("./routes/profile.routes");
-app.use("/", profileRoutes);
+const currentUserProfileRoutes = require("./routes/currentUserProfile.routes");
+app.use("/", currentUserProfileRoutes);
 
 const videoRoutes = require("./routes/video.routes");
 app.use("/", videoRoutes);
