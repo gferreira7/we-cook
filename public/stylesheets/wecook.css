@@ -156,6 +156,9 @@ hr {
 .video {
   width: 270px;
   margin-bottom: 30px;
+  border: 1px solid blue;
+  margin: 2px;
+  border-radius: 5px;
 }
 .thumbnail {
   width: 100%;
