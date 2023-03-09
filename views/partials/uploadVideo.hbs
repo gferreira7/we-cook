@@ -60,6 +60,14 @@
                 id='formFile'
               />
           </div>
+  <label for='formFile' class='form-label'>Add thumbnail from device storage</label>
+              <input
+                class='form-control-file'
+                name='image'
+                type='file'
+                id='formFile'
+              />
+       
 
           <div class='form-text'>OR</div>
 
@@ -111,24 +119,5 @@
 
 <script>
 
-  var _CANVAS = document.querySelector("#video-canvas"),
-    _CTX = _CANVAS.getContext("2d"),
-    _VIDEO = document.querySelector("#main-video");
-
-  // Upon click this should should trigger click on the #formFile file input element
-  // This is better than showing the not-good-looking file input element
-  document.querySelector("#upload-button").addEventListener('click', function () {
-    document.querySelector("#formFile").click();
-  });
-
-  // When user chooses a MP4 file
-  document.querySelector("#formFile").addEventListener('change', function () {
-    // Validate whether MP4
-    if (['video/mp4'].indexOf(document.querySelector("#formFile").files[0].type) == -1) {
-      alert('Error : Only MP4 format allowed');
-      return;
-    }
-
- 
 
 </script>

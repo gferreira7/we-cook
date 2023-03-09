@@ -9,7 +9,7 @@ const stream = require('stream')
 const fs = require('fs')
 const { promisify } = require('util')
 
-const { uploadVideo, getVideo  } = require('../config/cloudinary.config')
+const { uploadVideo, getVideo, uploadImg  } = require('../config/cloudinary.config')
 
 // import models here
 const Video = require('../models/Video.model')
@@ -29,7 +29,6 @@ router.post('/upload', upload.single('video'), async (req, res) => {
   try {
     // Get the uploaded video file
     const file = req.file
-   
     // Get the other form fields
     const title = req.body.title
     const description = req.body.description
@@ -37,9 +36,12 @@ router.post('/upload', upload.single('video'), async (req, res) => {
     // Read the uploaded file from disk using fs
     const buffer = fs.readFileSync(file.path)
     // Upload the file to Cloudinary using the uploadVideo function
-   // const image =  uploadImg()  not working 
+    const imgLink = "https://helpx.adobe.com/content/dam/help/en/photoshop/using/convert-color-image-black-white/jcr_content/main-pars/before_and_after/image-before/Landscape-Color.jpg"    
+      const uploadedImage = await uploadImg(imgLink)
+    console.log(uploadedImage);
+
     const uploadedVideo = await uploadVideo(buffer)
-   
+   console.log(uploadedVideo)
 
     // Delete the uploaded file from disk using fs
     fs.unlinkSync(file.path)
@@ -52,7 +54,7 @@ router.post('/upload', upload.single('video'), async (req, res) => {
       //assigned by Cloudinary - needed to fetch it later and update
       cloudId: uploadedVideo.public_id,
       url: uploadedVideo.secure_url,
-      //thumbnail: image.secure_url, not working 
+      thumbnail: uploadedImage,
       title,
       description,
       format: uploadedVideo.format,
@@ -60,7 +62,7 @@ router.post('/upload', upload.single('video'), async (req, res) => {
       duration:uploadedVideo.duration,
       author: userIdFromDB._id
     }
-    Video.create(videoToDB)
+    await Video.create(videoToDB)
 
 
       // Use the uploaded file's name as the asset's public ID and 
