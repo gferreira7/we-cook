@@ -1,12 +1,7 @@
-
-<div class="videos">
-  <!-- a video starts -->
-  {{#each video}}
-    <div class="video">
+{{#each videos}}
+   <div class="video">
       <div class="thumbnail">
-       <a href="/watch/{{_id}}"> 
-        <img id="thumbnail" src="{{thumbnail}}"> 
-       </a>
+       <a href="/watch/{{_id}}">  <img   src="{{thumbnail}}" alt="" /> </a>
       </div>
 
       <div class="details">
@@ -16,10 +11,9 @@
             alt="" />
         </div>
         <div class="title">   <h3> {{title}}   </h3>
-          <a href=""> {{author}} </a>
+          <a href="profile/{{author}}">{{author}}</a>
           <span> {{views}} Views • 3 {{createdAt}} </span>
         </div>
       </div>
   </div>
   {{/each}}
-</div>

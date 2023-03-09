@@ -1,9 +1,15 @@
-const { Schema, model } = require("mongoose");
+const { Schema, model } = require('mongoose')
 
 // TODO: Please make sure you edit the User model to whatever makes sense in this case
 const userSchema = new Schema(
   {
     username: {
+      type: String,
+      required: false,
+      unique: false,
+      trim: true,
+    },
+    firstName: {
       type: String,
       required: false,
       unique: false,
@@ -22,17 +28,20 @@ const userSchema = new Schema(
       trim: true,
       lowercase: true,
     },
-    // id from Auth0 
+    // id from Auth0
     authId: String,
     // image url
     profilePic: String,
+    subscribers: { type: Number, default: 0 },
+    channelViews: { type: Number, default: 0 },
+    channelLikes: { type: Number, default: 0 },
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
   }
-);
+)
 
-const User = model("User", userSchema);
+const User = model('User', userSchema)
 
-module.exports = User;
+module.exports = User

@@ -1,45 +1,5 @@
-<!-- <center> 
-{{#each videos}}
- <a href="/watch/{{_id}}" style="text-decoration: none; color: inherit;"> 
-<div class="card mb-3" style="max-width: 540px; border: none;" >
-  <div class="row g-0" >
-    <div class="col-md-4">
-      <img src="{{url}}" class="img-fluid " alt="...">
-    </div>
-    <div class="col-md-8" >
-      <div class="card-body" >
-         <small class="text-muted">{{owner}}</small>
-       <small class="text-muted">{{views}}<i> <img src="../../images/icons/view.png" width="5%"> </i></small>
-        <small class="text-muted">{{likes}} <i> <img src="../../images/icons/yum.png" width="5%"> </i> </small>
-        <h5 class="card-title">{{title}}</h5>
-        <p class="card-text">{{description}}</p>
-        <p class="card-text"><small class="text-muted"></small></p>
-      </div>
-    </div>
-  </div>
+<div class="">
+  {{> videos/videosList}}
+
 </div>
- </a>
-{{/each }}
-</center>
- -->
  
-{{#each videos}}
-
-   <div class="video">
-      <div class="thumbnail">
-       <a href="/watch/{{_id}}">  <img   src="{{url}}" alt="" /> </a>
-      </div>
-
-      <div class="details">
-        <div class="author">
-          <img
-            src="../../images/icons/account.png"
-            alt="" />
-        </div>
-        <div class="title">   <h3> {{title}}   </h3>
-          <a href=""> {{author}} </a>
-          <span> {{views}} Views • 3 {{createdAt}} </span>
-        </div>
-      </div>
-  </div>
-  {{/each }}

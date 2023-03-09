@@ -30,3 +30,7 @@
 
 - Layouts 
     apaguei os layouts todos menos o teu, fiz uma pasta "layouts" e pus essa como default no app.js
+## Mar 9 - Gui
+
+- Adding channel likes and channel views for user model (total)
+- 

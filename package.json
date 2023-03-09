@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "watch:views": "onchange \"views/**/*.hbs\" -- nodemon server.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
@@ -26,6 +27,7 @@
     "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.21"
+    "nodemon": "^2.0.21",
+    "onchange": "^7.1.0"
   }
 }

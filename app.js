@@ -41,8 +41,8 @@ app.use("/", indexRoutes);
 const authRoutes = require("./routes/auth.routes");
 app.use("/", authRoutes);
 
-const currentUserProfileRoutes = require("./routes/currentUserProfile.routes");
-app.use("/", currentUserProfileRoutes);
+const channelRoutes = require("./routes/channel.routes");
+app.use("/", channelRoutes);
 
 const videoRoutes = require("./routes/video.routes");
 app.use("/", videoRoutes);

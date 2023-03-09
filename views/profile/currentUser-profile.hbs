@@ -1,18 +1,22 @@
 
-<div currentUserProfilePage>
+
+<div>
   {{!-- User Info --}}
   <div class="p-5 mb-4 bg-light rounded-3">
-    {{> currentUserPage/currentUserDashboard}}
-    <div buttonsContainer>
-      <button class="btn btn-secondary btn" type="button">Settings</button>
-      {{> currentUserPage/uploadVideo}}
+    {{> dashboard}}
+    <div>
+      <button href="#" class="btn btn-secondary btn" type="button">Settings</button>
+      {{> videos/uploadVideo}}
     </div>
   </div>
 
-  {{> currentUserPage/currentUserVideoList}}
-
+  <div>
+    {{> profileVideos}}
+    <a href="/profile/{{userFromDB._id}}/all-videos" >
+    <button class="btn btn-primary btn" type="button">See All</button>
+    </a>
+  </div>
 </div>
-
 <script>
 
   const form = document.getElementById('upload-video') 

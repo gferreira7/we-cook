@@ -1,0 +1,20 @@
+
+
+<div>
+  {{!-- OtherUser Info --}}
+  <div class="p-5 mb-4 bg-light rounded-3">
+    {{> dashboard}}
+  </div>
+
+  <div>
+    {{> profileVideos}}
+
+
+    <a href="/profile/{{userFromDB._id}}/all-videos" >
+
+    <button class="btn btn-primary btn" type="button">See All</button>
+    </a>
+  </div>
+
+
+</div>

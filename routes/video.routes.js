@@ -8,39 +8,6 @@ const Video = require('../models/Video.model.js')
 
 const mongoose = require('mongoose') // <== has to be added
 
-router.get('/home', (req, res, next) => {
-  let currentUserInfo = { name: { givenName: '' } }
-  if (req.user === undefined) {
-    currentUserInfo.name.givenName = 'Guest'
-  } else {
-    const { _raw, _json, ...userProfile } = req.user
-    currentUserInfo = userProfile
-  }
-
-  Video.find()
-    .then((video) => {
-      // console.log('Retrieved video from DB:', video);
-      res.render('videos/videos-list', {
-        title: 'Home',
-        userProfile: currentUserInfo,
-        video: video,
-      })
-    })
-    .catch((error) => {
-      console.log('Error while getting the videos from the DB: ', error)
-
-      // Call the error-middleware to display the error page to the user
-      next(error)
-    })
-})
-
-// router.get("/layout", secured, (req, res, next) => {
-//   res.render("videos/wecook", {
-//     layout: 'wecook-layout',
-
-//   });
-// })
-
 router.get('/watch/:id', (req, res, next) => {
   let Id = req.params.id
 
@@ -95,10 +62,7 @@ router.post('/video/:videoId/update', (req, res, next) => {
   if(views){
     Video.findByIdAndUpdate(videoId, {$inc: {views: 1}}, {new:true}).then(updatedVideo => {
       res.status(200).json(`views: ${updatedVideo.views} FODASSE`)
-
     })
-
-
   }
 })
 
