@@ -1,0 +1,32 @@
+{{#each videos}}
+   <div videoId="{{_id}}" class="video">
+        {{#unless ../isChannelOwner}}
+          <div class="thumbnail">
+          <a href="/watch/{{_id}}">  <img   src="{{thumbnail}}" alt="" /> </a>
+          </div>
+
+          <div class="details">
+            <div class="author">
+              <img
+                src="../../images/icons/account.png"
+                alt="" />
+            </div>
+        {{/unless}}
+        <div class="title">
+          <h3> {{title}} {{page}}   </h3>
+          <a author="{{author._id}}" href="/profile/{{author._id}}">{{author.channelName}}</a>
+          <span> {{views}} Views • 3 {{createdAt}} </span>
+        </div>
+      
+      {{#if ../isChannelOwner}}
+      <div class="d-flex p-2 justify-content-right align-items-center">
+        <form action="/video/{{_id}}/edit" method="get">
+          <button class="btn btn-secondary">Edit</button>
+        </form>
+      
+      </div>
+      {{/if}}
+      </div>
+  </div>
+  {{/each}}
+

@@ -53,6 +53,7 @@ router.get('/callback', (req, res, next) => {
         dbUser =  await User.create({
           authId: user.id,
           username: user.displayName,
+          firstName: user.name.givenName,
           channelName: user.nickname,
           email: user.emails[0].value,
         })
@@ -65,7 +66,7 @@ router.get('/callback', (req, res, next) => {
         await dbUser.save()
       }
 
-      res.redirect(returnTo || '/')
+      res.redirect(returnTo || '/home')
     })
   })(req, res, next)
 })

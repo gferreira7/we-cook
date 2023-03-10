@@ -1,9 +1,44 @@
 const express = require('express');
 const router = express.Router();
+const Video = require('../models/Video.model.js')
+const mongoose = require('mongoose'); // <== has to be added
+const User = require('../models/User.model.js');
+
+router.get('/', (req, res, next) => {
+
+  res.redirect('/home')
+})
 
 /* GET home page */
-router.get("/", (req, res, next) => {
-  res.redirect("/home");
-});
+router.get('/home', (req, res, next) => {
+  let currentUserInfo = { name: { givenName: '' } }
+
+  if (req.user === undefined) {
+    currentUserInfo.name.givenName = 'Guest'
+  } else {
+    const { _raw, _json, ...userProfile } = req.user
+    currentUserInfo = userProfile
+  }
+
+  Video.find()
+    .populate('author')
+    .then((videos) => {
+      console.log('Retrieved video from DB:', videos);
+      res.render('home', {
+        title: 'Home',
+        userProfile: currentUserInfo,
+        videos: videos,
+      })
+    })
+    .catch((error) => {
+      console.log('Error while getting the videos from the DB: ', error)
+
+      // Call the error-middleware to display the error page to the user
+      next(error)
+    })
+})
+
+
+
 
 module.exports = router;

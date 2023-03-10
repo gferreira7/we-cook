@@ -1,0 +1,27 @@
+{{! My Videos }}
+<div class='horizontal-video-list'>
+  <h3>My Videos</h3>
+  <div class='profile-videos-list'>
+
+    {{#each videos}}
+      <div videoId="{{_id}}" class="video">
+      <div class="thumbnail">
+       <a href="/watch/{{_id}}">  <img   src="{{thumbnail}}" alt="" /> </a>
+      </div>
+
+      <div class="details">
+        <div class="author">
+          <img
+            src="../../images/icons/account.png"
+            alt="" />
+        </div>
+        <div class="title">   <h3> {{title}}   </h3>
+          <a author="{{author._id}}" href="/profile/{{author._id}}">{{author.channelName}}</a>
+          <span> {{views}} Views • 3 {{createdAt}} </span>
+        </div>
+      </div>
+  </div>
+    {{/each}}
+  </div>
+
+</div>

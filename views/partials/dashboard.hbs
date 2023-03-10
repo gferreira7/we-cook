@@ -1,0 +1,17 @@
+{{#with userFromDB}}
+<div class='container-fluid py-5 d-flex align-items-center'>
+  <img
+    id='profile-page-pic'
+    src='/images/icons/account.png'
+    class='object-fit-contain'
+    alt='account_circle'
+  />
+  <div class='p-5'>
+    <h1 class='display-5 fw-bold'>{{firstName}}</h1>
+    <p class='col-md-8 fs-4'>{{email}}</p>
+    <p>{{subscribers }}Subscribers</p>
+    <p>Channels Views: {{channelViews}}</p>
+    <p>Channels Likes: {{channelLikes}}</p>
+  </div>
+</div>
+{{/with }}
