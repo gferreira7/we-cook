@@ -10,14 +10,15 @@ router.get('/', (req, res, next) => {
 })
 
 /* GET home page */
-router.get('/home', (req, res, next) => {
-  let currentUserInfo = { name: { givenName: '' } }
+router.get('/home', async (req, res, next) => {
+  let currentUser = { name: { givenName: '' } }
 
   if (req.user === undefined) {
-    currentUserInfo.name.givenName = 'Guest'
+    currentUser.name.givenName = 'Guest'
   } else {
-    const { _raw, _json, ...userProfile } = req.user
-    currentUserInfo = userProfile
+
+    let userProfile = await User.findOne({ authId: req.user.id }).exec()    
+    currentUser = userProfile
   }
 
   Video.find()
@@ -26,7 +27,7 @@ router.get('/home', (req, res, next) => {
       console.log('Retrieved video from DB:', videos);
       res.render('home', {
         title: 'Home',
-        userProfile: currentUserInfo,
+        userProfile: currentUser,
         videos: videos,
       })
     })
