@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Video = require('../models/Video.model.js')
-const mongoose = require('mongoose') // <== has to be added
+const mongoose = require('mongoose'); // <== has to be added
+const User = require('../models/User.model.js');
 
 router.get('/', (req, res, next) => {
 
@@ -36,6 +37,16 @@ router.get('/home', (req, res, next) => {
     })
 })
 
+router.get('/home/:authorId/fetchData', async (req, res, next) => {
+  const {authorId} = req.params
+
+
+  let author = await User.findById(authorId)
+
+  if(author){
+    res.status(200).json(author.channelName)
+  }
+})
 
 
 module.exports = router;

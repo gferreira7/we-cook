@@ -1,5 +1,5 @@
 {{#each videos}}
-   <div class="video">
+   <div videoId="{{_id}}" class="video">
       <div class="thumbnail">
        <a href="/watch/{{_id}}">  <img   src="{{thumbnail}}" alt="" /> </a>
       </div>
@@ -10,10 +10,39 @@
             src="../../images/icons/account.png"
             alt="" />
         </div>
-        <div class="title">   <h3> {{title}}   </h3>
-          <a href="profile/{{author}}">{{author}}</a>
+        <div class="title">
+          <h3> {{title}} {{page}}   </h3>
+          <a author="{{author}}" href="/profile/{{author}}">{{author}}</a>
           <span> {{views}} Views • 3 {{createdAt}} </span>
         </div>
+        {{#if currentUser}}
+        <p>{{page}}</p>
+        {{else}}
+
+        {{/if}}
       </div>
   </div>
   {{/each}}
+
+<script>
+     window.onload = () => { 
+    
+        const videos = document.querySelectorAll('.video');
+
+        videos.forEach(video => {
+
+        const author = video.querySelector('a[author]')
+        const authorId = author.getAttribute('author')
+        
+
+        axios.get(`/home/${authorId}/fetchData`)
+        .then((response) => {
+            console.log('RES:',response);
+            author.textContent = response.data
+        })
+        .catch(function (error) {
+            console.log('ERROR',error);
+        })
+        })
+  }
+</script>
