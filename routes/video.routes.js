@@ -16,7 +16,7 @@ router.get('/home', (req, res, next) => {
     const { _raw, _json, ...userProfile } = req.user
     currentUserInfo = userProfile
   }
-
+  console.log(currentUserInfo)
   Video.find()
     .then((video) => {
       // console.log('Retrieved video from DB:', video);

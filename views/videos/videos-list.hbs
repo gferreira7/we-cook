@@ -1,25 +1,38 @@
 
-<div class="videos">
   <!-- a video starts -->
-  {{#each video}}
-    <div class="video">
-      <div class="thumbnail">
-       <a href="/watch/{{_id}}"> 
-        <img id="thumbnail" src="{{thumbnail}}"> 
-       </a>
-      </div>
 
-      <div class="details">
-        <div class="author">
-          <img
-            src="../../images/icons/account.png"
-            alt="" />
-        </div>
-        <div class="title">   <h3> {{title}}   </h3>
-          <a href=""> {{author}} </a>
-          <span> {{views}} Views • 3 {{createdAt}} </span>
-        </div>
-      </div>
-  </div>
+
+   
+                <div class="main-header anim" style="--delay: 0s">Discover</div>
+                 <!--VIdeos here -->
+                   
+       <div class="videos">
+  {{#each video}}
+    <div class="video anim" style="--delay: .4s">  <!--one video start-->
+                        <div class="video-time">8 min</div>
+                        <div class="video-wrapper">
+                            <video muted="">
+                                <source
+                                    height="300"
+                                    src="{{url}}"
+                                    type="video/mp4">
+                                    
+                            </video>
+                            <div class="author-img__wrapper video-author">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-check">
+                                    <path d="M20 6L9 17l-5-5" />
+                                </svg>
+                                <img class="author-img"
+                                    src="https://images.pexels.com/photos/1680172/pexels-photo-1680172.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
+                            </div>
+                        </div>
+                        <div class="video-by">{{author}} </div>
+                        <div class="video-name">{{title}}</div>
+                        <div class="video-view">{{views}} views<span class="seperate video-seperate"></span>{{createdAt}}</div>
+                    </div>
   {{/each}}
-</div>
+
+     </div>
+        </div>
+
