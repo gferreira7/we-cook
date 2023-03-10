@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const secured = require('../middleware/route-guard')
 const Video = require('../models/Video.model.js')
 
+const {timePassedSince} = require('../controllers/helpers')
 router.get('/watch/:id', (req, res, next) => {
   let Id = req.params.id
 
@@ -16,14 +17,20 @@ router.get('/watch/:id', (req, res, next) => {
     const { _raw, _json, ...currentUserProfile } = req.user
     currentUserInfo = currentUserProfile
   }
-
+  
   Video.findById(Id)
   .populate('author')
-    .then((videoInfo) => {
+    .then((video) => {
+      
+      
+      const timeSinceUpload = timePassedSince(video.createdAt.getTime())
+
+      console.log('time passed since upload: ',timeSinceUpload);
       res.render('videos/single-video', {
-        title: videoInfo.title,
+        title: video.title,
         currentUserProfile: currentUserInfo,
-        video: videoInfo,
+        video,
+        timeSinceUpload,
       })
     })
     .catch((err) => {

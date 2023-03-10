@@ -1,32 +1,39 @@
-{{#each videos}}
-   <div videoId="{{_id}}" class="video">
-        {{#unless ../isChannelOwner}}
-          <div class="thumbnail">
-          <a href="/watch/{{_id}}">  <img   src="{{thumbnail}}" alt="" /> </a>
-          </div>
 
-          <div class="details">
-            <div class="author">
-              <img
-                src="../../images/icons/account.png"
-                alt="" />
+  <!-- a video starts -->
+    <div class="main-header anim" style="--delay: 0s">
+        Discover</div>
+
+        <!--VIdeos here -->
+                   
+        <div class="videos">
+        
+        {{#each videos}}
+        
+        <div class="video anim" style="--delay: .4s">  <!--one video start-->
+            <div class="video-time">{{duration}}</div>
+            <div class="video-wrapper">
+            <video muted="">
+                <source
+                    height="300"
+                    src="{{url}}"
+                    type="video/mp4">         
+                </video>
+            <div class="author-img__wrapper video-author">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                     stroke-linecap="round" stroke-linejoin="round" class="feather feather-check">
+                    <path d="M20 6L9 17l-5-5" />
+                    </svg>
+                <img class="author-img"
+                    src="{{author.profilePic}}" />
             </div>
-        {{/unless}}
-        <div class="title">
-          <h3> {{title}} {{page}}   </h3>
-          <a author="{{author._id}}" href="/profile/{{author._id}}">{{author.channelName}}</a>
-          <span> {{views}} Views • 3 {{createdAt}} </span>
+            
+            </div>
+                <div class="video-by">{{author.channelName}} </div>
+                <div class="video-name">{{title}}</div>
+                <div class="video-view">{{views}} views<span class="seperate video-seperate"></span>{{createdAt}}</div>
+            </div>
+        {{/each}}
+
         </div>
-      
-      {{#if ../isChannelOwner}}
-      <div class="d-flex p-2 justify-content-right align-items-center">
-        <form action="/video/{{_id}}/edit" method="get">
-          <button class="btn btn-secondary">Edit</button>
-        </form>
-      
-      </div>
-      {{/if}}
-      </div>
-  </div>
-  {{/each}}
+    </div>
 

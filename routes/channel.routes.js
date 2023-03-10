@@ -24,14 +24,14 @@ router.get('/profile', secured, async (req, res, next) => {
 
   
   let userFromDB = await User.findOne({ authId: req.user.id }).exec()
-
+  console.log(userFromDB)
   Video.find({ author: userFromDB._id })
   .populate('author')
     .then((videos) => {
       res.render('profile/currentUser-profile', {
         title: 'Profile',
         videos,
-        userFromDB
+        userProfile:userFromDB
       })
     })
     .catch((error) => {
@@ -53,12 +53,17 @@ router.get('/profile/:idFromDB', secured, async (req, res, next) => {
   } else if (userFromDB.authId === req.user.id) {
     res.redirect('/profile')
   } else {
+
+    let currentUser = await User.findOne({authId: req.user.id}).exec()
+
     Video.find({ author: idFromDB })
+    .populate('author')
       .then((videos) => {
         res.render('profile/otherUser-profile', {
           title: 'Profile',
           videos,
-          userFromDB,
+          otherUser:userFromDB,
+          userProfile:currentUser
         })
       })
       .catch((error) => {
@@ -72,6 +77,7 @@ router.get('/profile/:idFromDB', secured, async (req, res, next) => {
 
 router.get('/profile/:idFromDB/all-videos', async (req, res, next) => {
   const { idFromDB } = req.params
+  
   let isChannelOwner
   let userFromDB = await User.findById(idFromDB)
 
@@ -82,11 +88,13 @@ router.get('/profile/:idFromDB/all-videos', async (req, res, next) => {
   }
 
   Video.find({ author: idFromDB })
+  .populate('author')
     .then((videos) => {
       res.render('profile/list-channel-videos', {
         title: 'Profile',
         videos,
-        isChannelOwner
+        isChannelOwner,
+        userProfile:userFromDB,
       })
     })
     .catch((error) => {

@@ -24,7 +24,7 @@ router.get('/home', async (req, res, next) => {
   Video.find()
     .populate('author')
     .then((videos) => {
-      console.log('Retrieved video from DB:', videos);
+
       res.render('home', {
         title: 'Home',
         userProfile: currentUser,

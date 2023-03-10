@@ -1,26 +1,36 @@
 {{#with video}}
 
-<div class="row row-cols-1 row-cols-md-2 g-4">
-            <video class="" videoId="{{_id}}" width="320" height="240" controls>
+<div class="">
+       
+       <div class="video-wrapper">
+             <video class="" videoId="{{_id}}" height="480" controls>
                 <source src="{{url}}" type="video/mp4">
                 <source src="{{url}}" type="video/ogg">
                 Your browser does not support the video tag.
             </video>
-    <div class="col">
-        <div class="card">
-      
-            <div class="card-body">
-                <h5 class="card-title">{{video.title}}</h5>
-                <p class="card-text">{{video.description}}</p>
-                <p views class="card-text">{{video.views}}</p>
-                <p class="card-text"><small class="text-muted">{{video.createdAt}}</small></p>
-                {{#each video.tags}}
-                <small class="text-muted">#{{this}}</small>
+       </div>
+    <div class="">
+        <div class="">
+            <div class="author-img__wrapper video-author">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                     stroke-linecap="round" stroke-linejoin="round" class="feather feather-check">
+                    <path d="M20 6L9 17l-5-5" />
+                    </svg>
+                <img class="author-img"
+                    src="{{author.profilePic}}" />
+            </div>
+            <div class="">
+                <h2 class="">{{title}}</h2>
+                <p class="">{{description}}</p>
+                <p views class="">{{views}}</p>
+                <p class=""><small class="">{{createdAt}}</small></p>
+                {{#each tags}}
+                <small class="">#{{this}}</small>
                 {{/each}}
             </div>
         </div>
         <h6>Reviews:</h6>
-        {{#each video.reviews}}
+        {{#each reviews}}
         <p class="card-text"><small class="text-muted">{{this}}</small></p>
         {{/each}}
     </div>
@@ -29,7 +39,7 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title">recipe</h5>
-                {{#each video.recipe}}
+                {{#each recipe}}
                 <p class="card-text"><small class="text-muted">{{this}}</small></p>
                 {{/each}}
             </div>
