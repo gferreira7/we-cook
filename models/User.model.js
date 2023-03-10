@@ -31,7 +31,10 @@ const userSchema = new Schema(
     // id from Auth0
     authId: String,
     // image url
-    profilePic: String,
+    profilePic: {
+      type: String,
+      default: "images/icons/account.png"
+    },
     subscribers: { type: Number, default: 0 },
     channelViews: { type: Number, default: 0 },
     channelLikes: { type: Number, default: 0 },
