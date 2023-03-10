@@ -32,16 +32,18 @@ router.get('/watch/:id', secured, async (req, res, next) => {
     })
 })
 
-router.post('/search', secured, (req, res, next) => {
+router.post('/search', secured, async (req, res, next) => {
   let { search } = req.body
-  const { _raw, _json, ...currentUserProfile } = req.user
+
+  let userProfile = await User.findOne({ authId: req.user.id }).exec()
+
 
   Video.find({ title: { $regex: search, $options: 'i' } })
     .populate('author')
     .then((videos) => {
       res.render('videos/video-search', {
         title: search,
-        userProfile: currentUserProfile,
+        userProfile,
         videos: videos,
         // show results page with count
         count: videos.length 
