@@ -26,11 +26,12 @@ router.get('/profile', secured, async (req, res, next) => {
   let userFromDB = await User.findOne({ authId: req.user.id }).exec()
 
   Video.find({ author: userFromDB._id })
+  .populate('author')
     .then((videos) => {
       res.render('profile/currentUser-profile', {
         title: 'Profile',
         videos,
-        userFromDB,
+        userFromDB
       })
     })
     .catch((error) => {
