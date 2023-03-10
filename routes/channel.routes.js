@@ -21,8 +21,8 @@ const mongoose = require('mongoose') // <== has to be added
 const User = require('../models/User.model')
 
 router.get('/profile', secured, async (req, res, next) => {
-  // const { _raw, _json, ...currentUserProfile } = req.user
 
+  
   let userFromDB = await User.findOne({ authId: req.user.id }).exec()
 
   Video.find({ author: userFromDB._id })
