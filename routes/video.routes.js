@@ -55,17 +55,6 @@ router.post('/search', secured, (req, res, next) => {
     })
 })
 
-router.get('/video/:authorId/fetchData', async (req, res, next) => {
-  const {authorId} = req.params
-
-
-  let author = await User.findById(authorId)
-
-  if(author){
-    res.status(200).json(author.channelName)
-  }
-})
-
 router.post('/video/:videoId/update', (req, res, next) => {
 
   const {videoId} = req.params

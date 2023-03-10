@@ -14,7 +14,7 @@
         {{/unless}}
         <div class="title">
           <h3> {{title}} {{page}}   </h3>
-          <a author="{{author}}" href="/profile/{{author}}">{{author}}</a>
+          <a author="{{author._id}}" href="/profile/{{author._id}}">{{author.channelName}}</a>
           <span> {{views}} Views • 3 {{createdAt}} </span>
         </div>
       
@@ -30,25 +30,3 @@
   </div>
   {{/each}}
 
-<script>
-     window.onload = () => { 
-    
-        const videos = document.querySelectorAll('.video');
-
-        videos.forEach(video => {
-
-        const author = video.querySelector('a[author]')
-        const authorId = author.getAttribute('author')
-        
-
-        axios.get(`/video/${authorId}/fetchData`)
-        .then((response) => {
-            console.log('RES:',response);
-            author.textContent = response.data
-        })
-        .catch(function (error) {
-            console.log('ERROR',error);
-        })
-        })
-  }
-</script>
