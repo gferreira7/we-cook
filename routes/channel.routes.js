@@ -21,7 +21,7 @@ const mongoose = require('mongoose') // <== has to be added
 const User = require('../models/User.model')
 
 router.get('/profile', secured, async (req, res, next) => {
-  const { _raw, _json, ...currentUserProfile } = req.user
+  // const { _raw, _json, ...currentUserProfile } = req.user
 
   let userFromDB = await User.findOne({ authId: req.user.id }).exec()
 
@@ -41,8 +41,9 @@ router.get('/profile', secured, async (req, res, next) => {
     })
 })
 
-router.get('/profile/:idFromDB', async (req, res, next) => {
+router.get('/profile/:idFromDB', secured, async (req, res, next) => {
   const { idFromDB } = req.params
+
 
   let userFromDB = await User.findById(idFromDB)
 
@@ -81,9 +82,10 @@ router.get('/profile/:idFromDB/all-videos', async (req, res, next) => {
 
   Video.find({ author: idFromDB })
     .then((videos) => {
-      res.render('profile/currentUser-edit-videos-page', {
+      res.render('profile/list-channel-videos', {
         title: 'Profile',
         videos,
+        isChannelOwner
       })
     })
     .catch((error) => {

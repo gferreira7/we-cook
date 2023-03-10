@@ -10,7 +10,7 @@ const videoSchema = new Schema(
     },
     reviews: [
       {
-        /* id: { type: Schema.Types.ObjectId, ref: "Review" } */
+        id: { type: Schema.Types.ObjectId, ref: "Review" },
         type: String,
       },
     ],
@@ -62,6 +62,6 @@ const videoSchema = new Schema(
   }
 )
 
-const video = model('video', videoSchema)
+const Video = model('Video', videoSchema)
 
-module.exports = video
+module.exports = Video

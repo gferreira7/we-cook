@@ -16,7 +16,7 @@
             alt="" />
         </div>
         <div class="title">   <h3> {{title}}   </h3>
-          <a author="{{author}}" href="profile/{{author}}">{{author}}</a>
+          <a author="{{author}}" href="/profile/{{author}}">{{author}}</a>
           <span> {{views}} Views • 3 {{createdAt}} </span>
         </div>
       </div>
@@ -33,18 +33,17 @@
 
         videos.forEach(video => {
 
-        const author = video.querySelector('a[author]')
-        const authorId = author.getAttribute('author')
-        
-
-        axios.get(`/home/${authorId}/fetchData`)
-        .then((response) => {
-            console.log('RES:',response);
-            author.textContent = response.data
-        })
-        .catch(function (error) {
-            console.log('ERROR',error);
-        })
+          const author = video.querySelector('a[author]')
+          const authorId = author.getAttribute('author')
+          
+          axios.get(`/video/${authorId}/fetchData`)
+          .then((response) => {
+              console.log('RES:',response);
+              author.textContent = response.data
+          })
+          .catch( (error) => {
+              console.log('ERROR',error);
+          })
         })
   }
 </script>
