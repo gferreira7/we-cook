@@ -15,23 +15,22 @@ const {
   uploadImg,
 } = require('../config/cloudinary.config')
 
+const { toHoursAndMinutes } = require('../controllers/helpers')
+
 // import models here
 const Video = require('../models/Video.model')
 const mongoose = require('mongoose') // <== has to be added
 const User = require('../models/User.model')
 
 router.get('/profile', secured, async (req, res, next) => {
-
-  
   let userFromDB = await User.findOne({ authId: req.user.id }).exec()
-  console.log(userFromDB)
   Video.find({ author: userFromDB._id })
-  .populate('author')
+    .populate('author')
     .then((videos) => {
       res.render('profile/currentUser-profile', {
         title: 'Profile',
         videos,
-        userProfile:userFromDB
+        userProfile: userFromDB,
       })
     })
     .catch((error) => {
@@ -45,25 +44,23 @@ router.get('/profile', secured, async (req, res, next) => {
 router.get('/profile/:idFromDB', secured, async (req, res, next) => {
   const { idFromDB } = req.params
 
-
   let userFromDB = await User.findById(idFromDB)
 
-  if(!userFromDB){
+  if (!userFromDB) {
     res.status(500).json('message: this user no longer exists')
   } else if (userFromDB.authId === req.user.id) {
     res.redirect('/profile')
   } else {
-
-    let currentUser = await User.findOne({authId: req.user.id}).exec()
+    let currentUser = await User.findOne({ authId: req.user.id }).exec()
 
     Video.find({ author: idFromDB })
-    .populate('author')
+      .populate('author')
       .then((videos) => {
         res.render('profile/otherUser-profile', {
           title: 'Profile',
           videos,
-          otherUser:userFromDB,
-          userProfile:currentUser
+          otherUser: userFromDB,
+          userProfile: currentUser,
         })
       })
       .catch((error) => {
@@ -77,7 +74,7 @@ router.get('/profile/:idFromDB', secured, async (req, res, next) => {
 
 router.get('/profile/:idFromDB/all-videos', async (req, res, next) => {
   const { idFromDB } = req.params
-  
+
   let isChannelOwner
   let userFromDB = await User.findById(idFromDB)
 
@@ -88,13 +85,13 @@ router.get('/profile/:idFromDB/all-videos', async (req, res, next) => {
   }
 
   Video.find({ author: idFromDB })
-  .populate('author')
+    .populate('author')
     .then((videos) => {
       res.render('profile/list-channel-videos', {
         title: 'Profile',
         videos,
         isChannelOwner,
-        userProfile:userFromDB,
+        userProfile: userFromDB,
       })
     })
     .catch((error) => {
@@ -129,7 +126,8 @@ router.post(
 
       let userIdFromDB = await User.findOne({ authId: req.user.id }).exec()
 
-      // console.log(req.user.id, userIdFromDB)
+      let durationInHMS = toHoursAndMinutes(uploadedVideo.durationInSeconds)
+
       const videoToDB = {
         //assigned by Cloudinary - needed to fetch it later and update
         cloudId: uploadedVideo.public_id,
@@ -139,11 +137,12 @@ router.post(
         description,
         format: uploadedVideo.format,
         // tags,
-        duration: uploadedVideo.duration,
+        durationInSeconds: uploadedVideo.durationInSeconds,
+        durationInHMS: durationInHMS,
         author: userIdFromDB._id,
       }
 
-      await Video.create(videoToDB)
+      // await Video.create(videoToDB)
 
       res.redirect('/profile')
     } catch (error) {

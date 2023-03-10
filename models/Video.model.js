@@ -10,7 +10,7 @@ const videoSchema = new Schema(
     },
     reviews: [
       {
-        id: { type: Schema.Types.ObjectId, ref: "Review" },
+        id: { type: Schema.Types.ObjectId, ref: 'Review' },
         type: String,
       },
     ],
@@ -48,9 +48,13 @@ const videoSchema = new Schema(
       ref: 'User',
       required: true,
     },
-
     cloudId: { type: String },
-    duration: { type: Number },
+    durationInSeconds: { type: Number },
+    durationInHMS: {
+      h: Number,
+      m: Number,
+      s: Number,
+    },
     format: { type: String },
     file: {
       type: String,

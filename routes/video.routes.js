@@ -5,30 +5,23 @@ const mongoose = require('mongoose')
 
 const secured = require('../middleware/route-guard')
 const Video = require('../models/Video.model.js')
+const User = require('../models/User.model.js')
 
-const {timePassedSince} = require('../controllers/helpers')
-router.get('/watch/:id', (req, res, next) => {
+const { timePassedSince, toHoursAndMinutes } = require('../controllers/helpers')
+router.get('/watch/:id', secured, async (req, res, next) => {
   let Id = req.params.id
 
-  let currentUserInfo = { name: { givenName: '' } }
-  if (req.user === undefined) {
-    currentUserInfo.name.givenName = 'Guest'
-  } else {
-    const { _raw, _json, ...currentUserProfile } = req.user
-    currentUserInfo = currentUserProfile
-  }
-  
+  let userProfile = await User.findOne({ authId: req.user.id }).exec()
+
   Video.findById(Id)
-  .populate('author')
+    .populate('author')
     .then((video) => {
-      
-      
       const timeSinceUpload = timePassedSince(video.createdAt.getTime())
 
-      console.log('time passed since upload: ',timeSinceUpload);
+      console.log('time passed since upload: ', timeSinceUpload)
       res.render('videos/single-video', {
         title: video.title,
-        currentUserProfile: currentUserInfo,
+        userProfile,
         video,
         timeSinceUpload,
       })
@@ -44,13 +37,14 @@ router.post('/search', secured, (req, res, next) => {
   const { _raw, _json, ...currentUserProfile } = req.user
 
   Video.find({ title: { $regex: search, $options: 'i' } })
-  .populate('author')
+    .populate('author')
     .then((videos) => {
-      console.log(videos)
       res.render('videos/video-search', {
         title: search,
-        currentUserProfile: currentUserProfile,
+        userProfile: currentUserProfile,
         videos: videos,
+        // show results page with count
+        count: videos.length 
       })
     })
     .catch((err) => {
@@ -76,7 +70,6 @@ router.post('/video/:videoId/update', (req, res, next) => {
 })
 
 router.get('/video/:videoId/edit', secured, async (req, res, next) => {
-  
   const { videoId } = req.params
 
   Video.findById(videoId)
@@ -88,9 +81,7 @@ router.get('/video/:videoId/edit', secured, async (req, res, next) => {
 })
 
 router.post('/video/:videoId/delete', secured, (req, res, next) => {
-  
   const { videoId } = req.params
-  
 })
 
 module.exports = router

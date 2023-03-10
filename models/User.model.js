@@ -33,7 +33,7 @@ const userSchema = new Schema(
     // image url
     profilePic: {
       type: String,
-      default: "images/icons/account.png"
+      default: "/images/icons/account.png"
     },
     subscribers: { type: Number, default: 0 },
     channelViews: { type: Number, default: 0 },

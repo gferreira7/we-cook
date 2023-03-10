@@ -14,7 +14,8 @@ router.get('/home', async (req, res, next) => {
   let currentUser = { name: { givenName: '' } }
 
   if (req.user === undefined) {
-    currentUser.name.givenName = 'Guest'
+    currentUser.firstName = 'Guest'
+    currentUser.profilePic = '/images/icons/account.png'
   } else {
 
     let userProfile = await User.findOne({ authId: req.user.id }).exec()    
@@ -24,7 +25,7 @@ router.get('/home', async (req, res, next) => {
   Video.find()
     .populate('author')
     .then((videos) => {
-
+      console.log(currentUser)
       res.render('home', {
         title: 'Home',
         userProfile: currentUser,
