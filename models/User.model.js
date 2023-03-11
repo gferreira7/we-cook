@@ -37,7 +37,6 @@ const userSchema = new Schema(
     },
     bannerImage: {
       type: String,
-      default: "/images/banner-image.jpg"
     },
     description: String,
     subscribers: { type: Number, default: 0 },
