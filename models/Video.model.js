@@ -55,6 +55,9 @@ const videoSchema = new Schema(
     file: {
       type: String,
     },
+    category:{
+      enum: ['Healthy', 'Cheat Day!']
+    }
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

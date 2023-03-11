@@ -72,6 +72,104 @@ router.get('/profile/:idFromDB', secured, async (req, res, next) => {
   }
 })
 
+router.get(
+  '/profile/:idFromDB/accountSettings',
+  secured,
+  async (req, res, next) => {
+    const { idFromDB } = req.params
+
+    let userFromDB = await User.findById(idFromDB).exec()
+
+    Video.find({ author: userFromDB._id })
+      .populate('author')
+      .then((videos) => {
+        res.render('profile/account-settings', {
+          title: 'Account Settings',
+          videos,
+          userProfile: userFromDB,
+        })
+      })
+      .catch((error) => {
+        console.log('Error while getting the videos from the DB: ', error)
+
+        // Call the error-middleware to display the error page to the user
+        next(error)
+      })
+  }
+)
+
+router.post(
+  '/profile/:idFromDB/accountSettings',
+  secured,
+  upload.fields([
+    { name: 'bannerImage', maxCount: 1 },
+    { name: 'profilePic', maxCount: 1 },
+  ]),
+  async (req, res, next) => {
+    console.log(req.files)
+    const { idFromDB } = req.params
+    const { channelName, description, instagram, twitter, facebook, discord, youtube } = req.body
+    const socialLinks = {instagram, twitter, facebook, discord, youtube}
+
+    const newAccountSettings = {}
+    newAccountSettings.socialLinks = socialLinks
+    // Check if banner image is provided
+    if (req.files.bannerImage !== undefined) {
+      const bannerImage = req.files.bannerImage[0]
+      const uploadedBannerImage = await uploadImg(bannerImage.path)
+      newAccountSettings.bannerImage = uploadedBannerImage
+      fs.unlinkSync(bannerImage.path.toString())
+    }
+
+    // Check if profile pic is provided
+    if (req.files.profilePic !== undefined) {
+      const profilePic = req.files.profilePic[0]
+      const uploadedProfilePic = await uploadImg(profilePic.path)
+      newAccountSettings.profilePic = uploadedProfilePic
+      fs.unlinkSync(profilePic.path.toString())
+    }
+
+    if (channelName) {
+      newAccountSettings.channelName = channelName
+    }
+    if (description) {
+      newAccountSettings.description = description
+    }
+
+    let updatedUser = await User.findByIdAndUpdate(
+      idFromDB,
+      newAccountSettings,
+      { new: true }
+    ).exec()
+
+    res.redirect('/profile')
+  }
+)
+
+router.get(
+  '/profile/:idFromDB/manageVideos',
+  secured,
+  async (req, res, next) => {
+    let userFromDB = await User.findOne({ authId: req.user.id }).exec()
+
+    Video.find({ author: userFromDB._id })
+      .populate('author')
+      .then((videos) => {
+        res.render('profile/settings', {
+          title: 'Account Settings',
+          videos,
+          userProfile: userFromDB,
+        })
+      })
+      .catch((error) => {
+        console.log('Error while getting the videos from the DB: ', error)
+
+        // Call the error-middleware to display the error page to the user
+        next(error)
+      })
+  }
+)
+
 router.get('/profile/:idFromDB/all-videos', async (req, res, next) => {
   const { idFromDB } = req.params
 
@@ -109,6 +207,7 @@ router.post(
     { name: 'image', maxCount: 1 },
   ]),
   async (req, res) => {
+    console.log(req.files)
     try {
       // Get the uploaded video file
       const video = req.files.video[0]
@@ -129,9 +228,8 @@ router.post(
       console.log(uploadedVideo.duration)
       let durationInHMS = toHoursAndMinutes(Math.floor(uploadedVideo.duration))
       console.log(durationInHMS)
-    
-    //  if(!uploadedImage)
-    
+
+      //  if(!uploadedImage)
 
       const videoToDB = {
         //assigned by Cloudinary - needed to fetch it later and update
@@ -154,13 +252,13 @@ router.post(
       console.error(error)
       res.status(500).json({ error: 'Failed to upload video' })
     }
-  })
+  }
+)
 
-
-  router.get('/history', async (req, res, next) => {
-    res.render('test', {
-      title: 'history',
-    })
+router.get('/history', async (req, res, next) => {
+  res.render('test', {
+    title: 'history',
   })
+})
 
 module.exports = router
