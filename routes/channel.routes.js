@@ -72,6 +72,27 @@ router.get('/profile/:idFromDB', secured, async (req, res, next) => {
   }
 })
 
+router.get('/profile/:idFromDB/settings', secured, async (req, res, next) => {
+  let userFromDB = await User.findOne({ authId: req.user.id }).exec()
+
+  Video.find({ author: userFromDB._id })
+    .populate('author')
+    .then((videos) => {
+      res.render('profile/settings', {
+        title: 'Account Settings',
+        videos,
+        userProfile: userFromDB,
+      })
+    })
+    .catch((error) => {
+      console.log('Error while getting the videos from the DB: ', error)
+
+      // Call the error-middleware to display the error page to the user
+      next(error)
+    })
+
+})
+
 router.get('/profile/:idFromDB/all-videos', async (req, res, next) => {
   const { idFromDB } = req.params
 
@@ -129,9 +150,8 @@ router.post(
       console.log(uploadedVideo.duration)
       let durationInHMS = toHoursAndMinutes(Math.floor(uploadedVideo.duration))
       console.log(durationInHMS)
-    
-    //  if(!uploadedImage)
-    
+
+      //  if(!uploadedImage)
 
       const videoToDB = {
         //assigned by Cloudinary - needed to fetch it later and update
@@ -154,13 +174,13 @@ router.post(
       console.error(error)
       res.status(500).json({ error: 'Failed to upload video' })
     }
-  })
+  }
+)
 
-
-  router.get('/history', async (req, res, next) => {
-    res.render('test', {
-      title: 'history',
-    })
+router.get('/history', async (req, res, next) => {
+  res.render('test', {
+    title: 'history',
   })
+})
 
 module.exports = router

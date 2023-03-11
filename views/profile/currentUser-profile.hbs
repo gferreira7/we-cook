@@ -1,13 +1,12 @@
-
-
-
-
-    {{> dashboard}}
-
+      {{> dashboard}}
       {{> videos/uploadVideo}}
-       <div class="main-header anim" style="--delay: 0s">
+      <a href="/profile/{{userProfile._id}}/settings">
+        <button type="button" class="btn btn-secondary">Settings</button>
+      </a>  
+      
+      <div class="main-header anim" style="--delay: 0s">
         My Videos
-</div>
+      </div>
     {{> videos/profileVideos}}
     <a href="/profile/{{userProfile._id}}/all-videos" >
     <button class="btn btn-primary btn" type="button">See All</button> </a>
