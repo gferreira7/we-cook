@@ -1,78 +1,111 @@
- 
-  <div class="main-header anim" style="--delay: 0.5s">
-   <button uploadModal> Upload Video</button>
-  </div>
- <div id="upload-form" style="display:none" >
+</div>
+<div id="upload-form" style="display:none ;--delay: .1s;" >
   <form id='upload-video' action='/upload' method='post' enctype='multipart/form-data'>
-        <div class='modal-body'>
-          <div class='input-group mb-3'>
-            <span class='input-group-text'>Title</span>
-            <input name='title' type='text' class='form-control' placeholder='Video tile' />
-          </div>
+    
+       <label>Title </label> 
+      <div class='video-input'>
+      <textarea name='title' type='text' placeholder='Video tile' /> </textarea>
+      </div>
 
-          <div class='mb-3'>
-           <label for='formFile' class='form-label'>Add from device storage</label>
-              <input
-                class='form-control-file'
-                name='video'
-                type='file'
-                id='formFile'
-              />
-          </div>
-  <label for='formFile' class='form-label'>Add thumbnail from device storage</label>
-              <input
-                class='form-control-file'
-                name='image'
-                type='file'
-                id='formFile'
-              />
-       
-
-          <div class='form-text'>OR</div>
-
-          <div class='input-group mb-3'>
-            <span class='input-group-text'>Video URL</span>
-            <textarea name='url' class='form-control'></textarea>
-          </div>
-
-
-          <div class='input-group mb-3'>
-            <span class='input-group-text'>Description</span>
-            <textarea name='description' class='form-control'></textarea>
-          </div>
-
-          <div class='form-text'>Please make sure you're uploading original
-            content
-          </div>
-
+      <!--        <span >Video URL</span>
+         <div  class='video-input'> 
+        <textarea name='url' ></textarea>
         </div>
-        <div class='modal-footer'>
-          <button class='btn btn-success' data-bs-target='#exampleModalToggle2' data-bs-toggle='modal'
-            type='submit'>Upload</button>
+        --> 
+         <span >Video Tags</span>
+         <div  class='video-input'> 
+        <textarea name='Tags' ></textarea>
         </div>
-      </form>
+        <span >Description</span>
+           <div  class='video-input'> 
+        <textarea name='description' ></textarea>
+       </div>
+ <span >Recipe</span>
+           <div  class='video-input'> 
+        <textarea name='Recipe' ></textarea>
+       </div>
+   <span >Category</span>
+    <div class="select">
+      <select>
+        <option>Healthy</option>
+        <option>Cheat Meal</option>
+      </select>
+      <div class="select__arrow"></div>
+    </div>
+    
+<div class="file-drop-area">
+  <span class="fake-btn">Choose files</span>
+   <span class="file-msg js-set-number">or drag and drop files here</span>
+       <input class="file-input" name='video' type='file' id='formFile'>
+</div>
 
- </div>
- 
+<div class="file-drop-area">
+  <span class="fake-btn">Choose files</span>
+   <span class="file-msg js-set-number">or drag and drop files here</span>
+     <input class="file-input" name='image' type='file' id='formFile'>
+</div>
+<center> 
+       <div class='form-text' style="color:gray">
+        Please make sure you're uploading original content
+      </div>
+      </center>
+    <div class='modal-footer' style="display:flex">
+     
+      <button class='btn btn-success' data-bs-target='#exampleModalToggle2' data-bs-toggle='modal'
+        type='submit'>Upload</button>
+    </div>
+  </form>
+
+</div>
+
 
 <script>
 
-window.addEventListener("load", (event) => {
-let uploadModal = document.querySelector("button[uploadModal]")
-let form = document.getElementById("upload-form")
-uploadModal.onclick = ((event) =>{
+  window.addEventListener("load", (event) => {
+    let uploadModal = document.querySelector("a[uploadModal]")
+    let form = document.getElementById("upload-form")
+       form.style.transitionDelay =".1s";
+    uploadModal.onclick = ((event) => {
 
-  if(form.style.display == "none" )
-  {
-form.style.display = "flex";
-  }
- else {
-    form.style.display = "none";
-  }
-form.style.delay = "1s"
+      if (form.style.display == "none") {
+        form.style.display = "flex";
 
-})});
+      }
+      else {
+        form.style.display = "none";
+      }
+   
+    })
+
+var fileinput = document.querySelector('.file-input');
+var filedroparea = document.querySelector('.file-drop-area');
+var jssetnumber = document.querySelector('.js-set-number');
+fileinput.addEventListener('dragenter', isactive);
+fileinput.addEventListener('focus', isactive);
+fileinput.addEventListener('click', isactive);
+
+// back to normal state
+fileinput.addEventListener('dragleave', isactive);
+fileinput.addEventListener('blur', isactive);
+fileinput.addEventListener('drop', isactive);
+
+// add Class
+function isactive() {
+  filedroparea.classList.add('is-active');
+}
+
+// change inner text
+fileinput.addEventListener('change', function() {
+  var count = fileinput.files.length;
+  if (count === 1) {
+    // if single file then show file name
+    jssetnumber.innerText = fileinput.value.split('\\').pop();
+  } else {
+    // otherwise show number of files
+    jssetnumber.innerText = count + ' files selected';
+  }
+});
+
+  });
 
 </script>
-
-
