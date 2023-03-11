@@ -108,9 +108,11 @@ router.post(
   async (req, res, next) => {
     console.log(req.files)
     const { idFromDB } = req.params
-    const { channelName, description } = req.body
-    const newAccountSettings = {}
+    const { channelName, description, instagram, twitter, facebook, discord, youtube } = req.body
+    const socialLinks = {instagram, twitter, facebook, discord, youtube}
 
+    const newAccountSettings = {}
+    newAccountSettings.socialLinks = socialLinks
     // Check if banner image is provided
     if (req.files.bannerImage !== undefined) {
       const bannerImage = req.files.bannerImage[0]

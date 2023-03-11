@@ -43,6 +43,13 @@ const userSchema = new Schema(
     subscribers: { type: Number, default: 0 },
     channelViews: { type: Number, default: 0 },
     channelLikes: { type: Number, default: 0 },
+    socialLinks: {
+      instagram: String,
+      twitter: String,
+      facebook: String,
+      discord: String,
+      youtube: String,
+    }
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`
