@@ -13,17 +13,20 @@ router.get('/watch/:id', secured, async (req, res, next) => {
 
   let userProfile = await User.findOne({ authId: req.user.id }).exec()
 
+
   Video.findById(Id)
     .populate('author')
     .then((video) => {
       const timeSinceUpload = timePassedSince(video.createdAt.getTime())
-
-      console.log('time passed since upload: ', timeSinceUpload)
-      res.render('videos/single-video', {
+      let data = {
         title: video.title,
         userProfile,
         video,
-        timeSinceUpload,
+        timeSinceUpload
+      }
+      console.log('time passed since upload: ', timeSinceUpload)
+      res.render('videos/single-video', {
+        data
       })
     })
     .catch((err) => {
@@ -85,5 +88,8 @@ router.get('/video/:videoId/edit', secured, async (req, res, next) => {
 router.post('/video/:videoId/delete', secured, (req, res, next) => {
   const { videoId } = req.params
 })
+
+
+
 
 module.exports = router

@@ -40,7 +40,28 @@ router.get('/home', async (req, res, next) => {
     })
 })
 
+router.get('/trending', async (req, res, next) => {
+  res.render('test', {
+    title: 'trending',
+  })
+} )
 
+router.get('/groups', async (req, res, next) => {
+  res.render('test', {
+    title: 'groups',
+  })
+  })
 
-
+  router.get('/subscriptions', async (req, res, next) => {
+    res.render('test', {
+      title: 'subscriptions',
+    })
+    })
+    router.get('/nutrition', async (req, res, next) => {
+      res.render('test', {
+        title: 'nutrition',
+      })
+      })
+  
+    
 module.exports = router;

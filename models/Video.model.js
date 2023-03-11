@@ -50,11 +50,7 @@ const videoSchema = new Schema(
     },
     cloudId: { type: String },
     durationInSeconds: { type: Number },
-    durationInHMS: {
-      h: Number,
-      m: Number,
-      s: Number,
-    },
+    durationInHMS: {type: String },
     format: { type: String },
     file: {
       type: String,

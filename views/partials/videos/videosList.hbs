@@ -5,7 +5,7 @@
         <div class="videos">
         
             {{#each videos}}
-        
+            <a href="/watch/{{_id}}" > 
             <div class="video anim" style="--delay: .4s">  <!--one video start-->
                 <div class="video-time">{{durationInHMS}}</div>
                 <div class="video-wrapper">
@@ -29,6 +29,7 @@
                     <div class="video-name">{{title}}</div>
                     <div class="video-view">{{views}} views<span class="seperate video-seperate"></span>{{createdAt}}</div>
                 </div>
+                </a>
             {{/each}}
 
         </div>

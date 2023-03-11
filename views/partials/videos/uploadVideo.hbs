@@ -1,13 +1,9 @@
-
-
-<div class='modal fade bd-example-modal-lg' id='exampleModalToggle' aria-hidden='true' aria-labelledby='exampleModalToggleLabel' tabindex='-1'>
-  <div class='modal-dialog modal-dialog-centered modal-lg'>
-    <div class='modal-content'>
-      <div class='modal-header'>
-        <h1 class='modal-title fs-5' id='exampleModalToggleLabel'>WeCook</h1>
-        <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
-      </div>
-      <form id='upload-video' action='/upload' method='post' enctype='multipart/form-data'>
+ 
+  <div class="main-header anim" style="--delay: 0.5s">
+   <button uploadModal> Upload Video</button>
+  </div>
+ <div id="upload-form" style="display:none" >
+  <form id='upload-video' action='/upload' method='post' enctype='multipart/form-data'>
         <div class='modal-body'>
           <div class='input-group mb-3'>
             <span class='input-group-text'>Title</span>
@@ -55,26 +51,28 @@
             type='submit'>Upload</button>
         </div>
       </form>
-    </div>
-  </div>
-</div>
-<div class='modal fade' id='exampleModalToggle2' aria-hidden='true' aria-labelledby='exampleModalToggleLabel2'
-  tabindex='-1'>
-  <div class='modal-dialog modal-dialog-centered'>
-    <div class='modal-content'>
-      <div class='modal-header'>
-        <h1 class='modal-title fs-5' id='exampleModalToggleLabel2'>Upload</h1>
-        <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
-      </div>
-      <div class='modal-body'>
-        Video Uploaded
 
-      </div>
-      <div class='modal-footer'>
-        <button id='close-upload-modal' type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-<button class='btn btn-primary' data-bs-target='#exampleModalToggle' data-bs-toggle='modal'>Upload Video</button>
+ </div>
+ 
+
+<script>
+
+window.addEventListener("load", (event) => {
+let uploadModal = document.querySelector("button[uploadModal]")
+let form = document.getElementById("upload-form")
+uploadModal.onclick = ((event) =>{
+
+  if(form.style.display == "none" )
+  {
+form.style.display = "flex";
+  }
+ else {
+    form.style.display = "none";
+  }
+form.style.delay = "1s"
+
+})});
+
+</script>
+
 

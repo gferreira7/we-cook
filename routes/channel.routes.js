@@ -125,8 +125,13 @@ router.post(
       fs.unlinkSync(image.path.toString())
 
       let userIdFromDB = await User.findOne({ authId: req.user.id }).exec()
-
-      let durationInHMS = toHoursAndMinutes(uploadedVideo.durationInSeconds)
+      console.log(uploadedVideo)
+      console.log(uploadedVideo.duration)
+      let durationInHMS = toHoursAndMinutes(Math.floor(uploadedVideo.duration))
+      console.log(durationInHMS)
+    
+    //  if(!uploadedImage)
+    
 
       const videoToDB = {
         //assigned by Cloudinary - needed to fetch it later and update
@@ -137,19 +142,25 @@ router.post(
         description,
         format: uploadedVideo.format,
         // tags,
-        durationInSeconds: uploadedVideo.durationInSeconds,
+        durationInSeconds: uploadedVideo.duration,
         durationInHMS: durationInHMS,
         author: userIdFromDB._id,
       }
 
-      // await Video.create(videoToDB)
+      await Video.create(videoToDB)
 
       res.redirect('/profile')
     } catch (error) {
       console.error(error)
       res.status(500).json({ error: 'Failed to upload video' })
     }
-  }
-)
+  })
+
+
+  router.get('/history', async (req, res, next) => {
+    res.render('test', {
+      title: 'history',
+    })
+  })
 
 module.exports = router
