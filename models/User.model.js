@@ -35,6 +35,11 @@ const userSchema = new Schema(
       type: String,
       default: "/images/icons/account.png"
     },
+    bannerImage: {
+      type: String,
+      default: "/images/banner-image.jpg"
+    },
+    description: String,
     subscribers: { type: Number, default: 0 },
     channelViews: { type: Number, default: 0 },
     channelLikes: { type: Number, default: 0 },

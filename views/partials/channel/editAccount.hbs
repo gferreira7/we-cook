@@ -1,0 +1,35 @@
+{{#with userProfile}}
+
+  <div>
+    <form action='/profile/{{_id}}/accountSettings' method='post' enctype='multipart/form-data'>
+      <div>
+        <div>
+          <span>Channel Name</span>
+          <input name='channelName' type='text' value='{{channelName}}' />
+        </div>
+
+        <div>
+          <span>Channel Description</span>
+          <textarea name='description'>{{{description}}}</textarea>
+        </div>
+
+        <div>
+          <label for='profilePic'>Profile Picture</label>
+          <input name='profilePic' type='file' id='profilePic'/>
+        </div>
+        <div>
+          <label for='bannerImage'>Banner Image</label>
+          <input name='bannerImage' type='file' id='bannerImage' />
+        </div>
+
+      </div>
+      <div>
+        <button
+          type='submit'
+        >Save Changes</button>
+      </div>
+    </form>
+
+  </div>
+
+{{/with}}
