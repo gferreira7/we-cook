@@ -1,31 +1,28 @@
-</div>
 <div id="upload-form" style="display:none ;--delay: .1s;" >
-  <form id='upload-video' action='/upload' method='post' enctype='multipart/form-data'>
+    <form id='upload-video' action='/upload' method='post' enctype='multipart/form-data'>
     
-       <label>Title </label> 
+      <label>Title </label> 
       <div class='video-input'>
-      <textarea name='title' type='text' placeholder='Video tile' /> </textarea>
+        <textarea name='title' type='text' placeholder='Video tile' /> </textarea>
       </div>
 
-      <!--        <span >Video URL</span>
-         <div  class='video-input'> 
-        <textarea name='url' ></textarea>
-        </div>
-        --> 
-         <span >Video Tags</span>
-         <div  class='video-input'> 
+      
+      <span >Video Tags</span>
+      <div  class='video-input'> 
         <textarea name='Tags' ></textarea>
-        </div>
-        <span >Description</span>
-           <div  class='video-input'> 
+      </div>
+        
+      <span >Description</span>
+      <div  class='video-input'> 
         <textarea name='description' ></textarea>
-       </div>
- <span >Recipe</span>
-           <div  class='video-input'> 
+      </div>
+      
+      <span >Recipe</span>
+      <div class='video-input'> 
         <textarea name='Recipe' ></textarea>
-       </div>
-   <span >Category</span>
-    <div class="select">
+      </div>
+      <span >Category</span>
+      <div class="select">
       <select>
         <option>Healthy</option>
         <option>Cheat Meal</option>
@@ -33,11 +30,11 @@
       <div class="select__arrow"></div>
     </div>
     
-<div class="file-drop-area">
-  <span class="fake-btn">Choose files</span>
-   <span class="file-msg js-set-number">or drag and drop files here</span>
-       <input class="file-input" name='video' type='file' id='formFile'>
-</div>
+  <div class="file-drop-area">
+    <span class="fake-btn">Choose files</span>
+    <span class="file-msg js-set-number">or drag and drop files here</span>
+    <input class="file-input" name='video' type='file' id='formFile'>
+  </div>
 
 <div class="file-drop-area">
   <span class="fake-btn">Choose files</span>

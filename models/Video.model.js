@@ -56,7 +56,8 @@ const videoSchema = new Schema(
       type: String,
     },
     category:{
-      enum: ['Healthy', 'Cheat Day!']
+      type: String,
+      // enum: ['Healthy', 'Cheat Day!']
     }
   },
   {

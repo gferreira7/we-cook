@@ -6,7 +6,7 @@
     <div class="side-menu" style="display:inline-block; ">
 
   
-      <a class="sidebar-link" href="/profile/{{userProfile._id}}/accountSettings" id="profile"
+      <a class="sidebar-link" href="/profile/{{userProfile._id}}/manageVideos" id="profile"
         style="display:inline-block; font-size: 1.5rem; cursor: pointer; ">
         <svg viewBox="0 0 24 24" fill="currentColor" style="margin-right: -2px;">
           <path fill-rule="evenodd" clip-rule="evenodd"
@@ -15,7 +15,7 @@
         Manage Videos
       </a>
      
-      <a class="sidebar-link" href="/profile/{{userProfile._id}}/manageVideos" id="groups"
+      <a class="sidebar-link" href="/profile/{{userProfile._id}}/accountSettings" id="groups"
         style="display:inline-block ; font-size: 1.5rem; cursor: pointer; ">
         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" style="margin-right: -2px;" viewBox="0 0 50 50">
           <path fill-rule="evenodd" clip-rule="evenodd"
@@ -48,12 +48,12 @@
 
   <script>
 
-    const form = document.getElementById('upload-video')
+    {{!-- const form = document.getElementById('upload-video')
     const closedModal = document.getElementById('close-upload-modal')
     form.onsubmit = (e) => {
       e.preventDefault()
       closedModal.onclick = (e) => {
         form.submit()
       }
-    }
+    } --}}
   </script>

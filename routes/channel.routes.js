@@ -108,8 +108,16 @@ router.post(
   async (req, res, next) => {
     console.log(req.files)
     const { idFromDB } = req.params
-    const { channelName, description, instagram, twitter, facebook, discord, youtube } = req.body
-    const socialLinks = {instagram, twitter, facebook, discord, youtube}
+    const {
+      channelName,
+      description,
+      instagram,
+      twitter,
+      facebook,
+      discord,
+      youtube,
+    } = req.body
+    const socialLinks = { instagram, twitter, facebook, discord, youtube }
 
     const newAccountSettings = {}
     newAccountSettings.socialLinks = socialLinks
@@ -155,8 +163,8 @@ router.get(
     Video.find({ author: userFromDB._id })
       .populate('author')
       .then((videos) => {
-        res.render('profile/settings', {
-          title: 'Account Settings',
+        res.render('profile/manage-videos', {
+          title: 'Manage Videos',
           videos,
           userProfile: userFromDB,
         })
@@ -167,6 +175,42 @@ router.get(
         // Call the error-middleware to display the error page to the user
         next(error)
       })
+  }
+)
+
+router.post(
+  '/profile/:idFromDB/manageVideos',
+  secured,
+  upload.single('thumbnail'),
+  async (req, res, next) => {
+    const { idFromDB } = req.params
+    const { title, description, category, videoId } = req.body
+    console.log(videoId)
+    const newVideoInfo = {}
+
+    // Check if thumbnail image is provided
+    if (req.file !== undefined) {
+      const thumbnail = req.file
+      const uploadedThumbnail = await uploadImg(thumbnail.path)
+      newVideoInfo.thumbnail = uploadedThumbnail
+      fs.unlinkSync(thumbnail.path.toString())
+    }
+
+    if (title) {
+      newVideoInfo.title = title
+    }
+    if (description) {
+      newVideoInfo.description = description
+    }
+    if (category) {
+      newVideoInfo.category = category
+    }
+
+    let updatedVideo = await Video.findByIdAndUpdate(videoId, newVideoInfo, {
+      new: true,
+    }).exec()
+
+    res.redirect(`/watch/${videoId}`)
   }
 )
 

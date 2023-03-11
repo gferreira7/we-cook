@@ -1,0 +1,41 @@
+<div class='w-50'>
+
+  <div class='sticky-top h-25'>
+   <form action='/profile/{{userProfile._id}}/manageVideos' method='post' enctype="multipart/form-data">
+    <input type="hidden" id='edit-video-id' name="videoId" ></input>
+  <div>
+    <span>Title</span>
+    <input id='edit-video-title' name='title' type='text' />
+  </div>
+
+  <div>
+    <span>Description</span>
+    <textarea id='edit-video-description' name='description'></textarea>
+  </div>
+
+  <div>
+    <label>Thumbnail</label>
+    <input id='edit-video-thumbnail' name='thumbnail' type='file'>
+    <img id='thumbnail-preview' src='' alt='Thumbnail Preview' style='max-width: 200px; max-height: 200px; margin-top: 10px;'>
+  </div>
+  
+  <div>
+    <span>Category</span>
+    <select id='edit-video-category'>
+      <option value='healthy'>Healthy</option>
+      <option value='cheatMeal'>Cheat Meal</option>
+    </select>
+  </div>
+  
+  <button type='submit'>Update Video</button>
+</form>
+
+  </div>
+  {{!-- <form action="/profile/{{userProfile._d}}/manageVideos" method="post">
+        <button type="submit">
+            
+            Delete
+        </button>
+    </form> --}}
+
+</div>

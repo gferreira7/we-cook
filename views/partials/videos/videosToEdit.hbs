@@ -1,0 +1,75 @@
+<div class='w-50'>
+
+  {{#each videos}}
+    <div
+      videoId={{_id}}
+      class='anim d-flex justify-content-evenly align-items-center'
+      style='--delay: .4s'
+      title="{{title}}" 
+      description="{{description}}"
+      thumbnail="{{thumbnail}}"
+      category="{{category}}"
+    >
+        <img class='w-50' src='{{thumbnail}}' alt='thumbnail' />
+        <div class='video-wrapper'>
+            <div class='video-name'>{{title}}</div>
+            <div class='video-view'>{{views}}
+            views<span class='seperate video-seperate'></span>{{createdAt}}</div>
+            <div class='video-view'>{{category}}</div>
+
+        </div>
+    </div>
+
+  {{/each}}
+
+</div>
+
+<script>
+  const videosCollection = document.querySelectorAll("div[videoId]")
+  videosToUpdate = [...videosCollection] 
+  videosToUpdate.forEach(video => {
+    video.onclick = (e) => { 
+      let videoId = video.getAttribute('videoId')
+      let title = video.getAttribute('title')
+      let description = video.getAttribute('description')
+      let thumbnail = video.getAttribute('thumbnail')
+      let category = video.getAttribute('category')
+      
+      console.log('videoId:',videoId)
+      document.getElementById("edit-video-id").value = videoId
+      document.getElementById("edit-video-title").value = title
+      document.getElementById("edit-video-description").value = description
+      
+      let categorySelect = document.getElementById("edit-video-category")
+      let categoryOptions = categorySelect.options
+      for (let i = 0; i < categoryOptions.length; i++) {
+        if (categoryOptions[i].textContent === category) {
+          categoryOptions[i].selected = true
+          break
+        }
+      }
+      
+      let thumbnailInput = document.getElementById("edit-video-thumbnail")
+      thumbnailInput.value = ""
+      let thumbnailPreview = document.getElementById("thumbnail-preview")
+      if (thumbnail !== null) {
+        thumbnailPreview.src = thumbnail
+      } else {
+        thumbnailPreview.src = ""
+      }
+
+      thumbnailInput.addEventListener("change", function() {
+        let file = this.files[0];
+        if (file) {
+          let reader = new FileReader();
+          reader.onload = function(event) {
+            thumbnailPreview.src = event.target.result;
+          }
+          reader.readAsDataURL(file);
+        } else {
+          thumbnailPreview.src = "";
+        }
+      });
+    } 
+  })
+</script>
