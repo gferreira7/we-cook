@@ -1,8 +1,10 @@
 <div class='w-50'>
 
   <div class='sticky-top h-25'>
-   <form action='/profile/{{userProfile._id}}/manageVideos' method='post' enctype="multipart/form-data">
+   <form action='/profile/{{userProfile._id}}/edit' method='post' enctype="multipart/form-data">
     <input type="hidden" id='edit-video-id' name="videoId" ></input>
+    <input type="hidden" profileId={{userProfile._id}} name="profileId" ></input>
+
   <div>
     <span>Title</span>
     <input id='edit-video-title' name='title' type='text' />
@@ -28,14 +30,40 @@
   </div>
   
   <button type='submit'>Update Video</button>
+  <button delete type="button">
+    Delete
+  </button>
+  
 </form>
 
-  </div>
-  {{!-- <form action="/profile/{{userProfile._d}}/manageVideos" method="post">
-        <button type="submit">
-            
-            Delete
-        </button>
-    </form> --}}
+</div>
 
 </div>
+
+<script>
+  window.onload = (e) => {
+
+    const deleteBtn = document.querySelector('button[delete]')
+    const profileId = document.querySelector('input[profileId]').getAttribute('profileId')
+    
+    
+    
+    deleteBtn.onclick = (e) => {
+    const videoId = document.getElementById('edit-video-id').value
+
+    axios.post(`/profile/${profileId}/delete`, {videoId}, {
+                headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+                }          
+            })
+            .then((response) => {
+               console.log('RES:',response);
+               window.location.reload();
+            })
+            .catch( (error) =>{
+                console.log('ERROR',error);
+            });
+
+    }
+  }
+</script>

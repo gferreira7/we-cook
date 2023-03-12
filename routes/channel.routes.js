@@ -179,13 +179,13 @@ router.get(
 )
 
 router.post(
-  '/profile/:idFromDB/manageVideos',
+  '/profile/:profileId/edit/',
   secured,
   upload.single('thumbnail'),
   async (req, res, next) => {
-    const { idFromDB } = req.params
+    const { profileId } = req.params
     const { title, description, category, videoId } = req.body
-    console.log(videoId)
+
     const newVideoInfo = {}
 
     // Check if thumbnail image is provided
@@ -213,6 +213,28 @@ router.post(
     res.redirect(`/watch/${videoId}`)
   }
 )
+
+router.post('/profile/:profileId/delete', secured, async (req, res, next) => {
+  const { profileId } = req.params
+  try {
+    const { videoId } = req.body
+
+    console.log(videoId, 'in the route')
+
+    const deletedVideo = await Video.findByIdAndDelete(videoId)
+
+    if (!deletedVideo) {
+      throw new Error('Video not found')
+    }
+
+
+    
+
+    res.redirect(`/profile/${profileId}/manageVideos`)
+  } catch (error) {
+    next(error)
+  }
+})
 
 router.get('/profile/:idFromDB/all-videos', async (req, res, next) => {
   const { idFromDB } = req.params
