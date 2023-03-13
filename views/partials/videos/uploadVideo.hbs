@@ -5,30 +5,72 @@
       <div class='video-input'>
         <textarea name='title' type='text' placeholder='Video tile' /> </textarea>
       </div>
-
       
-      <span >Video Tags</span>
-      <div  class='video-input'> 
-        <textarea name='Tags' ></textarea>
-      </div>
-        
       <span >Description</span>
       <div  class='video-input'> 
         <textarea name='description' ></textarea>
       </div>
       
+      <span>Meal Type</span>
+      <div class='video-input'>
+        <div class="select">
+          <select>
+            <option active>Breakfast</option>
+            <option>Main Course</option>
+            <option>Side Dish</option>
+            <option>Snack</option>
+            <option>Soup</option>
+            <option>Appettizer</option>
+            <option>Salad</option>
+            <option>Drink</option>
+          </select>
+          <div class="select__arrow"></div>
+        </div>     
+      </div>
+
+      <span>Ingredients</span>
+      <div main-ingredients-container>
+        <div class='video-input ingredients-input'>
+          <small>Qty</small> 
+          <input ingredient-quantity placeholder='150' name='ingredient-quantity'></input>
+          <div class="select">
+            <select ingredient-unit name="ingredient-unit">
+              <option>unit</option>
+              <option>ml</option>
+              <option>cl</option>
+              <option>dl</option>
+              <option>L</option>
+              <option selected>g</option>
+              <option>kg</option>
+              <option>tsp</option>
+              <option>tbsp</option>
+              <option>cup</option>
+            </select>
+            <div class="select__arrow"></div>
+          </div>
+          <input ingredient name='ingredient' type='text' placeholder='brown sugar' /> </input>
+          <button class="btn btn-success" type="button" add-ingredient>+</button>
+          <button class="btn btn-danger" type="button" remove-ingredient>-</button>   
+        </div>
+      </div>
+      
       <span >Recipe</span>
       <div class='video-input'> 
-        <textarea name='Recipe' ></textarea>
+        <textarea name='recipe'></textarea>
       </div>
+      
       <span >Category</span>
       <div class="select">
-      <select>
-        <option>Healthy</option>
-        <option>Cheat Meal</option>
-      </select>
+        <select>
+          <option>Healthy</option>
+          <option>Cheat Meal</option>
+        </select>
       <div class="select__arrow"></div>
     </div>
+      <span >Video Tags</span>
+      <div  class='video-input'> 
+        <textarea name='tags' ></textarea>
+      </div>
     
   <div class="file-drop-area">
     <span class="fake-btn">Choose files</span>
@@ -48,7 +90,7 @@
       </center>
     <div class='modal-footer' style="display:flex">
      
-      <button class='btn btn-success' data-bs-target='#exampleModalToggle2' data-bs-toggle='modal'
+      <button uploadBtn class='btn btn-success'
         type='submit'>Upload</button>
     </div>
   </form>
@@ -59,50 +101,117 @@
 <script>
 
   window.addEventListener("load", (event) => {
+    
+    /* Open and close Upload Form*/ 
     let uploadModal = document.querySelector("a[uploadModal]")
     let form = document.getElementById("upload-form")
-       form.style.transitionDelay =".1s";
+    const ingredientsList = []
+    form.style.transitionDelay =".1s";
+    
     uploadModal.onclick = ((event) => {
-
       if (form.style.display == "none") {
         form.style.display = "flex";
+        const uploadBtn = document.querySelector('button[uploadBtn]')
+        
+        uploadBtn.onclick = () => {
+          if(ingredientsList.length !==0){
 
-      }
-      else {
+        axios.post(`/upload`, {ingredientsList:ingredientsList}, {
+                headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+                }          
+            })
+            .then((response) => {
+               console.log('RES:',response);
+               window.location.reload();
+            })
+            .catch( (error) =>{
+                console.log('ERROR',error);
+            });
+          }
+
+     }
+      } else {
         form.style.display = "none";
       }
-   
     })
 
-var fileinput = document.querySelector('.file-input');
-var filedroparea = document.querySelector('.file-drop-area');
-var jssetnumber = document.querySelector('.js-set-number');
-fileinput.addEventListener('dragenter', isactive);
-fileinput.addEventListener('focus', isactive);
-fileinput.addEventListener('click', isactive);
+    
+    /* Adding new ingredients to Recipe*/ 
+    const addButton = document.querySelector('button[add-ingredient]')
+    addButton.onclick = (e) => {
+    
+    // Get current values from form
+    const ingredient = document.querySelector('input[ingredient]').value
+    const quantity = document.querySelector('input[ingredient-quantity]').value
+    const unit = document.querySelector('select[ingredient-unit]').value
 
-// back to normal state
-fileinput.addEventListener('dragleave', isactive);
-fileinput.addEventListener('blur', isactive);
-fileinput.addEventListener('drop', isactive);
 
-// add Class
-function isactive() {
-  filedroparea.classList.add('is-active');
+
+    // Clone div and append below
+    const ingredientsInput = document.querySelector('.ingredients-input')
+    const newIngredientsInput = ingredientsInput.cloneNode(true)
+    
+    const removeButton = newIngredientsInput.querySelector('button[remove-ingredient]')
+    
+    removeButton.onclick = (e) => {
+      e.target.closest('.ingredients-input').remove()
+    }
+    
+    const newListItem = document.createElement('div')
+    newListItem.classList.add("ingredients-input")
+    newListItem.style.flexDirection = 'row-reverse' 
+    newListItem.innerHTML = `<div class="added-ingredient">${ingredient} - ${quantity} ${unit==='unit'?'':unit}</div>`
+    newListItem.appendChild(removeButton)
+    
+    ingredientsList.push({ingredient, quantity, unit})
+
+    //reset firstline inputs
+    const firstInputDiv = document.querySelector('div[main-ingredients-container]').children[0]
+    firstInputDiv.querySelector('input[ingredient]').value = ''
+    firstInputDiv.querySelector('input[ingredient-quantity]').value = ''
+    firstInputDiv.querySelector('select[ingredient-unit]').value = ''
+
+    ingredientsInput.parentNode.appendChild(newListItem)
+    console.log(ingredientsList)
 }
+    
 
-// change inner text
-fileinput.addEventListener('change', function() {
-  var count = fileinput.files.length;
-  if (count === 1) {
-    // if single file then show file name
-    jssetnumber.innerText = fileinput.value.split('\\').pop();
-  } else {
-    // otherwise show number of files
-    jssetnumber.innerText = count + ' files selected';
+  let fileinput = document.querySelector('.file-input');
+  let filedroparea = document.querySelector('.file-drop-area');
+  let jssetnumber = document.querySelector('.js-set-number');
+  fileinput.addEventListener('dragenter', isactive);
+  fileinput.addEventListener('focus', isactive);
+  fileinput.addEventListener('click', isactive);
+
+  // back to normal state
+  fileinput.addEventListener('dragleave', isactive);
+  fileinput.addEventListener('blur', isactive);
+  fileinput.addEventListener('drop', isactive);
+
+  // add Class
+  function isactive() {
+    filedroparea.classList.add('is-active');
   }
-});
 
+  // change inner text
+  fileinput.addEventListener('change', function() {
+    let count = fileinput.files.length;
+    if (count === 1) {
+      // if single file then show file name
+      jssetnumber.innerText = fileinput.value.split('\\').pop();
+    } else {
+      // otherwise show number of files
+      jssetnumber.innerText = count + ' files selected';
+    }
   });
+
+
+
+     
+
+    
+
+});
 
 </script>

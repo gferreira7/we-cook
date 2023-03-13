@@ -227,9 +227,6 @@ router.post('/profile/:profileId/delete', secured, async (req, res, next) => {
       throw new Error('Video not found')
     }
 
-
-    
-
     res.redirect(`/profile/${profileId}/manageVideos`)
   } catch (error) {
     next(error)
@@ -273,42 +270,72 @@ router.post(
     { name: 'image', maxCount: 1 },
   ]),
   async (req, res) => {
-    console.log(req.files)
     try {
-      // Get the uploaded video file
-      const video = req.files.video[0]
-      const image = req.files.image[0]
+      let videoToDB = {}
 
-      const title = req.body.title
-      const description = req.body.description
+      let video
+      let image
 
-      const buffer = fs.readFileSync(video.path.toString())
-      const uploadedVideo = await uploadVideo(buffer)
-      fs.unlinkSync(video.path.toString())
+      console.log(req.files.video)
+      
+        if (req.files.video !== undefined) {
+          video = req.files.video[0]
+          const buffer = fs.readFileSync(video.path.toString())
+          const uploadedVideo = await uploadVideo(buffer)
+          fs.unlinkSync(video.path.toString())
+          let durationInHMS = toHoursAndMinutes(
+            Math.floor(uploadedVideo.duration)
+          )
 
-      const uploadedImage = await uploadImg(image.path)
-      fs.unlinkSync(image.path.toString())
+          videoToDB.cloudId = uploadedVideo.public_id
+          videoToDB.url = uploadedVideo.secure_url
+          videoToDB.format = uploadedVideo.format
+          videoToDB.durationInSeconds = uploadedVideo.duration
+          videoToDB.durationInHMS = durationInHMS
+        }
+        if (req.files.image !== undefined) {
+          image = req.files.image[0]
+          const uploadedImage = await uploadImg(image.path)
+          fs.unlinkSync(image.path.toString())
+          videoToDB.thumbnail = uploadedImage
+        }
+      
 
-      let userIdFromDB = await User.findOne({ authId: req.user.id }).exec()
-      console.log(uploadedVideo)
-      console.log(uploadedVideo.duration)
-      let durationInHMS = toHoursAndMinutes(Math.floor(uploadedVideo.duration))
-      console.log(durationInHMS)
-
-      //  if(!uploadedImage)
-
-      const videoToDB = {
-        //assigned by Cloudinary - needed to fetch it later and update
-        cloudId: uploadedVideo.public_id,
-        url: uploadedVideo.secure_url,
-        thumbnail: uploadedImage,
+      const {
         title,
         description,
-        format: uploadedVideo.format,
-        // tags,
-        durationInSeconds: uploadedVideo.duration,
-        durationInHMS: durationInHMS,
-        author: userIdFromDB._id,
+        ingredientsList,
+        mealType,
+        recipe,
+        tags,
+        category,
+      } = req.body
+
+      let userIdFromDB = await User.findOne({ authId: req.user.id }).exec()
+      videoToDB.author = userIdFromDB._id
+
+      if (title) {
+        videoToDB.title = title
+      }
+
+      if (description) {
+        videoToDB.description = description
+      }
+      if (recipe) {
+        videoToDB.recipe = recipe
+      }
+      if (mealType) {
+        videoToDB.mealType = mealType
+      }
+      if (ingredientsList) {
+        videoToDB.ingredientsList = ingredientsList
+      }
+
+      if (tags) {
+        videoToDB.tags = tags
+      }
+      if (category) {
+        videoToDB.category = category
       }
 
       await Video.create(videoToDB)
@@ -316,7 +343,6 @@ router.post(
       res.redirect('/profile')
     } catch (error) {
       console.error(error)
-      res.status(500).json({ error: 'Failed to upload video' })
     }
   }
 )

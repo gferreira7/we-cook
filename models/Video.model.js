@@ -32,6 +32,7 @@ const videoSchema = new Schema(
       default: 0,
     },
     recipe: [String],
+    //ingreditents + recipe, time to cook
     url: {
       type: String,
       // required: true,

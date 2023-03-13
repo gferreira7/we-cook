@@ -280,6 +280,17 @@ a{
   background-position: 96%;
   color: #fff;
 }
+
+.ingredients-input{
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.added-ingredient{
+  opacity: 0.6;
+  margin-left: 5vw;
+}
 .user-settings {
   display: flex;
   align-items: center;
