@@ -17,10 +17,12 @@ const {
 
 const { toHoursAndMinutes } = require('../controllers/helpers')
 
+const mongoose = require('mongoose') // <== has to be added
+
 // import models here
 const Video = require('../models/Video.model')
-const mongoose = require('mongoose') // <== has to be added
 const User = require('../models/User.model')
+const Recipe = require('../models/Recipe.model')
 
 router.get('/profile', secured, async (req, res, next) => {
   let userFromDB = await User.findOne({ authId: req.user.id }).exec()
@@ -272,6 +274,7 @@ router.post(
   async (req, res) => {
     try {
       let videoToDB = {}
+      let recipeToDB = {}
 
       let video
       let image
@@ -284,7 +287,7 @@ router.post(
         let durationInHMS = toHoursAndMinutes(
           Math.floor(uploadedVideo.duration)
         )
-      
+
         videoToDB.cloudId = uploadedVideo.public_id
         videoToDB.url = uploadedVideo.secure_url
         videoToDB.format = uploadedVideo.format
@@ -298,44 +301,46 @@ router.post(
         videoToDB.thumbnail = uploadedImage
       }
 
-      const { title, description, mealType, recipe, category } =
-        req.body
-      const {dataToPost} = req.body
 
-      // const { ingredientsArray, tagsArray } = dataToPost
-      
-      console.log(title, description, mealType, recipe, category)
-      console.log('data from axios in the backend: ', dataToPost)
-      
-      
+      const { title, description, mealType, steps, category, cookTime, ingredientsList, tagsList } = req.body
+
       let userIdFromDB = await User.findOne({ authId: req.user.id }).exec()
       videoToDB.author = userIdFromDB._id
+      recipeToDB.author = userIdFromDB._id
 
       if (title) {
         videoToDB.title = title
       }
-
       if (description) {
         videoToDB.description = description
-      }
-      if (recipe) {
-        videoToDB.recipe = recipe
       }
       if (mealType) {
         videoToDB.mealType = mealType
       }
-      if (ingredientsArray) {
-        videoToDB.ingredientsArray = ingredientsArray
+      if (cookTime) {
+        videoToDB.cookTime = cookTime
       }
-
-      if (tagsArray) {
-        videoToDB.tagsArray = tagsArray
+      if (tagsList) {
+        videoToDB.tagsList = JSON.parse(tagsList)
       }
       if (category) {
         videoToDB.category = category
       }
 
-      await Video.create(videoToDB)
+      //Recipe Info 
+      if (steps) {
+        recipeToDB.steps = steps
+      }
+      if (ingredientsList) {
+        recipeToDB.ingredients = JSON.parse(ingredientsList)
+      }
+      // save recipe ID to video Document
+      const recipeId = await Recipe.create(recipeToDB)
+      
+      videoToDB.recipe = recipeId._id
+      const createdVideo = await Video.create(videoToDB)
+
+      Recipe.findByIdAndUpdate(recipeId, {video: createdVideo._id})
 
       res.redirect('/profile')
     } catch (error) {
@@ -343,6 +348,7 @@ router.post(
     }
   }
 )
+
 
 router.get('/history', async (req, res, next) => {
   res.render('test', {
