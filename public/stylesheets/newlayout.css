@@ -763,6 +763,9 @@ video {
 .like.red {
   background-color: #ea5f5f;
 }
+.like.green {
+  background-color: #27a849;
+}
 .like svg {
   width: 18px;
   flex-shrink: 0;
@@ -1189,6 +1192,52 @@ button.vjs-play-control.vjs-control.vjs-button {
   color: #fff;
 }
  */
+ /*dropdown navbar */
+ .dropdown-content {
+  display: none;
+  position: absolute;
+  min-width: 8vw;
+  z-index: 100;
+  padding: 1rem;
+  outline: 0;
+  border: none;
+  border-radius: 0;
+  background-color: var(--button-bg);
+  border-radius: 8px;
+  font-family: var(--body-font);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 0 40px 0 16px;
+  box-shadow: 0 0 0 2px rgba(134, 140, 160, 0.02);
+  color:whitesmoke;
+
+}
+
+.dropdown-content a {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+ cursor: pointer;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  height: 2rem;
+  width: 100%;
+}
+.dropdown-content img {
+  margin-right: 5px;
+}
+
+.dropdown-content a:hover {
+  color:whitesmoke;
+  background-color: #3b3947;
+  height: 2rem;
+  width: 100%;
+
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
 
 .select {
   position: relative;

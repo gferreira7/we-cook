@@ -1,9 +1,10 @@
 
 {{#with userProfile}}
 <div class="main-blogs">
-                    <div class="main-blog anim"  style="--delay: .1s;background-image: url({{{bannerImage}}})">
-                        <div class="main-blog__title">{{description}}</div>
-                        <div class="main-blog__author">
+                    <div class="main-blog anim"  style="--delay: .1s;background-image: url({{{bannerImage}}}) ; min-height:50vh; ">
+                         <div class="main-blog__title"> <br> <br> <br><br> <br> <br><br> <br> <br><br> <br> </div>
+                        
+                        <div class="main-blog__author" >
                             <div class="author-img__wrapper">
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
                                     stroke-linecap="round" stroke-linejoin="round" class="feather feather-check">
@@ -12,12 +13,20 @@
                                 <img class="author-img"
                                     src="{{profilePic}}" />
                             </div>
-                            <div class="author-detail">
+                            <div class="author-detail" >
                                 <div class="author-name">{{channelName}} | {{email}}</div>
                                 <div class="author-info">{{subscribers}} subscribers <span class="seperate"></span>{{channelViews}}</div>
+                                <div class="author-info" style="max-width:35rem">{{description}}</div>
                             </div>
                         </div>
-                        <div class="main-blog__time">Instagram | Facebook | Youtube | Twitter</div>
+                         <div class="main-blog__time"> 
+                            <img width="15%" href="{{socialLinks.instagram}}" src="../../images/png/instagram_c.png">
+                            <img width="15%" href="{{socialLinks.facebook}}" src="../../images/png/facebook_c.png"> 
+                            <img width="15%" href="{{socialLinks.youtube}}" src="../../images/png/youtube_c.png"> 
+                            <img width="15%" href="{{socialLinks.twitter}}" src="../../images/png/twitter_c.png"> 
+                            <img width="15%" href="{{socialLinks.discord}}" src="../../images/png/discord_c.png"> 
+                        <!--  Instagram | Facebook | Youtube | Twitter--> 
+                          </div>
                     </div>
                    
                 </div> <!--Blogs /Posts-->
