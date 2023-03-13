@@ -31,8 +31,10 @@ const videoSchema = new Schema(
       type: Number,
       default: 0,
     },
-    recipe: [String],
-    //ingreditents + recipe, time to cook
+    recipe: {
+      type: Schema.Types.ObjectId,
+      ref: 'Recipe',
+    },
     url: {
       type: String,
       // required: true,

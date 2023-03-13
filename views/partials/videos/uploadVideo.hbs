@@ -12,9 +12,9 @@
       </div>
 
        <span >Cooking time</span>
-      <div  class='video-input'> 
-        <textarea name='cookTime' ></textarea>
-      </div>
+        <div class='video-input'> 
+          <textarea name='cookTime'></textarea>
+        </div>
       
       <span>Meal Type</span>
       <div class='video-input'>
@@ -61,12 +61,12 @@
       
       <span >Recipe</span>
       <div class='video-input'> 
-        <textarea name='recipe'></textarea>
+        <textarea name='steps'></textarea>
       </div>
       
       <span >Category</span>
       <div class="select">
-        <select>
+        <select name="category">
           <option>Healthy</option>
           <option>Cheat Meal</option>
         </select>
@@ -119,58 +119,21 @@
     //Global Vars
     const ingredientsList = []
     const tagsList = []
-    const dataToPost = {
-      tagsArray: [],
-      ingredientsArray: []
-    }
     
-    
-    
+  
     //Open and close Upload Form 
     let uploadModal = document.querySelector("a[uploadModal]")
-    let form = document.getElementById("upload-form")
-    form.style.transitionDelay =".1s";
+    let form = document.getElementById("upload-video")
+    let formContainer = document.getElementById("upload-form")
+    formContainer.style.transitionDelay =".1s";
     
     
     uploadModal.onclick = ((event) => {
-      if (form.style.display == "none") {
-        form.style.display = "flex";
+      if (formContainer.style.display == "none") {
+        formContainer.style.display = "flex";
         const uploadBtn = document.querySelector('button[uploadBtn]')
         
-        //uploading tags and ingredients to Backend
-        uploadBtn.onclick = (e) => {
-
-          
-          if(tagsList.length !==0){
-            dataToPost.tagsArray = tagsList
-          }
-          if(ingredientsList.length !==0){
-            dataToPost.ingredientsArray = ingredientsList
-          }
-
-          if(dataToPost){
-            console.log("this will be sent to db", dataToPost)
-          axios.post(`/upload`, {dataToPost}, {
-                headers: {
-                'Content-Type': 'application/json'
-                }          
-            })
-            .then((response) => {
-               console.log('RES:',response);
-            })
-            .catch( (error) =>{
-                console.log('ERROR',error);
-            });
-          } 
-          
-
-     }
-      } else {
-        form.style.display = "none";
-      }
-    })
-
-    //INGREDIENTS INPUT
+        //INGREDIENTS INPUT
 
     //Adding new ingredients to Recipe 
     const addIngredientButton = document.querySelector('button[add-ingredient]')
@@ -280,12 +243,36 @@
     }
   });
 
+        //uploading tags and ingredients to Backend
+        uploadBtn.onclick = (e) => {
 
+          e.preventDefault()
+          console.log(form)
+          let formData = new FormData(form)
 
-     
+          formData.append('ingredientsList', JSON.stringify(ingredientsList));
+          formData.append('tagsList', JSON.stringify(tagsList));
+          console.log("Form Sent to DB", formData)
+          axios.post(`/upload`, formData, {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }          
+            })
+            .then((response) => {
+               console.log('RES:',response);
+            })
+            .catch( (error) =>{
+                console.log('ERROR',error);
+            });
+          } 
+          
+
+     } else {
+        formContainer.style.display = "none";
+      }
+    })
 
     
-
 });
 
 </script>
