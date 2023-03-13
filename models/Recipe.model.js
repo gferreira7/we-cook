@@ -26,7 +26,6 @@ const recipeSchema = new Schema(
     steps: String,
     ingredients: {
       type: [ingredientSchema],
-      required: true,
     },
     author: {
       id: { type: Schema.Types.ObjectId, ref: 'User' },
