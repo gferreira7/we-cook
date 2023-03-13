@@ -1,18 +1,28 @@
 ## TODO List
 
 
-- Fix layouts for every page
+# Backend
+✅CRUD => Edit Page => Delete Video
+- Recipe Model?
+- CRUD REVIEWS
+- Add Reviews
+- CRUD RECIPE - 
+
+# Search
+- Search results by tag
+
+# CSS - Fix layouts for every page
     -   manage videos
         - highlight the selected one
+        - even when coming from the watch page
     -   account settings
-    -   watch video = edit button should send id to manage videos page to become highlighted
-    - Loader = upload and delete take a long time
-✅CRUD => Edit Page => Delete Video
-- CRUD RECIPE 
-- CRUD REVIEWS
+    -   watch video
+    - Loader = upload and delete take a long time - need a spinner
+
+# profile page
 ✅Edit user Settings 
+✅Manage Videos page 
 - Subscribers
-- Add Reviews
-- Recipe Model?
-- Search results by tag
 - delete unused videos/photos.
+- resize banner photo
+- scroll to top of the form on upload

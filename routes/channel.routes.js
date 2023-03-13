@@ -276,41 +276,38 @@ router.post(
       let video
       let image
 
-      console.log(req.files.video)
+      if (req.files.video !== undefined) {
+        video = req.files.video[0]
+        const buffer = fs.readFileSync(video.path.toString())
+        const uploadedVideo = await uploadVideo(buffer)
+        fs.unlinkSync(video.path.toString())
+        let durationInHMS = toHoursAndMinutes(
+          Math.floor(uploadedVideo.duration)
+        )
       
-        if (req.files.video !== undefined) {
-          video = req.files.video[0]
-          const buffer = fs.readFileSync(video.path.toString())
-          const uploadedVideo = await uploadVideo(buffer)
-          fs.unlinkSync(video.path.toString())
-          let durationInHMS = toHoursAndMinutes(
-            Math.floor(uploadedVideo.duration)
-          )
+        videoToDB.cloudId = uploadedVideo.public_id
+        videoToDB.url = uploadedVideo.secure_url
+        videoToDB.format = uploadedVideo.format
+        videoToDB.durationInSeconds = uploadedVideo.duration
+        videoToDB.durationInHMS = durationInHMS
+      }
+      if (req.files.image !== undefined) {
+        image = req.files.image[0]
+        const uploadedImage = await uploadImg(image.path)
+        fs.unlinkSync(image.path.toString())
+        videoToDB.thumbnail = uploadedImage
+      }
 
-          videoToDB.cloudId = uploadedVideo.public_id
-          videoToDB.url = uploadedVideo.secure_url
-          videoToDB.format = uploadedVideo.format
-          videoToDB.durationInSeconds = uploadedVideo.duration
-          videoToDB.durationInHMS = durationInHMS
-        }
-        if (req.files.image !== undefined) {
-          image = req.files.image[0]
-          const uploadedImage = await uploadImg(image.path)
-          fs.unlinkSync(image.path.toString())
-          videoToDB.thumbnail = uploadedImage
-        }
+      const { title, description, mealType, recipe, category } =
+        req.body
+      const {dataToPost} = req.body
+
+      // const { ingredientsArray, tagsArray } = dataToPost
       
-
-      const {
-        title,
-        description,
-        ingredientsList,
-        mealType,
-        recipe,
-        tags,
-        category,
-      } = req.body
-
+      console.log(title, description, mealType, recipe, category)
+      console.log('data from axios in the backend: ', dataToPost)
+      
+      
       let userIdFromDB = await User.findOne({ authId: req.user.id }).exec()
       videoToDB.author = userIdFromDB._id
 
@@ -327,12 +324,12 @@ router.post(
       if (mealType) {
         videoToDB.mealType = mealType
       }
-      if (ingredientsList) {
-        videoToDB.ingredientsList = ingredientsList
+      if (ingredientsArray) {
+        videoToDB.ingredientsArray = ingredientsArray
       }
 
-      if (tags) {
-        videoToDB.tags = tags
+      if (tagsArray) {
+        videoToDB.tagsArray = tagsArray
       }
       if (category) {
         videoToDB.category = category
