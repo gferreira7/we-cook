@@ -8,40 +8,38 @@ const videoSchema = new Schema(
       required: true,
       trim: true,
     },
-    reviews: [
-      {
-        id: { type: Schema.Types.ObjectId, ref: 'Review' },
-        type: String,
-      },
-    ],
     description: {
       type: String,
       required: false,
     },
+    reviews: [
+      {
+        id: { type: Schema.Types.ObjectId, ref: 'Review' },
+      },
+    ],
     tags: [String],
     views: {
       type: Number,
       default: 0,
     },
-    likes: {
-      type: Number,
-      default: 0,
+    likes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+    }],
+    dislikes: [{
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    }],
+    recipe: {
+      type: Schema.Types.ObjectId,
+      ref: 'Recipe',
     },
-    dislikes: {
-      type: Number,
-      default: 0,
-    },
-    recipe: [String],
-    //ingreditents + recipe, time to cook
     url: {
       type: String,
-      // required: true,
       trim: true,
     },
     thumbnail: {
-      //image url to store in cloudinary
       type: String,
-      // required: true,
       trim: true,
     },
     author: {
@@ -58,11 +56,9 @@ const videoSchema = new Schema(
     },
     category:{
       type: String,
-      // enum: ['Healthy', 'Cheat Day!']
     }
   },
   {
-    // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
   }
 )

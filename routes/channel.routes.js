@@ -17,28 +17,32 @@ const {
 
 const { toHoursAndMinutes } = require('../controllers/helpers')
 
+const mongoose = require('mongoose') // <== has to be added
+
 // import models here
 const Video = require('../models/Video.model')
-const mongoose = require('mongoose') // <== has to be added
 const User = require('../models/User.model')
+const Recipe = require('../models/Recipe.model')
 
 router.get('/profile', secured, async (req, res, next) => {
   let userFromDB = await User.findOne({ authId: req.user.id }).exec()
-  Video.find({ author: userFromDB._id })
-    .populate('author')
-    .then((videos) => {
-      res.render('profile/currentUser-profile', {
-        title: 'Profile',
-        videos,
-        userProfile: userFromDB,
-      })
-    })
-    .catch((error) => {
-      console.log('Error while getting the videos from the DB: ', error)
+  const allVideos = await Video.find().populate('author').populate('recipe')
 
-      // Call the error-middleware to display the error page to the user
-      next(error)
-    })
+  // My Uploads
+  const uploadedVideos = allVideos.filter(
+    (video) => video.author.authId === userFromDB.authId
+  )
+  // My liked Videos
+  const likedVideos = allVideos.filter((video) =>
+    video.likes.includes(userFromDB._id)
+  )
+
+  res.render('profile/currentUser-profile', {
+    title: 'Profile',
+    uploadedVideos,
+    likedVideos,
+    userProfile: userFromDB,
+  })
 })
 
 router.get('/profile/:idFromDB', secured, async (req, res, next) => {
@@ -233,7 +237,7 @@ router.post('/profile/:profileId/delete', secured, async (req, res, next) => {
   }
 })
 
-router.get('/profile/:idFromDB/all-videos', async (req, res, next) => {
+router.get('/profile/:idFromDB/uploadedVideos', async (req, res, next) => {
   const { idFromDB } = req.params
 
   let isChannelOwner
@@ -263,6 +267,33 @@ router.get('/profile/:idFromDB/all-videos', async (req, res, next) => {
     })
 })
 
+router.get('/profile/:idFromDB/likedVideos', async (req, res, next) => {
+  const { idFromDB } = req.params
+
+  let isChannelOwner
+  let userFromDB = await User.findById(idFromDB)
+
+  if (userFromDB.authId === req.user.id) {
+    isChannelOwner = true
+  } else {
+    isChannelOwner = false
+  }
+
+  const allVideos = await Video.find().populate('author')
+  
+  // liked videos
+  const videos = allVideos.filter((video) =>
+    video.likes.includes(userFromDB._id)
+  )
+
+  res.render('profile/list-channel-videos', {
+    title: 'Profile',
+    videos,
+    isChannelOwner,
+    userProfile: userFromDB,
+  })
+})
+
 router.post(
   '/upload',
   upload.fields([
@@ -272,6 +303,7 @@ router.post(
   async (req, res) => {
     try {
       let videoToDB = {}
+      let recipeToDB = {}
 
       let video
       let image
@@ -284,7 +316,7 @@ router.post(
         let durationInHMS = toHoursAndMinutes(
           Math.floor(uploadedVideo.duration)
         )
-      
+
         videoToDB.cloudId = uploadedVideo.public_id
         videoToDB.url = uploadedVideo.secure_url
         videoToDB.format = uploadedVideo.format
@@ -298,46 +330,58 @@ router.post(
         videoToDB.thumbnail = uploadedImage
       }
 
-      const { title, description, mealType, recipe, category } =
-        req.body
-      const {dataToPost} = req.body
+      const {
+        title,
+        description,
+        mealType,
+        steps,
+        category,
+        cookTime,
+        ingredientsList,
+        tagsList,
+      } = req.body
 
-      // const { ingredientsArray, tagsArray } = dataToPost
-      
-      console.log(title, description, mealType, recipe, category)
-      console.log('data from axios in the backend: ', dataToPost)
-      
-      
       let userIdFromDB = await User.findOne({ authId: req.user.id }).exec()
       videoToDB.author = userIdFromDB._id
+      recipeToDB.author = userIdFromDB._id
 
       if (title) {
         videoToDB.title = title
       }
-
       if (description) {
         videoToDB.description = description
       }
-      if (recipe) {
-        videoToDB.recipe = recipe
-      }
       if (mealType) {
-        videoToDB.mealType = mealType
+        recipeToDB.mealType = mealType
       }
-      if (ingredientsArray) {
-        videoToDB.ingredientsArray = ingredientsArray
+      if (cookTime) {
+        recipeToDB.cookTime = parseInt(cookTime)
       }
-
-      if (tagsArray) {
-        videoToDB.tagsArray = tagsArray
+      if (tagsList) {
+        videoToDB.tagsList = JSON.parse(tagsList)
       }
       if (category) {
         videoToDB.category = category
       }
 
-      await Video.create(videoToDB)
+      //Recipe Info
+      if (steps) {
+        recipeToDB.steps = steps
+      }
+      if (ingredientsList) {
+        recipeToDB.ingredients = JSON.parse(ingredientsList)
+      }
+      // save recipe ID to video Document
+      const recipeId = await Recipe.create(recipeToDB)
 
-      res.redirect('/profile')
+      videoToDB.recipe = recipeId._id
+      const createdVideo = await Video.create(videoToDB)
+
+      const updatedRecipe = await Recipe.findByIdAndUpdate(recipeId, { video: createdVideo._id }, {new:true})
+
+      console.log(videoToDB, recipeToDB)
+      
+      res.status(200).json(createdVideo._id)
     } catch (error) {
       console.error(error)
     }

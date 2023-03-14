@@ -3,19 +3,19 @@
 
 # Backend
 ✅CRUD => Edit Page => Delete Video
-- Recipe Model?
+✅Recipe Model
 - CRUD REVIEWS
 - Add Reviews
-- CRUD RECIPE - 
+- CRUD RECIPE
 
 # Search
 - Search results by tag
 
 # CSS - Fix layouts for every page
-    -   manage videos
+    ✅manage videos
         - highlight the selected one
         - even when coming from the watch page
-    -   account settings
+    ✅account settings
     -   watch video
     - Loader = upload and delete take a long time - need a spinner
 
@@ -26,3 +26,6 @@
 - delete unused videos/photos.
 - resize banner photo
 - scroll to top of the form on upload
+
+# Video Page
+✅Likes/dislikes - Unique User Ids stored in Video Model

@@ -30,7 +30,6 @@ const userSchema = new Schema(
     },
     // id from Auth0
     authId: String,
-    // image url
     profilePic: {
       type: String,
       default: "/images/icons/account.png"
@@ -51,7 +50,6 @@ const userSchema = new Schema(
     }
   },
   {
-    // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
   }
 )

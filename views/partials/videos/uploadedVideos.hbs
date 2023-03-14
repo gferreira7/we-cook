@@ -1,0 +1,23 @@
+
+  <div class="videos">
+            {{#each uploadedVideos}}
+            <a href="/watch/{{_id}}" > 
+            <div class="video anim" style="--delay: .4s">  <!--one video start-->
+                <div class="video-time">{{durationInHMS}}</div>
+                <div class="video-wrapper">
+                <video muted="">
+                    <source
+                        height="300"
+                        src="{{url}}"
+                        type="video/mp4">         
+                    </video>
+                
+                </div>
+                    <div class="video-by">{{author.channelName}} </div>
+                    <div class="video-name">{{title}}</div>
+                    <div class="video-view">{{views}} views<span class="seperate video-seperate"></span>{{createdAt}}</div>
+                </div>
+                </a>
+            {{/each}}
+
+        </div>

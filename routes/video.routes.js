@@ -14,22 +14,19 @@ router.get('/watch/:videoId', secured, async (req, res, next) => {
 
   let userProfile = await User.findOne({ authId: req.user.id }).exec()
 
-  
-
   Video.findById(videoId)
     .populate('author')
     .then((video) => {
       const timeSinceUpload = timePassedSince(video.createdAt.getTime())
 
-      const isUploader = (req.user.id === video.author.authId)
+      const isUploader = req.user.id === video.author.authId
 
-
-      res.render('videos/single-video', {
+      res.render('single-video', {
         title: video.title,
         userProfile,
         video,
         timeSinceUpload,
-        isUploader
+        isUploader,
       })
     })
     .catch((err) => {
@@ -60,26 +57,73 @@ router.post('/search', secured, async (req, res, next) => {
     })
 })
 
-router.post('/video/:videoId/update', (req, res, next) => {
+router.post('/video/:videoId/update', async (req, res, next) => {
   const { videoId } = req.params
+  const { toUpdate } = req.body
 
-  const { views } = req.body
+  const currentUser = await User.findOne({ authId: req.user.id })
 
-  if (views) {
-    Video.findByIdAndUpdate(
+  const videoFromDB = await Video.findById(videoId)
+
+  const { likes, dislikes } = videoFromDB
+
+  if (toUpdate === 'views') {
+    const updatedVideo = await Video.findByIdAndUpdate(
       videoId,
       { $inc: { views: 1 } },
       { new: true }
-    ).then((updatedVideo) => {
-      res.status(200).json(`views: ${updatedVideo.views}`)
-    })
+    )
+    console.log(updatedVideo)
+    res.status(200).json(`views: ${updatedVideo.views}`)
   }
-})
 
+  if (toUpdate === 'like') {
+    let updatedVideo
+    //check if user already disliked
+    if (dislikes && dislikes.includes(currentUser._id)) {
+      updatedVideo = await Video.findByIdAndUpdate(
+        videoId,
+        {
+          $addToSet: { likes: currentUser._id },
+          $pull: { dislikes: currentUser._id },
+        },
+        { new: true }
+      )
+      console.log('Likes', updatedVideo.likes)
+    } else {
+      updatedVideo = await Video.findByIdAndUpdate(
+        videoId,
+        { $addToSet: { likes: currentUser._id } },
+        { new: true }
+      )
+      console.log('Likes', updatedVideo.dislikes)
+    }
+    res.status(200).json(updatedVideo)
+  }
 
-
-router.post('/video/:videoId/delete', secured, (req, res, next) => {
-  const { videoId } = req.params
+  if (toUpdate === 'dislike') {
+    let updatedVideo
+    //check if user liked
+    if (likes !== undefined && likes.includes(currentUser._id)) {
+      updatedVideo = await Video.findByIdAndUpdate(
+        videoId,
+        {
+          $addToSet: { dislikes: currentUser._id },
+          $pull: { likes: currentUser._id },
+        },
+        { new: true }
+      )
+      console.log('Dislikes', updatedVideo.dislikes)
+    } else {
+      updatedVideo = await Video.findByIdAndUpdate(
+        videoId,
+        { $addToSet: { dislikes: currentUser._id } },
+        { new: true }
+      )
+      console.log('Dislikes', updatedVideo.dislikes)
+    }
+    res.status(200).json(updatedVideo)
+  }
 })
 
 module.exports = router
