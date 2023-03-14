@@ -6,18 +6,15 @@ const reviewSchema = new Schema(
     author: 
     {
       id: { type: Schema.Types.ObjectId, ref: "User" },
-      type: String,
     },
     description: String,
     rating: Number,
     video: 
     {
       id: { type: Schema.Types.ObjectId, ref: "Video" },
-      type: String,
     },
   },
   {
-    // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
   }
 )

@@ -3,7 +3,7 @@
                     <div class="video-stream">
                         <video videoId="{{_id}}" class="video-js vjs-default-skin anim" width="640px" height="267px"
                             controls preload="none"
-                            poster=' {{thumbnail}}'
+                            poster='{{thumbnail}}'
                             data-setup='{ "aspectRatio":"940:620", "playbackRates": [1, 1.5, 2] }'>
                             <source
                                 src="{{url}}"
@@ -23,16 +23,16 @@
                                         </svg>
                                       
                                         <img class="author-img"
-                                            src="{{userProfile.profilePic}}" />
+                                            src="{{author.profilePic}}" />
                                     </div>
                                     <div class="video-p-detail">
-                                        <div class="video-p-name">{{userProfile.channelName}}</div>
-                                        <div class="video-p-sub">{{userProfile.subscribers}} subscribers</div>
+                                        <div class="video-p-name">{{author.channelName}}</div>
+                                        <div class="video-p-sub">{{author.subscribers}} subscribers</div>
                                          <div class="video-p-sub" >{{views}} Views</div>
                                     </div>
                                   
                                     <div class="button-wrapper">
-                                         <a href="/profile/{{id}}/manageVideos">
+                                         <a href="/profile/{{_id}}/manageVideos">
                                             <button class="like">
                                             <svg viewBox="0 0 24 24" fill="currentColor"
                                                 xmlns="http://www.w3.org/2000/svg">
@@ -50,7 +50,7 @@
                                             </svg>
                                             Share
                                         </button>
-                                        <button class="like red">
+                                        <button like-btn class="like red">
                                             <svg viewBox="0 0 24 24" fill="currentColor"
                                                 xmlns="http://www.w3.org/2000/svg">
                                                 <path fill-rule="evenodd" clip-rule="evenodd"
@@ -225,14 +225,15 @@ window.onload = () => {
         video.hasSentViewCount = false
     })
 
+    //after x seconds update view Count by 1
     video.addEventListener('timeupdate', () =>{ 
 
         let videoId = video.getAttribute('videoId')
 
         if(video.currentTime >=5 && !video.hasSentViewCount){
-            axios.post(`/video/${videoId}/update`, {views:1}, {
+            axios.post(`/video/${videoId}/update`, {toUpdate: 'views'}, {
                 headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/json'
                 }          
             })
             .then((response) => {
@@ -246,6 +247,19 @@ window.onload = () => {
         }
     
     })  
+
+
+    const likeButton = document.querySelector('button[like-btn]')
+    likeButton.onclick = () =>{
+        
+        let videoId = video.getAttribute('videoId')
+            axios.post(`/video/${videoId}/update`, {toUpdate: 'likes'}, {
+            headers: {
+                'Content-Type': 'application/json'
+            }          
+        })
+    }
+
   }
   
 </script>

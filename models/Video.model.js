@@ -11,7 +11,6 @@ const videoSchema = new Schema(
     reviews: [
       {
         id: { type: Schema.Types.ObjectId, ref: 'Review' },
-        type: String,
       },
     ],
     description: {
@@ -37,13 +36,10 @@ const videoSchema = new Schema(
     },
     url: {
       type: String,
-      // required: true,
       trim: true,
     },
     thumbnail: {
-      //image url to store in cloudinary
       type: String,
-      // required: true,
       trim: true,
     },
     author: {
@@ -60,11 +56,9 @@ const videoSchema = new Schema(
     },
     category:{
       type: String,
-      // enum: ['Healthy', 'Cheat Day!']
     }
   },
   {
-    // this second object adds extra properties: `createdAt` and `updatedAt`
     timestamps: true,
   }
 )

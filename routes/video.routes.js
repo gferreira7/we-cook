@@ -10,11 +10,12 @@ const User = require('../models/User.model.js')
 const { timePassedSince, toHoursAndMinutes } = require('../controllers/helpers')
 
 router.get('/watch/:videoId', secured, async (req, res, next) => {
+  
   let { videoId } = req.params
 
   let userProfile = await User.findOne({ authId: req.user.id }).exec()
 
-  
+
 
   Video.findById(videoId)
     .populate('author')
@@ -24,7 +25,7 @@ router.get('/watch/:videoId', secured, async (req, res, next) => {
       const isUploader = (req.user.id === video.author.authId)
 
 
-      res.render('videos/single-video', {
+      res.render('single-video', {
         title: video.title,
         userProfile,
         video,
@@ -60,26 +61,33 @@ router.post('/search', secured, async (req, res, next) => {
     })
 })
 
-router.post('/video/:videoId/update', (req, res, next) => {
+router.post('/video/:videoId/update', async (req, res, next) => {
   const { videoId } = req.params
+  const { toUpdate } = req.body
 
-  const { views } = req.body
-
-  if (views) {
-    Video.findByIdAndUpdate(
+  if (toUpdate === 'views') {
+    const updatedVideo = await Video.findByIdAndUpdate(
       videoId,
       { $inc: { views: 1 } },
       { new: true }
-    ).then((updatedVideo) => {
-      res.status(200).json(`views: ${updatedVideo.views}`)
-    })
+    )
+    console.log(updatedVideo)
+    res.status(200).json(`views: ${updatedVideo.views}`)
+    
+  }
+  if (toUpdate === 'likes') {
+    const updatedVideo = await Video.findByIdAndUpdate(
+      videoId,
+      { $inc: { likes: 1 } },
+      { new: true }
+    )
+    console.log(updatedVideo.views, updatedVideo.likes)
+
+    res.status(200).json(`likes: ${updatedVideo.likes}`)
+    
   }
 })
 
 
-
-router.post('/video/:videoId/delete', secured, (req, res, next) => {
-  const { videoId } = req.params
-})
 
 module.exports = router
