@@ -22,14 +22,14 @@ const videoSchema = new Schema(
       type: Number,
       default: 0,
     },
-    likes: {
-      type: Number,
-      default: 0,
-    },
-    dislikes: {
-      type: Number,
-      default: 0,
-    },
+    likes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+    }],
+    dislikes: [{
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    }],
     recipe: {
       type: Schema.Types.ObjectId,
       ref: 'Recipe',

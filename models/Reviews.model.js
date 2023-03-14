@@ -6,12 +6,14 @@ const reviewSchema = new Schema(
     author: 
     {
       id: { type: Schema.Types.ObjectId, ref: "User" },
+      required:true,
     },
-    description: String,
+    comment: String,
     rating: Number,
     video: 
     {
       id: { type: Schema.Types.ObjectId, ref: "Video" },
+      required:true,
     },
   },
   {
