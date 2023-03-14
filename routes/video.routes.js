@@ -16,11 +16,12 @@ router.get('/watch/:videoId', secured, async (req, res, next) => {
 
   Video.findById(videoId)
     .populate('author')
+    .populate('recipe')
     .then((video) => {
       const timeSinceUpload = timePassedSince(video.createdAt.getTime())
 
-      const isUploader = req.user.id === video.author.authId
-
+      const isUploader = req.user.id === video.author.authId      
+      console.log(video)
       res.render('single-video', {
         title: video.title,
         userProfile,

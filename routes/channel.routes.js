@@ -334,7 +334,7 @@ router.post(
         title,
         description,
         mealType,
-        steps,
+        stepsList,
         category,
         cookTime,
         ingredientsList,
@@ -365,8 +365,8 @@ router.post(
       }
 
       //Recipe Info
-      if (steps) {
-        recipeToDB.steps = steps
+      if (stepsList) {
+        recipeToDB.steps = JSON.parse(stepsList)
       }
       if (ingredientsList) {
         recipeToDB.ingredients = JSON.parse(ingredientsList)
