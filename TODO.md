@@ -12,10 +12,10 @@
 - Search results by tag
 
 # CSS - Fix layouts for every page
-    ✅   manage videos
+    ✅manage videos
         - highlight the selected one
         - even when coming from the watch page
-    ✅   account settings
+    ✅account settings
     -   watch video
     - Loader = upload and delete take a long time - need a spinner
 
@@ -28,4 +28,4 @@
 - scroll to top of the form on upload
 
 # Video Page
-- User need to remember liked Videos
+✅Likes/dislikes - Unique User Ids stored in Video Model

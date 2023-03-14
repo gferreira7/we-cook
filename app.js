@@ -19,6 +19,7 @@ const partialsDir = path.join(__dirname, 'views', 'partials');
 hbs.registerPartials(partialsDir);
 hbs.registerPartials(path.join(partialsDir, 'videos'));
 hbs.registerPartials(path.join(partialsDir, 'navbar'));
+hbs.registerPartials(path.join(partialsDir, 'channel'));
 
 const app = express();
 

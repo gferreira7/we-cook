@@ -39,15 +39,23 @@
 
 
   {{> videos/uploadVideo}}
-  <div class="main-header anim" style="--delay: 0s">
+  <div class="main-header anim" style="--delay: 0.3s">
     My Videos
   </div>
-  {{> videos/profileVideos}}
-  <a href="/profile/{{userProfile._id}}/all-videos">
-    <button class="btn btn-primary btn" type="button">See All</button> </a>
+  {{> videos/uploadedVideos}}
+  <a href="/profile/{{userProfile._id}}/uploadedVideos">
+    <button class="btn btn-primary btn" type="button">See All</button> 
+  </a>
+  <div class="main-header anim" style="--delay: 0.5s">
+    Liked Videos
+  </div>
+  {{> videos/likedVideos}}
+  <a href="/profile/{{userProfile._id}}/likedVideos">
+    <button class="btn btn-primary btn" type="button">See All</button> 
+  </a>
 
   <script>
-
+  
     {{!-- const form = document.getElementById('upload-video')
     const closedModal = document.getElementById('close-upload-modal')
     form.onsubmit = (e) => {

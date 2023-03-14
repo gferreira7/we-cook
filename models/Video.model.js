@@ -8,15 +8,15 @@ const videoSchema = new Schema(
       required: true,
       trim: true,
     },
+    description: {
+      type: String,
+      required: false,
+    },
     reviews: [
       {
         id: { type: Schema.Types.ObjectId, ref: 'Review' },
       },
     ],
-    description: {
-      type: String,
-      required: false,
-    },
     tags: [String],
     views: {
       type: Number,

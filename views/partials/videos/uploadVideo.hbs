@@ -259,7 +259,8 @@
                 }          
             })
             .then((response) => {
-               console.log('RES:',response);
+               console.log('RES:',response.data);
+               //window.location.href = `/watch/${response.data}`;
             })
             .catch( (error) =>{
                 console.log('ERROR',error);

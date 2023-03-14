@@ -26,21 +26,23 @@ const Recipe = require('../models/Recipe.model')
 
 router.get('/profile', secured, async (req, res, next) => {
   let userFromDB = await User.findOne({ authId: req.user.id }).exec()
-  Video.find({ author: userFromDB._id })
-    .populate('author')
-    .then((videos) => {
-      res.render('profile/currentUser-profile', {
-        title: 'Profile',
-        videos,
-        userProfile: userFromDB,
-      })
-    })
-    .catch((error) => {
-      console.log('Error while getting the videos from the DB: ', error)
+  const allVideos = await Video.find().populate('author').populate('recipe')
 
-      // Call the error-middleware to display the error page to the user
-      next(error)
-    })
+  // My Uploads
+  const uploadedVideos = allVideos.filter(
+    (video) => video.author.authId === userFromDB.authId
+  )
+  // My liked Videos
+  const likedVideos = allVideos.filter((video) =>
+    video.likes.includes(userFromDB._id)
+  )
+
+  res.render('profile/currentUser-profile', {
+    title: 'Profile',
+    uploadedVideos,
+    likedVideos,
+    userProfile: userFromDB,
+  })
 })
 
 router.get('/profile/:idFromDB', secured, async (req, res, next) => {
@@ -235,7 +237,7 @@ router.post('/profile/:profileId/delete', secured, async (req, res, next) => {
   }
 })
 
-router.get('/profile/:idFromDB/all-videos', async (req, res, next) => {
+router.get('/profile/:idFromDB/uploadedVideos', async (req, res, next) => {
   const { idFromDB } = req.params
 
   let isChannelOwner
@@ -263,6 +265,33 @@ router.get('/profile/:idFromDB/all-videos', async (req, res, next) => {
       // Call the error-middleware to display the error page to the user
       next(error)
     })
+})
+
+router.get('/profile/:idFromDB/likedVideos', async (req, res, next) => {
+  const { idFromDB } = req.params
+
+  let isChannelOwner
+  let userFromDB = await User.findById(idFromDB)
+
+  if (userFromDB.authId === req.user.id) {
+    isChannelOwner = true
+  } else {
+    isChannelOwner = false
+  }
+
+  const allVideos = await Video.find().populate('author')
+  
+  // liked videos
+  const videos = allVideos.filter((video) =>
+    video.likes.includes(userFromDB._id)
+  )
+
+  res.render('profile/list-channel-videos', {
+    title: 'Profile',
+    videos,
+    isChannelOwner,
+    userProfile: userFromDB,
+  })
 })
 
 router.post(
@@ -301,8 +330,16 @@ router.post(
         videoToDB.thumbnail = uploadedImage
       }
 
-
-      const { title, description, mealType, steps, category, cookTime, ingredientsList, tagsList } = req.body
+      const {
+        title,
+        description,
+        mealType,
+        steps,
+        category,
+        cookTime,
+        ingredientsList,
+        tagsList,
+      } = req.body
 
       let userIdFromDB = await User.findOne({ authId: req.user.id }).exec()
       videoToDB.author = userIdFromDB._id
@@ -315,10 +352,10 @@ router.post(
         videoToDB.description = description
       }
       if (mealType) {
-        videoToDB.mealType = mealType
+        recipeToDB.mealType = mealType
       }
       if (cookTime) {
-        videoToDB.cookTime = cookTime
+        recipeToDB.cookTime = parseInt(cookTime)
       }
       if (tagsList) {
         videoToDB.tagsList = JSON.parse(tagsList)
@@ -327,7 +364,7 @@ router.post(
         videoToDB.category = category
       }
 
-      //Recipe Info 
+      //Recipe Info
       if (steps) {
         recipeToDB.steps = steps
       }
@@ -336,19 +373,20 @@ router.post(
       }
       // save recipe ID to video Document
       const recipeId = await Recipe.create(recipeToDB)
-      
+
       videoToDB.recipe = recipeId._id
       const createdVideo = await Video.create(videoToDB)
 
-      Recipe.findByIdAndUpdate(recipeId, {video: createdVideo._id})
+      const updatedRecipe = await Recipe.findByIdAndUpdate(recipeId, { video: createdVideo._id }, {new:true})
 
-      res.redirect('/profile')
+      console.log(videoToDB, recipeToDB)
+      
+      res.status(200).json(createdVideo._id)
     } catch (error) {
       console.error(error)
     }
   }
 )
-
 
 router.get('/history', async (req, res, next) => {
   res.render('test', {

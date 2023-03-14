@@ -24,6 +24,8 @@ const recipeSchema = new Schema(
     },
     // should convert to steps
     steps: String,
+    mealType: String,
+    cookTime: Number,
     ingredients: {
       type: [ingredientSchema],
     },
