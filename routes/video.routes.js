@@ -60,11 +60,8 @@ router.post('/search', secured, async (req, res, next) => {
 router.post('/video/:videoId/update', async (req, res, next) => {
   const { videoId } = req.params
   const { toUpdate } = req.body
-
   const currentUser = await User.findOne({ authId: req.user.id })
-
   const videoFromDB = await Video.findById(videoId)
-
   const { likes, dislikes } = videoFromDB
 
   if (toUpdate === 'views') {
@@ -73,7 +70,6 @@ router.post('/video/:videoId/update', async (req, res, next) => {
       { $inc: { views: 1 } },
       { new: true }
     )
-    console.log(updatedVideo)
     res.status(200).json(`views: ${updatedVideo.views}`)
   }
 
@@ -89,14 +85,12 @@ router.post('/video/:videoId/update', async (req, res, next) => {
         },
         { new: true }
       )
-      console.log('Likes', updatedVideo.likes)
     } else {
       updatedVideo = await Video.findByIdAndUpdate(
         videoId,
         { $addToSet: { likes: currentUser._id } },
         { new: true }
       )
-      console.log('Likes', updatedVideo.dislikes)
     }
     res.status(200).json(updatedVideo)
   }
