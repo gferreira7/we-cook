@@ -455,8 +455,12 @@ a{
   font-size: 12px;
   border-radius: 6px;
   position: absolute;
-  right: 20px;
+  right: -10px;
   bottom: 20px;
+}
+.main-blog__time img{
+  max-width:15%;
+  
 }
 
 .author-img {
@@ -1196,9 +1200,7 @@ button.vjs-play-control.vjs-control.vjs-button {
  .dropdown-content {
   display: none;
   position: absolute;
-  min-width: 8vw;
   z-index: 100;
-  padding: 1rem;
   outline: 0;
   border: none;
   border-radius: 0;
@@ -1206,38 +1208,42 @@ button.vjs-play-control.vjs-control.vjs-button {
   border-radius: 8px;
   font-family: var(--body-font);
   font-size: 14px;
-  font-weight: 500;
-  padding: 0 40px 0 16px;
+  font-weight: 400;
+  padding: 5px 10px 5px 10px;
   box-shadow: 0 0 0 2px rgba(134, 140, 160, 0.02);
   color:whitesmoke;
+  min-width: 10rem;
 
 }
 
 .dropdown-content a {
+  display: inline;
   margin-top: 0.5rem;
   padding: 0.5rem;
- cursor: pointer;
+  cursor: pointer;
   text-decoration: none;
   display: block;
   text-align: left;
   height: 2rem;
-  width: 100%;
+
+
 }
 .dropdown-content img {
   margin-right: 5px;
+  width: 20%;
 }
+
 
 .dropdown-content a:hover {
   color:whitesmoke;
-  background-color: #3b3947;
-  height: 2rem;
-  width: 100%;
+  background-color: #3b3947;  
 
 }
 
 .dropdown:hover .dropdown-content {
   display: block;
 }
+
 
 .select {
   position: relative;
