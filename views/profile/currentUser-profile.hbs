@@ -25,12 +25,14 @@
         Account Settings
       </a>
     
-          <a class="sidebar-link" href="#" id="messages" style="display:inline-block; font-size: 1.5rem;  cursor: pointer;"
-        uploadModal>
+          <div
+            uploadModal 
+            class="sidebar-link" id="messages" 
+            style="display:inline-block; font-size: 1.5rem;  cursor: pointer;">
       
       <img src="../images/png/down.png"> 
         Upload Video
-      </a>
+      </button>
     </div>
   </div>
 
@@ -54,14 +56,3 @@
     <button class="btn btn-primary btn" type="button">See All</button> 
   </a>
 
-  <script>
-  
-    {{!-- const form = document.getElementById('upload-video')
-    const closedModal = document.getElementById('close-upload-modal')
-    form.onsubmit = (e) => {
-      e.preventDefault()
-      closedModal.onclick = (e) => {
-        form.submit()
-      }
-    } --}}
-  </script>

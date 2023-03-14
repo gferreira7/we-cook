@@ -1,4 +1,4 @@
-<div id="upload-form" style="display:none ;--delay: .1s;" >
+<div id="upload-form" style="display:none;" >
     <form id='upload-video' action='/upload' method='post' enctype='multipart/form-data'>
     
       <label>Title </label> 
@@ -99,10 +99,11 @@
      <input class="file-input" name='image' type='file' id='formFile'>
 </div>
 <center> 
-       <div class='form-text' style="color:gray">
-        Please make sure you're uploading original content
-      </div>
-      </center>
+  <div class='form-text' style="color:gray">
+    Please make sure you're uploading original content
+  </div>
+</center>
+    
     <div class='modal-footer' style="display:flex">
      
       <button uploadBtn class='btn btn-success'
@@ -122,7 +123,7 @@
     
   
     //Open and close Upload Form 
-    let uploadModal = document.querySelector("a[uploadModal]")
+    let uploadModal = document.querySelector("div[uploadModal]")
     let form = document.getElementById("upload-video")
     let formContainer = document.getElementById("upload-form")
     formContainer.style.transitionDelay =".1s";
@@ -130,7 +131,10 @@
     
     uploadModal.onclick = ((event) => {
       if (formContainer.style.display == "none") {
-        formContainer.style.display = "flex";
+        formContainer.style.display = "flex"
+        formContainer.classList.add('anim')
+        formContainer.setAttribute("style", "--delay: 0.2s");
+        uploadModal.scrollIntoView()
         const uploadBtn = document.querySelector('button[uploadBtn]')
         
         //INGREDIENTS INPUT
