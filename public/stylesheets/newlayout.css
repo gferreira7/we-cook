@@ -245,7 +245,7 @@ a{
 
 .search-bar {
   height: 34px;
-  display: flex;
+  display: inline-block;
   width: 100%;
   max-width: 450px;
 }
@@ -1211,7 +1211,7 @@ button.vjs-play-control.vjs-control.vjs-button {
   font-family: var(--body-font);
   font-size: 14px;
   font-weight: 400;
-  padding: 5px 10px 5px 10px;
+  padding: 5px 10px 10px 10px;
   box-shadow: 0 0 0 2px rgba(134, 140, 160, 0.02);
   color:whitesmoke;
   min-width: 10rem;
@@ -1360,3 +1360,13 @@ button.vjs-play-control.vjs-control.vjs-button {
 
 
 
+/* filter navbar */
+.filters{
+display: none;
+z-index: 100;
+padding: 5px;
+}
+.filters div{
+  display: flex;
+ padding: 0rem 1rem;
+  }

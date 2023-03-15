@@ -36,14 +36,102 @@ router.get('/watch/:videoId', secured, async (req, res, next) => {
 })
 
 router.post('/search', secured, async (req, res, next) => {
-  let { search } = req.body
+
+  let { search, f_category, f_author, f_title, f_tags, f_all } = req.body
 
   let userProfile = await User.findOne({ authId: req.user.id }).exec()
 
-  Video.find({ title: { $regex: search, $options: 'i' } })
+  let searchParams = {};
+
+  const regex = new RegExp(search, "i");
+
+
+  if (f_category == "on") {
+    searchParams = { category: { $regex: regex } }
+  }
+
+  else if (f_title == "on") {
+    searchParams = { title: { $regex: regex } }
+
+  }
+  else if (f_tags == "on") {
+    searchParams = { tags: { $regex: regex } }
+
+  }
+  else {
+    searchParams = { title: { $regex: regex } }
+
+  }
+
+  if (f_all == "on") {
+    searchParams = {
+      $or: [
+        { title: { $regex: regex } },
+        { tags: { $in: [regex] } },
+        { category: { $regex: regex } }
+      ]
+    };
+  }
+  console.log(searchParams)
+
+  //falta ver como fazer pra o author pois está com a ref pra outra tabela 
+  /* EXEMPLO CHATGPT
+  const videoTitle = 'My Video Title';
+  const userName = 'John Doe';
+  
+  Video.find({ title: videoTitle })
+    .populate({
+      path: 'author',
+      match: { name: userName }
+    })
+    .exec((err, video) => {
+      if (err) {
+        console.log(err);
+      } else if (!video) {
+        console.log(`No video found with title: ${videoTitle}`);
+      } else {
+        console.log(video);
+      }
+    }); */
+
+  if (f_author == "on") {
+    let videosArray = [];
+    let usersFromDB = await User.find({channelName:{ $regex: regex } })
+    console.log(typeof usersFromDB);
+    console.log(usersFromDB);
+    
+  const matching = await usersFromDB.forEach((element) => {
+      console.log(typeof element);
+      console.log(element._id)
+      Video.find( { author : element._id})
+      .then((videos) => {
+        console.log("INSIDE FIND");
+        console.log(videos)
+        videosArray.push(videos)
+      })
+      .catch((err) => {
+        console.log(err)
+        next(err)
+      })
+   
+    });
+    console.log("POS FIND");
+
+  console.log(videosArray);
+    res.render('video-search', {
+      title: search,
+      userProfile,
+      videos: videosArray,
+      // show results page with count
+      count: videosArray.length,
+    })
+
+  }
+  else {
+    Video.find(searchParams)
     .populate('author')
     .then((videos) => {
-      res.render('videos/video-search', {
+      res.render('video-search', {
         title: search,
         userProfile,
         videos: videos,
@@ -55,6 +143,9 @@ router.post('/search', secured, async (req, res, next) => {
       console.log(err)
       next(err)
     })
+  }
+
+ 
 })
 
 router.post('/video/:videoId/update', async (req, res, next) => {
