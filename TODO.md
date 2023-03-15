@@ -26,6 +26,7 @@
 - delete unused videos/photos.
 - resize banner photo
 ✅scroll to top of the form on upload
+- caixinha atras das letras dentro da banner para se ver bem
 
 
 # upload
@@ -37,3 +38,4 @@
 - Add recipe View
 - convert createdAt date to "4 days ago" for example
 
+# Particles JS
