@@ -1,36 +1,48 @@
+<!--VIdeos here -->
 
+<div class='videos'>
 
-        <!--VIdeos here -->
-                   
-        <div class="videos">
-        
-            {{#each videos}}
-            <a href="/watch/{{_id}}" > 
-            <div class="video anim" style="--delay: .4s">  <!--one video start-->
-                <div class="video-time">{{durationInHMS}}</div>
-                <div class="video-wrapper">
-                <video muted="">
-                    <source
-                        height="300"
-                        src="{{url}}"
-                        type="video/mp4">         
-                    </video>
-                <div class="author-img__wrapper video-author">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
-                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-check">
-                        <path d="M20 6L9 17l-5-5" />
-                        </svg>
-                    <img class="author-img"
-                        src="{{author.profilePic}}" />
-                </div>
-                
-                </div>
-                    <div class="video-by">{{author.channelName}} </div>
-                    <div class="video-name">{{title}}</div>
-                    <div class="video-view">{{views}} views<span class="seperate video-seperate"></span>{{createdAt}}</div>
-                </div>
-                </a>
-            {{/each}}
+  {{#each videos}}
+    <a href='/watch/{{_id}}'>
+      <div class='video anim' style='--delay: .4s'>
+        <!--one video start-->
+        <div class='video-time'>{{durationInHMS}}</div>
+        <div videoWrapper class='video-wrapper'>
 
+          <video muted=''>
+            <source height='300' src='{{url}}' type='video/mp4' />
+          </video>
+          <div class='author-img__wrapper video-author'>
+            <svg
+              viewBox='0 0 24 24'
+              fill='none'
+              stroke='currentColor'
+              stroke-width='3'
+              stroke-linecap='round'
+              stroke-linejoin='round'
+              class='feather feather-check'
+            >
+              <path d='M20 6L9 17l-5-5'></path>
+            </svg>
+            <img class='author-img' src='{{author.profilePic}}' />
+          </div>
         </div>
+        <div channelName class='video-by'>
+          {{author.channelName}}
+        </div>
+        <div class='video-name'>{{title}}</div>
+        <div class='video-view'>{{views}}
+          views<span class='seperate video-seperate'>
 
+          </span>
+          {{!-- {{createdAt}} --}}
+        </div>
+      </div>
+    </a>
+  {{/each}}
+
+</div>
+
+<script>
+
+</script>

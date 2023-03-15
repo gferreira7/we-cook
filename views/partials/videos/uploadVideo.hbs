@@ -111,7 +111,9 @@
 </center>
     
     <div class='modal-footer' style="display:flex">
-     
+      
+      <button closeModalBtn class='btn btn-secondary me-4'
+        type='button'>Cancel</button>
       <button uploadBtn class='btn btn-success'
         type='submit'>Upload</button>
     </div>
@@ -143,7 +145,14 @@
         formContainer.setAttribute("style", "--delay: 0.2s");
         uploadModal.scrollIntoView({behavior:"smooth"})
         const uploadBtn = document.querySelector('button[uploadBtn]')
+        const closeModalBtn = document.querySelector('button[closeModalBtn]')
         
+        closeModalBtn.onclick = (e) =>{
+          formContainer.style.display = "none";
+          uploadModal.scrollIntoView({behavior:"smooth"})
+        }
+
+
         //INGREDIENTS INPUT
 
     //Adding new ingredients to Recipe 
@@ -322,7 +331,7 @@
             })
             .then((response) => {
                console.log('RES:',response.data);
-               //window.location.href = `/watch/${response.data}`;
+                window.location.href = `/watch/${response.data}`
             })
             .catch( (error) =>{
                 console.log('ERROR',error);

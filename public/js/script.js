@@ -45,8 +45,10 @@ window.dispatchEvent(new Event('resize'))
 const allVideos = document.querySelectorAll('.video')
 allVideos.forEach((video) => {
   const v = video.querySelector('video')
+
   video.addEventListener('mouseover', () => v.play())
   video.addEventListener('mouseleave', () => v.pause())
+
 })
 
 // Add click event listeners to logo, logo-expand, and discover
