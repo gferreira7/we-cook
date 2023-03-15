@@ -94,56 +94,56 @@ router.post('/search', secured, async (req, res, next) => {
       }
     }); */
 
-  if (f_author == "on") {
-    let videosArray = [];
-    let usersFromDB = await User.find({channelName:{ $regex: regex } })
-    console.log(typeof usersFromDB);
-    console.log(usersFromDB);
+    if (f_author == "on") {
+      let videosArray = [];
+      let usersFromDB = await User.find({channelName:{ $regex: regex } })
+      console.log(typeof usersFromDB);
+      console.log(usersFromDB);
+        
+        usersFromDB.forEach((element) => {
+        console.log(typeof element);
+        console.log(element._id)
+        Video.find( { author : element._id})
+        .populate('author')
+        .then((videos) => {
+          console.log("INSIDE FIND");
+          console.log(videos)
+          videosArray.push(videos)
+
+          res.render('video-search', {
+            title: search,
+            userProfile,
+            videos: videos,
+            // show results page with count
+            count: videos.length,
+          })
     
-  const matching = await usersFromDB.forEach((element) => {
-      console.log(typeof element);
-      console.log(element._id)
-      Video.find( { author : element._id})
+        })
+        .catch((err) => {
+          console.log(err)
+          next(err)
+        })
+     
+      });
+  
+    }
+    else {
+      Video.find(searchParams)
+      .populate('author')
       .then((videos) => {
-        console.log("INSIDE FIND");
-        console.log(videos)
-        videosArray.push(videos)
+        res.render('video-search', {
+          title: search,
+          userProfile,
+          videos: videos,
+          // show results page with count
+          count: videos.length,
+        })
       })
       .catch((err) => {
         console.log(err)
         next(err)
       })
-   
-    });
-    console.log("POS FIND");
-
-  console.log(videosArray);
-    res.render('video-search', {
-      title: search,
-      userProfile,
-      videos: videosArray,
-      // show results page with count
-      count: videosArray.length,
-    })
-
-  }
-  else {
-    Video.find(searchParams)
-    .populate('author')
-    .then((videos) => {
-      res.render('video-search', {
-        title: search,
-        userProfile,
-        videos: videos,
-        // show results page with count
-        count: videos.length,
-      })
-    })
-    .catch((err) => {
-      console.log(err)
-      next(err)
-    })
-  }
+    }
 
  
 })
