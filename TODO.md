@@ -25,7 +25,15 @@
 - Subscribers
 - delete unused videos/photos.
 - resize banner photo
-- scroll to top of the form on upload
+✅scroll to top of the form on upload
+
+
+# upload
+ - change ingredients order
+ - Cooking Time - Dropdown
 
 # Video Page
 ✅Likes/dislikes - Unique User Ids stored in Video Model
+- Add recipe View
+- convert createdAt date to "4 days ago" for example
+

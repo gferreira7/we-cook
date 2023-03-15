@@ -68,127 +68,48 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div class="video-p-title anim" style="--delay: .2s">{{title}}
-                                </div>
-                                <div class="video-p-subtitle anim" style="--delay: .3s"> {{description}}
-                                </div>
-                                <div data-bring-import data-bring-language="en" style="display:none">
-                                    <a href="https://www.getbring.com">Bring! Einkaufsliste App f&uuml;r iPhone und Android</a>
-                                </div>
-                              <div class="video-p-subtitle anim" style="--delay: .4s"> <!-- add reviews -->
-                                </div>
+                                <div class="video-p-title anim" style="--delay: .2s">{{title}}</div>
+                                <div class="video-p-subtitle anim" style="--delay: .3s"> {{description}}</div>
+                              <div class="video-p-subtitle anim" style="--delay: .4s">
+                                
+                              </div>
                             </div>
                         </div>
                     </div>
                     <div class="chat-stream">
                         <div class="chat">
-                            <div class="chat-header anim">Live Chat<span><svg viewBox="0 0 24 24" fill="currentColor"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M14.212 7.762c0 2.644-2.163 4.763-4.863 4.763-2.698 0-4.863-2.119-4.863-4.763C4.486 5.12 6.651 3 9.35 3c2.7 0 4.863 2.119 4.863 4.762zM2 17.917c0-2.447 3.386-3.06 7.35-3.06 3.985 0 7.349.634 7.349 3.083 0 2.448-3.386 3.06-7.35 3.06C5.364 21 2 20.367 2 17.917zM16.173 7.85a6.368 6.368 0 01-1.137 3.646c-.075.107-.008.252.123.275.182.03.369.048.56.052 1.898.048 3.601-1.148 4.072-2.95.697-2.675-1.35-5.077-3.957-5.077a4.16 4.16 0 00-.818.082c-.036.008-.075.025-.095.055-.025.04-.007.09.019.124a6.414 6.414 0 011.233 3.793zm3.144 5.853c1.276.245 2.115.742 2.462 1.467a2.107 2.107 0 010 1.878c-.531 1.123-2.245 1.485-2.912 1.578a.207.207 0 01-.234-.232c.34-3.113-2.367-4.588-3.067-4.927-.03-.017-.036-.04-.034-.055.002-.01.015-.025.038-.028 1.515-.028 3.145.176 3.747.32z" />
-                                    </svg>
-                                    15,988 people
+                            <div class="chat-header anim">Recipe<span>
+                                    <span cookTime={{recipe.cookTime}} class="p-2">...</span>
+                                    <img src="/images/clock.png" alt="cooking-time" style="width:20px">
                                 </span>
                             </div>
                             <div class="message-container">
-                                <div class="message anim" style="--delay: .1s">
-                                    <div class="author-img__wrapper video-author video-p">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-check">
-                                            <path d="M20 6L9 17l-5-5" />
-                                        </svg>
-                                        <img class="author-img"
-                                            src="" />
-                                    </div>
-                                    <div class="msg-wrapper">
-                                        <div class="msg__name video-p-name"> Wijaya Adabi</div>
-                                        <div class="msg__content video-p-sub"> Lorem ipsum clor sit, ame conse quae
-                                            debitis</div>
-                                    </div>
-                                </div>
-                                <div class="message anim" style="--delay: .2s">
-                                    <div class="author-img__wrapper video-author video-p">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-check">
-                                            <path d="M20 6L9 17l-5-5" />
-                                        </svg>
-                                        <img class="author-img"
-                                            src="https://images.pexels.com/photos/2889942/pexels-photo-2889942.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
-                                    </div>
-                                    <div class="msg-wrapper">
-                                        <div class="msg__name video-p-name offline"> Johny Wise</div>
-                                        <div class="msg__content video-p-sub"> Suscipit eos atque voluptates labore
+                                <div class="message anim d-flex flex-column justify-content-center align-items-start" style="--delay: .1s">
+                                    {{#each recipe.ingredients}}
+                                    <div class="author-img__wrapper video-author video-p d-flex justify-content-between w-100 px-4">
+                                        <div>
+                                        {{ingredient}} - {{quantity}} {{unit}}
+                                        </div>
+                                        <div>
+                                            Calories
                                         </div>
                                     </div>
+                                    {{/each}}
+                                </div>                                  
+                                <div class="message anim d-flex flex-column justify-content-center align-items-start" style="--delay: .1s">
+                                    {{#each recipe.steps}}
+                                    <div class="author-img__wrapper video-author video-p d-flex justify-content-between w-100 px-4">
+                                        <div>
+                                        {{this}}
+                                        </div>
+                                    </div>
+                                    {{/each}}
                                 </div>
-                                <div class="message anim" style="--delay: .3s">
-                                    <div class="author-img__wrapper video-author video-p">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-check">
-                                            <path d="M20 6L9 17l-5-5" />
-                                        </svg>
-                                        <img class="author-img"
-                                            src="https://images.unsplash.com/photo-1496345875659-11f7dd282d1d?ixid=MXwxMjA3fDB8MHxzZWFyY2h8Mzl8fG1lbnxlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" />
-                                    </div>
-                                    <div class="msg-wrapper">
-                                        <div class="msg__name video-p-name offline"> Budi Hakim</div>
-                                        <div class="msg__content video-p-sub">Dicta quidem sunt adipisci</div>
-                                    </div>
-                                </div>
-                                <div class="message anim" style="--delay: .4s">
-                                    <div class="author-img__wrapper video-author video-p">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-check">
-                                            <path d="M20 6L9 17l-5-5" />
-                                        </svg>
-                                        <img class="author-img"
-                                            src="https://images.pexels.com/photos/1870163/pexels-photo-1870163.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
-                                    </div>
-                                    <div class="msg-wrapper">
-                                        <div class="msg__name video-p-name"> Thomas Hope</div>
-                                        <div class="msg__content video-p-sub"> recusandae doloremque aperiam alias
-                                            molestias</div>
-                                    </div>
-                                </div>
-                                <div class="message anim" style="--delay: .5s">
-                                    <div class="author-img__wrapper video-author video-p">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-check">
-                                            <path d="M20 6L9 17l-5-5" />
-                                        </svg>
-                                        <img class="author-img"
-                                            src="https://images.pexels.com/photos/1680172/pexels-photo-1680172.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
-                                    </div>
-                                    <div class="msg-wrapper">
-                                        <div class="msg__name video-p-name"> Gerard Will</div>
-                                        <div class="msg__content video-p-sub">Dicta quidem sunt adipisci</div>
-                                    </div>
-                                </div>
-                                <div class="message anim" style="--delay: .6s">
-                                    <div class="author-img__wrapper video-author video-p">
-                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-check">
-                                            <path d="M20 6L9 17l-5-5" />
-                                        </svg>
-                                        <img class="author-img"
-                                            src="https://images.pexels.com/photos/2889942/pexels-photo-2889942.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" />
-                                    </div>
-                                    <div class="msg-wrapper">
-                                        <div class="msg__name video-p-name offline">Johny Wise</div>
-                                        <div class="msg__content video-p-sub"> recusandae doloremque aperiam alias
-                                            molestias</div>
-                                    </div>
-                                </div>
+                                <div data-bring-import data-bring-language="en" style="display:none">
+                                    <a href="https://www.getbring.com">Bring! Einkaufsliste App f&uuml;r iPhone und Android</a>
+                                </div>             
                             </div>
-                            <div class="chat-footer anim" style="--delay: .1s">
-                                <input type="text" placeholder="Write your message">
-                            </div>
+                            
                         </div>
                         <div class="chat-vid__container">
                             <div class="chat-vid__title anim" style="--delay: .3s">Related Videos</div>
@@ -229,79 +150,41 @@
 
 
 <script async="async" src="//platform.getbring.com/widgets/import.js"></script>
+<script src='/js/watch.js'></script>
 <script>
 
-window.onload = () => { 
+window.onload = () => {     
     
-    const video = document.querySelector('video[videoId]') 
-    let videoId = video.getAttribute('videoId')
-    
-    const likeButton = document.querySelector('button[like-btn]')
-    const dislikeButton = document.querySelector('button[dislike-btn]')
-
-    const likeCount = document.querySelector('span[like-count]')
-    const dislikeCount = document.querySelector('span[dislike-count]')
-
-
-      //***VIEWS COUNT***//
-     //*****************//
-    //*****************//
-
+    /*Convert # of cooking time minutes to readable format */
+    /*Update the DOM */
+    let minutes = parseInt(cookTimeElement.getAttribute('cookTime'))
+    if(minutes>=60){ 
+        const hours = Math.floor(minutes/60) 
+        minutes = Math.floor(minutes%60)
+        cookTimeElement.innerHTML = `${hours}h${minutes}m`
+    }
+    //once video starts count minViewTime Seconds until it counts as a view
     video.addEventListener('play', function() {
         video.hasSentViewCount = false
     })
-
-    //after x seconds update view Count by 1
-    video.addEventListener('timeupdate', () =>{ 
-
-        if(video.currentTime >=5 && !video.hasSentViewCount){
-            axios.post(`/video/${videoId}/update`, {toUpdate: 'views'}, {
-                headers: {
-                'Content-Type': 'application/json'
-                }          
-            })
-            .then((response) => {
-               console.log('RES:',response);
-            })
-            .catch(function (error) {
-                console.log('ERROR',error);
-            });
-        
-            video.hasSentViewCount = true
+    video.addEventListener('timeupdate', () => {
+        if(video.currentTime >= minViewTime && !video.hasSentViewCount){
+           video.hasSentViewCount = updateViews(videoId)
         }
-    
-    })  
+    })
 
-
-      //***LIKES COUNT***//
-     //*****************//
-    //*****************//
+    /*user can only like OR dislike a video*/
+    /*check in DB and update the DOM*/
     likeButton.onclick = () =>{
-            axios.post(`/video/${videoId}/update`, {toUpdate: 'like'}, {
-            headers: {
-                'Content-Type': 'application/json'
-            }          
-        }).then(response => {
-            dislikeCount.innerHTML = response.data.dislikes.length
-            likeCount.innerHTML = response.data.likes.length
-        }).catch(err => console.log(err))
+        updateLikesAndDislikes(videoId, 'like')
+        dislikeCount.innerHTML = response.data.dislikes.length
+        likeCount.innerHTML = response.data.likes.length
     }
-    
-      //***Dislikes COUNT***//
-     //********************//
-    //********************//
-
     dislikeButton.onclick = () =>{
-        axios.post(`/video/${videoId}/update`, {toUpdate: 'dislike'}, {
-            headers: {
-                'Content-Type': 'application/json'
-            }          
-        }).then(response => {
-            dislikeCount.innerHTML = response.data.dislikes.length
-            likeCount.innerHTML = response.data.likes.length
-        }).catch(err => console.log(err))
+        updateLikesAndDislikes(videoId, 'dislike')
+        dislikeCount.innerHTML = response.data.dislikes.length
+        likeCount.innerHTML = response.data.likes.length
     }
 
   }
-  
 </script>

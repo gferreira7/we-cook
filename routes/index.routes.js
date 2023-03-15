@@ -1,11 +1,10 @@
-const express = require('express');
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 const Video = require('../models/Video.model.js')
-const mongoose = require('mongoose'); // <== has to be added
-const User = require('../models/User.model.js');
+const mongoose = require('mongoose') // <== has to be added
+const User = require('../models/User.model.js')
 
 router.get('/', (req, res, next) => {
-
   res.redirect('/home')
 })
 
@@ -17,8 +16,7 @@ router.get('/home', async (req, res, next) => {
     currentUser.firstName = 'Guest'
     currentUser.profilePic = '/images/icons/account.png'
   } else {
-
-    let userProfile = await User.findOne({ authId: req.user.id }).exec()    
+    let userProfile = await User.findOne({ authId: req.user.id }).exec()
     currentUser = userProfile
   }
 
@@ -44,24 +42,29 @@ router.get('/trending', async (req, res, next) => {
   res.render('test', {
     title: 'trending',
   })
-} )
+})
 
 router.get('/groups', async (req, res, next) => {
   res.render('test', {
     title: 'groups',
   })
-  })
+})
 
-  router.get('/subscriptions', async (req, res, next) => {
-    res.render('test', {
-      title: 'subscriptions',
-    })
-    })
-    router.get('/nutrition', async (req, res, next) => {
-      res.render('test', {
-        title: 'nutrition',
-      })
-      })
-  
-    
-module.exports = router;
+router.get('/subscriptions', async (req, res, next) => {
+  res.render('test', {
+    title: 'subscriptions',
+  })
+})
+router.get('/nutrition', async (req, res, next) => {
+  res.render('test', {
+    title: 'nutrition',
+  })
+})
+
+router.get('/messages', async (req, res, next) => {
+  res.render('test', {
+    title: 'messages',
+  })
+})
+
+module.exports = router

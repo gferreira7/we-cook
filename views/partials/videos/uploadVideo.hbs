@@ -59,9 +59,15 @@
         </div>
       </div>
       
-      <span >Recipe</span>
-      <div class='video-input'> 
-        <textarea name='steps'></textarea>
+      <div main-steps-container>
+        <div>Steps</div>  
+        <div class='video-input d-flex'> 
+          <input step-input name='step-input' ></input>
+          <button class="btn btn-success w-25" type="button" add-step>+</button>
+        </div>
+        <div new-step-wrapper class="d-flex justify-content-center align-items-center pb-3">
+          <div new-steps-container class="video-input"></div>
+        </div>
       </div>
       
       <span >Category</span>
@@ -120,6 +126,7 @@
     //Global Vars
     const ingredientsList = []
     const tagsList = []
+    const stepsList = []
     
   
     //Open and close Upload Form 
@@ -134,7 +141,7 @@
         formContainer.style.display = "flex"
         formContainer.classList.add('anim')
         formContainer.setAttribute("style", "--delay: 0.2s");
-        uploadModal.scrollIntoView()
+        uploadModal.scrollIntoView({behavior:"smooth"})
         const uploadBtn = document.querySelector('button[uploadBtn]')
         
         //INGREDIENTS INPUT
@@ -215,6 +222,55 @@
     
   } 
 
+  //Steps
+
+
+    
+    //Adding new Steps to Recipe 
+    const addStepButton= document.querySelector('button[add-step]')
+    
+    addStepButton.onclick = (e) => {
+    
+    // Get current values from form
+    const stepInputDiv = document.querySelector('input[step-input]')
+    const newStep = stepInputDiv.value
+        
+    //append to the new tags container just below and add remove button   
+    const newStepsDiv = document.querySelector('div[new-steps-container]')
+    newStepsDiv.classList.add('d-flex', 'justify-content-center', 'align-items-center', 'flex-wrap', 'w-50')
+
+    const newStepItem = document.createElement('div')
+    newStepItem.classList.add('new-step', 'p-2')
+    newStepItem.setAttribute('step', newStep )
+
+    //add to array to post with axios
+    stepsList.push(newStep)
+
+
+
+    newStepItem.innerHTML = newStep
+
+    const removeStepBtn = document.createElement('button')
+    removeStepBtn.type = 'button'
+    removeStepBtn.classList.add('btn', 'btn-secondary')
+    removeStepBtn.innerHTML = 'X'
+    
+    newStepItem.appendChild(removeStepBtn)
+
+    removeStepBtn.onclick = (e) => {
+            let stepToRemove = e.target.closest('.new-step').getAttribute('step')
+            stepsList.splice(stepsList.indexOf(stepToRemove), 1)
+            e.target.closest('.new-step').remove()
+
+            console.log(stepsList)
+    }
+       
+    //reset tag input
+    stepInputDiv.value = ''
+    
+    newStepsDiv.appendChild(newStepItem)
+    
+  } 
 
   //FILE UPLOADS/DRAG AND DROP
   //Handle file uploads CSS
@@ -247,7 +303,8 @@
     }
   });
 
-        //uploading tags and ingredients to Backend
+        //appending tags, steps and ingredients to formData and sending to Backend
+
         uploadBtn.onclick = (e) => {
 
           e.preventDefault()
@@ -256,6 +313,7 @@
 
           formData.append('ingredientsList', JSON.stringify(ingredientsList));
           formData.append('tagsList', JSON.stringify(tagsList));
+          formData.append('stepsList', JSON.stringify(stepsList));
           console.log("Form Sent to DB", formData)
           axios.post(`/upload`, formData, {
                 headers: {
