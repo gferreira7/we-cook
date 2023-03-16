@@ -4,12 +4,8 @@
 # Backend
 ✅CRUD => Edit Page => Delete Video
 ✅Recipe Model
-<<<<<<< HEAD
 - CRUD REVIEWS (gui)
 - Add Reviews
-=======
-- CRUD REVIEWS
->>>>>>> f8f90e2fa404c14d1b9acd37dbce1aab97c88058
 - CRUD RECIPE
 
 # Search
