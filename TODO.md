@@ -4,7 +4,7 @@
 # Backend
 ✅CRUD => Edit Page => Delete Video
 ✅Recipe Model
-- CRUD REVIEWS
+- CRUD REVIEWS (gui)
 - Add Reviews
 - CRUD RECIPE
 
@@ -39,3 +39,10 @@
 - convert createdAt date to "4 days ago" for example
 
 # Particles JS
+
+
+# Fat secreet Api or another food API   (vilaboim)
+
+https://platform.fatsecret.com/api/Default.aspx?screen=rapiauth2
+
+# Edit Videos layout with the related videos layout (vilaboim)
