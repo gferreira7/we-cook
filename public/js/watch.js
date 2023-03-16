@@ -43,6 +43,4 @@ const updateLikesAndDislikes = (videoId, updateCriteria) => {
       likeCount.innerHTML = response.data.likes.length
     })
     .catch((err) => res = err)
-
-  
 }
