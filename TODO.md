@@ -49,4 +49,24 @@
 
 https://platform.fatsecret.com/api/Default.aspx?screen=rapiauth2
 
+Your OAuth 2.0 Client Secret is: aeec0d38440349799e18992a431b556a
+
+Your Client ID:
+df668fcaf2094bcc850c96e2f589d6b4
+
+Your Client Secret:
+aeec0d38440349799e18992a431b556a
+
+REST API OAuth 1.0 Credentials:
+Your Consumer Key:
+df668fcaf2094bcc850c96e2f589d6b4
+Your Consumer Secret:
+8052b222280642eabadfd5a5f4c7015b
+
+FORUM
+https://groups.google.com/g/fatsecret-platform-api?pli=1
+
+
+# Sending emails with something just to have the sending email part!
+
 # Edit Videos layout with the related videos layout (vilaboim)
