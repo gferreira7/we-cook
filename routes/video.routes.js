@@ -21,7 +21,6 @@ router.get('/watch/:videoId', secured, async (req, res, next) => {
       const timeSinceUpload = timePassedSince(video.createdAt.getTime())
 
       const isUploader = req.user.id === video.author.authId      
-      console.log(video)
       res.render('single-video', {
         title: video.title,
         userProfile,
@@ -44,7 +43,7 @@ router.post('/search', secured, async (req, res, next) => {
   Video.find({ title: { $regex: search, $options: 'i' } })
     .populate('author')
     .then((videos) => {
-      res.render('videos/video-search', {
+      res.render('video-search', {
         title: search,
         userProfile,
         videos: videos,
@@ -59,13 +58,14 @@ router.post('/search', secured, async (req, res, next) => {
 })
 
 router.post('/video/:videoId/update', async (req, res, next) => {
+  
   const { videoId } = req.params
-  const { toUpdate } = req.body
+  const { updateCriteria } = req.body
   const currentUser = await User.findOne({ authId: req.user.id })
   const videoFromDB = await Video.findById(videoId)
   const { likes, dislikes } = videoFromDB
-
-  if (toUpdate === 'views') {
+  
+  if (updateCriteria === 'views') {
     const updatedVideo = await Video.findByIdAndUpdate(
       videoId,
       { $inc: { views: 1 } },
@@ -74,7 +74,7 @@ router.post('/video/:videoId/update', async (req, res, next) => {
     res.status(200).json(`views: ${updatedVideo.views}`)
   }
 
-  if (toUpdate === 'like') {
+  if (updateCriteria === 'like') {
     let updatedVideo
     //check if user already disliked
     if (dislikes && dislikes.includes(currentUser._id)) {
@@ -96,7 +96,7 @@ router.post('/video/:videoId/update', async (req, res, next) => {
     res.status(200).json(updatedVideo)
   }
 
-  if (toUpdate === 'dislike') {
+  if (updateCriteria === 'dislike') {
     let updatedVideo
     //check if user liked
     if (likes !== undefined && likes.includes(currentUser._id)) {
@@ -108,14 +108,12 @@ router.post('/video/:videoId/update', async (req, res, next) => {
         },
         { new: true }
       )
-      console.log('Dislikes', updatedVideo.dislikes)
     } else {
       updatedVideo = await Video.findByIdAndUpdate(
         videoId,
         { $addToSet: { dislikes: currentUser._id } },
         { new: true }
       )
-      console.log('Dislikes', updatedVideo.dislikes)
     }
     res.status(200).json(updatedVideo)
   }
