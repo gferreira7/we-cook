@@ -24,6 +24,7 @@ img {
   --logo-color: #263238;
   --input-color: #c8e6c9;
   --light-green-transparent: rgba(200, 230, 201, 0.5);
+  --light-green: rgba(200, 230, 201, 1);
   --theme-bg: #a5d6a7;
   --body-color: #333333;
   --button-bg: #d1b26f;
@@ -787,39 +788,40 @@ video {
 .button-wrapper {
   display: flex;
   align-items: center;
+  justify-content: center;
   margin-left: auto;
 }
 
 .like {
   display: flex;
   align-items: center;
+  justify-content: center;
   background-color: var(--button-bg);
   color: #fff;
   border: 0;
   font-family: var(--button-font);
   border-radius: 8px;
-  padding: 10px 16px;
-  font-size: 14px;
+  padding: 5px 8px;
   cursor: pointer;
+  font-size: 18px;
+
+
 }
 .like.red {
-  background-color: #ea5f5f;
+  background-color: #ea5f5f8c;
 }
 .like.green {
   background-color: #27a849;
 }
 .like.blue {
-  background-color: #5d3cb9;
+  background-color: #5d3cb9a2;
+  margin-left: 16px;
+
 }
 .like svg {
   width: 18px;
   flex-shrink: 0;
-  margin-right: 10px;
   padding: 0;
-}
-
-.like + .like {
-  margin-left: 16px;
 }
 
 .video-stats {
@@ -839,12 +841,11 @@ video {
   font-size: 16px;
   font-weight: 600;
   color: #fff;
-  position: sticky;
   top: 0;
-  /* background-color: var(--light-green-transparent); */
   left: 0;
   z-index: 1;
   border-bottom: 1px solid var(--border-color);
+  opacity: 1;
 }
 .chat-header svg {
   width: 15px;
