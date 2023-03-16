@@ -62,9 +62,9 @@ const getFoodDetails = async (ingredientsArray) => {
       token = `Bearer ` + body.access_token
       // Make request to get food categories
       const urlsArray = []
-      ingredientsArray.forEach((ingredient) => {
+      ingredientsArray.forEach((element) => {
         urlsArray.push(
-          `https://platform.fatsecret.com/rest/server.api?POST&method=foods.search&search_expression=${ingredient}&max_results=1&format=json`
+          `https://platform.fatsecret.com/rest/server.api?POST&method=foods.search&search_expression=${element.ingredient}&max_results=1&format=json`
         )
       })
       const consumerKey = clientID
@@ -108,16 +108,18 @@ const getFoodDetails = async (ingredientsArray) => {
 
         axios(requestConfig)
           .then((responseFood) => {
-            console.log('response from Axios', responseFood)
             macros.push(responseFood.data.foods.food)
+           console.log('response from Axios', responseFood.data.foods.food)
+           pause();
           })
           .catch((err) => console.log(err))
       })
     })
   })
-
-  return macros
+  console.log('inside func', macros)
+    return macros
 }
+
 
 router.get('/watch/:videoId', secured, async (req, res, next) => {
   let { videoId } = req.params
@@ -130,13 +132,13 @@ router.get('/watch/:videoId', secured, async (req, res, next) => {
   console.log(video.recipe._id)
 
   const data = await Recipe.findById(video.recipe._id)
-  console.log('food before func', data.ingredients)
+ // console.log('food before func', data.ingredients)
 
   let macros = await getFoodDetails(data.ingredients)
 
-  console.log('food after func', macros)
+   console.log('food after func', macros)
   const isUploader = req.user.id === video.author.authId
-  res.render('single-video', {
+   res.render('single-video', {
     title: video.title,
     userProfile,
     video,
