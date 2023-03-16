@@ -66,6 +66,8 @@ Your Consumer Secret:
 FORUM
 https://groups.google.com/g/fatsecret-platform-api?pli=1
 
+gonvipa@gmail.com
+weCook2023!
 
 # Sending emails with something just to have the sending email part!
 
