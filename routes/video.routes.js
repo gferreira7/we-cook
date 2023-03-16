@@ -1,8 +1,8 @@
 const { Router } = require('express')
-const axios = require('axios');
-const request = require("request");
-const OAuth = require('oauth-1.0a');
-const crypto = require('crypto');
+const axios = require('axios')
+const request = require('request')
+const OAuth = require('oauth-1.0a')
+const crypto = require('crypto')
 const router = new Router()
 require('dotenv').config()
 const mongoose = require('mongoose')
@@ -13,33 +13,11 @@ const User = require('../models/User.model.js')
 const Recipe = require('../models/Recipe.model.js')
 const { timePassedSince, toHoursAndMinutes } = require('../controllers/helpers')
 
-
-  const getFoodDetails = async (food) =>
-{
-  const clientID = 'df668fcaf2094bcc850c96e2f589d6b4';
-  const clientSecret = 'aeec0d38440349799e18992a431b556a';
-  let token = '';
-
-  // Request access token
-  const tokenOptions = {
-    method: 'POST',
-    url: 'https://oauth.fatsecret.com/connect/token',
-    auth: {
-      user: clientID,
-      password: clientSecret
-    },
-    headers: {
-      'content-type': 'application/x-www-form-urlencoded'
-    },
-    form: {
-      grant_type: 'client_credentials',
-      scope: 'basic'
-    },
-    json: true
-  };
-
-  request(tokenOptions, function (error, response, body) {
-  let token = '';
+const getFoodDetails = async (ingredientsArray) => {
+  let macros = []
+  const clientID = 'df668fcaf2094bcc850c96e2f589d6b4'
+  const clientSecret = 'aeec0d38440349799e18992a431b556a'
+  let token = ''
 
   // Request access token
   const tokenOptions = {
@@ -47,62 +25,98 @@ const { timePassedSince, toHoursAndMinutes } = require('../controllers/helpers')
     url: 'https://oauth.fatsecret.com/connect/token',
     auth: {
       user: clientID,
-      password: clientSecret
+      password: clientSecret,
     },
     headers: {
-      'content-type': 'application/x-www-form-urlencoded'
+      'content-type': 'application/x-www-form-urlencoded',
     },
     form: {
       grant_type: 'client_credentials',
-      scope: 'basic'
+      scope: 'basic',
     },
-    json: true
-  };
+    json: true,
+  }
 
   request(tokenOptions, function (error, response, body) {
-    if (error) throw new Error(error);
-    token = `Bearer `+ body.access_token;
-  
-    // Make request to get food categories
-    const endpointUrl = `https://platform.fatsecret.com/rest/server.api?POST&method=foods.search&search_expression=${food}&max_results=1&format=json`;
-    const consumerKey = clientID;
-    const consumerSecret = body.client_secret;
-  
-    const oauth = OAuth({
-      consumer: {
-        key: consumerKey,
-        secret: consumerSecret
+    let token = ''
+    // Request access token
+    const tokenOptions = {
+      method: 'POST',
+      url: 'https://oauth.fatsecret.com/connect/token',
+      auth: {
+        user: clientID,
+        password: clientSecret,
       },
-      signature_method: 'HMAC-SHA1',
-      hash_function(base_string, key) {
-        return crypto.createHmac('sha1', key).update(base_string).digest('base64');
-      }
-    });
-  
-    const requestData = {
-      url: endpointUrl,
-      method: 'POST'
-    };
-  
-    const headers = oauth.toHeader(oauth.authorize(requestData, {
-      key: consumerKey,
-      secret: consumerSecret
-    }));
-  
-    headers.Authorization = token;
-  
-    const requestConfig = {
-      method: 'post',
-      headers: headers,
-      url: endpointUrl
-    };
-  
-    axios(requestConfig).then((responseFood) =>{
-      return responseFood.data.foods.food
-    })
-  });
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+      form: {
+        grant_type: 'client_credentials',
+        scope: 'basic',
+      },
+      json: true,
+    }
 
-});
+    request(tokenOptions, function (error, response, body) {
+      if (error) throw new Error(error)
+      token = `Bearer ` + body.access_token
+      // Make request to get food categories
+      const urlsArray = []
+      ingredientsArray.forEach((ingredient) => {
+        urlsArray.push(
+          `https://platform.fatsecret.com/rest/server.api?POST&method=foods.search&search_expression=${ingredient}&max_results=1&format=json`
+        )
+      })
+      const consumerKey = clientID
+      const consumerSecret = body.client_secret
+
+      const oauth = OAuth({
+        consumer: {
+          key: consumerKey,
+          secret: consumerSecret,
+        },
+        signature_method: 'HMAC-SHA1',
+        hash_function(base_string, key) {
+          return crypto
+            .createHmac('sha1', key)
+            .update(base_string)
+            .digest('base64')
+        },
+      })
+
+      urlsArray.forEach((endpointUrl) => {
+        console.log('url we are sending ', endpointUrl)
+        let requestData = {
+          url: endpointUrl,
+          method: 'POST',
+        }
+
+        let headers = oauth.toHeader(
+          oauth.authorize(requestData, {
+            key: consumerKey,
+            secret: consumerSecret,
+          })
+        )
+
+        headers.Authorization = token
+
+        let requestConfig = {
+          method: 'post',
+          headers: headers,
+          url: endpointUrl,
+        }
+
+        axios(requestConfig)
+          .then((responseFood) => {
+            console.log('response from Axios', responseFood)
+            macros.push(responseFood.data.foods.food)
+          })
+          .catch((err) => console.log(err))
+      })
+    })
+  })
+
+  return macros
 }
 
 router.get('/watch/:videoId', secured, async (req, res, next) => {
@@ -113,70 +127,55 @@ router.get('/watch/:videoId', secured, async (req, res, next) => {
   const video = await Video.findById(videoId).populate('author')
   const timeSinceUpload = timePassedSince(video.createdAt.getTime())
 
-      console.log(video.recipe._id)
+  console.log(video.recipe._id)
 
-    const data = await Recipe.findById(video.recipe._id)
-      let Macros = [];
-      console.log(data.ingredients)
-    
-        data.ingredients.forEach((element) => {
-        getFoodDetails(element)
-          Macros.push(food)
-        }) 
-      })
+  const data = await Recipe.findById(video.recipe._id)
+  console.log('food before func', data.ingredients)
 
-        console.log(Macros);
-        const isUploader = req.user.id === video.author.authId      
-        res.render('single-video', {
-          title: video.title,
-          userProfile,
-          video,
-          timeSinceUpload,
-          isUploader,
-      })
-   
+  let macros = await getFoodDetails(data.ingredients)
+
+  console.log('food after func', macros)
+  const isUploader = req.user.id === video.author.authId
+  res.render('single-video', {
+    title: video.title,
+    userProfile,
+    video,
+    timeSinceUpload,
+    isUploader,
+  })
 })
 
 router.post('/search', secured, async (req, res, next) => {
-
   let { search, f_category, f_author, f_title, f_tags, f_all } = req.body
 
   let userProfile = await User.findOne({ authId: req.user.id }).exec()
 
-  let searchParams = {};
+  let searchParams = {}
 
-  const regex = new RegExp(search, "i");
+  const regex = new RegExp(search, 'i')
 
-
-  if (f_category == "on") {
+  if (f_category == 'on') {
     searchParams = { category: { $regex: regex } }
-  }
-
-  else if (f_title == "on") {
+  } else if (f_title == 'on') {
     searchParams = { title: { $regex: regex } }
-
-  }
-  else if (f_tags == "on") {
+  } else if (f_tags == 'on') {
     searchParams = { tags: { $regex: regex } }
-
-  }
-  else {
+  } else {
     searchParams = { title: { $regex: regex } }
-
   }
 
-  if (f_all == "on") {
+  if (f_all == 'on') {
     searchParams = {
       $or: [
         { title: { $regex: regex } },
         { tags: { $in: [regex] } },
-        { category: { $regex: regex } }
-      ]
-    };
+        { category: { $regex: regex } },
+      ],
+    }
   }
   console.log(searchParams)
 
-  //falta ver como fazer pra o author pois está com a ref pra outra tabela 
+  //falta ver como fazer pra o author pois está com a ref pra outra tabela
   /* EXEMPLO CHATGPT
   const videoTitle = 'My Video Title';
   const userName = 'John Doe';
@@ -196,19 +195,19 @@ router.post('/search', secured, async (req, res, next) => {
       }
     }); */
 
-    if (f_author == "on") {
-      let videosArray = [];
-      let usersFromDB = await User.find({channelName:{ $regex: regex } })
-      console.log(typeof usersFromDB);
-      console.log(usersFromDB);
-        
-        usersFromDB.forEach((element) => {
-        console.log(typeof element);
-        console.log(element._id)
-        Video.find( { author : element._id})
+  if (f_author == 'on') {
+    let videosArray = []
+    let usersFromDB = await User.find({ channelName: { $regex: regex } })
+    console.log(typeof usersFromDB)
+    console.log(usersFromDB)
+
+    usersFromDB.forEach((element) => {
+      console.log(typeof element)
+      console.log(element._id)
+      Video.find({ author: element._id })
         .populate('author')
         .then((videos) => {
-          console.log("INSIDE FIND");
+          console.log('INSIDE FIND')
           console.log(videos)
           videosArray.push(videos)
 
@@ -219,18 +218,14 @@ router.post('/search', secured, async (req, res, next) => {
             // show results page with count
             count: videos.length,
           })
-    
         })
         .catch((err) => {
           console.log(err)
           next(err)
         })
-     
-      });
-  
-    }
-    else {
-      Video.find(searchParams)
+    })
+  } else {
+    Video.find(searchParams)
       .populate('author')
       .then((videos) => {
         res.render('video-search', {
@@ -245,19 +240,16 @@ router.post('/search', secured, async (req, res, next) => {
         console.log(err)
         next(err)
       })
-    }
-
- 
+  }
 })
 
 router.post('/video/:videoId/update', async (req, res, next) => {
-  
   const { videoId } = req.params
   const { updateCriteria } = req.body
   const currentUser = await User.findOne({ authId: req.user.id })
   const videoFromDB = await Video.findById(videoId)
   const { likes, dislikes } = videoFromDB
-  
+
   if (updateCriteria === 'views') {
     const updatedVideo = await Video.findByIdAndUpdate(
       videoId,
@@ -312,12 +304,11 @@ router.post('/video/:videoId/update', async (req, res, next) => {
   }
 })
 
-
 router.get('/food/:food', async (req, res, next) => {
-  const { food } = req.params;
-  const clientID = 'df668fcaf2094bcc850c96e2f589d6b4';
-  const clientSecret = 'aeec0d38440349799e18992a431b556a';
-  let token = '';
+  const { food } = req.params
+  const clientID = 'df668fcaf2094bcc850c96e2f589d6b4'
+  const clientSecret = 'aeec0d38440349799e18992a431b556a'
+  let token = ''
 
   // Request access token
   const tokenOptions = {
@@ -325,90 +316,93 @@ router.get('/food/:food', async (req, res, next) => {
     url: 'https://oauth.fatsecret.com/connect/token',
     auth: {
       user: clientID,
-      password: clientSecret
+      password: clientSecret,
     },
     headers: {
-      'content-type': 'application/x-www-form-urlencoded'
+      'content-type': 'application/x-www-form-urlencoded',
     },
     form: {
       grant_type: 'client_credentials',
-      scope: 'basic'
+      scope: 'basic',
     },
-    json: true
-  };
+    json: true,
+  }
 
   request(tokenOptions, function (error, response, body) {
-  let token = '';
+    let token = ''
 
-  // Request access token
-  const tokenOptions = {
-    method: 'POST',
-    url: 'https://oauth.fatsecret.com/connect/token',
-    auth: {
-      user: clientID,
-      password: clientSecret
-    },
-    headers: {
-      'content-type': 'application/x-www-form-urlencoded'
-    },
-    form: {
-      grant_type: 'client_credentials',
-      scope: 'basic'
-    },
-    json: true
-  };
-
-  request(tokenOptions, function (error, response, body) {
-    if (error) throw new Error(error);
-    token = `Bearer `+ body.access_token;
-  
-    // Make request to get food categories
-    const endpointUrl = `https://platform.fatsecret.com/rest/server.api?POST&method=foods.search&search_expression=${food}&max_results=1&format=json`;
-    const consumerKey = clientID;
-    const consumerSecret = body.client_secret;
-  
-    const oauth = OAuth({
-      consumer: {
-        key: consumerKey,
-        secret: consumerSecret
+    // Request access token
+    const tokenOptions = {
+      method: 'POST',
+      url: 'https://oauth.fatsecret.com/connect/token',
+      auth: {
+        user: clientID,
+        password: clientSecret,
       },
-      signature_method: 'HMAC-SHA1',
-      hash_function(base_string, key) {
-        return crypto.createHmac('sha1', key).update(base_string).digest('base64');
-      }
-    });
-  
-    const requestData = {
-      url: endpointUrl,
-      method: 'POST'
-    };
-  
-    const headers = oauth.toHeader(oauth.authorize(requestData, {
-      key: consumerKey,
-      secret: consumerSecret
-    }));
-  
-    headers.Authorization = token;
-  
-    const requestConfig = {
-      method: 'post',
-      headers: headers,
-      url: endpointUrl
-    };
-  
-    axios(requestConfig)
-      .then(response => {
-        console.log(response.data);
-        res.send(response.data.foods.food);
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+      form: {
+        grant_type: 'client_credentials',
+        scope: 'basic',
+      },
+      json: true,
+    }
+
+    request(tokenOptions, function (error, response, body) {
+      if (error) throw new Error(error)
+      token = `Bearer ` + body.access_token
+
+      // Make request to get food categories
+      const endpointUrl = `https://platform.fatsecret.com/rest/server.api?POST&method=foods.search&search_expression=${food}&max_results=1&format=json`
+      const consumerKey = clientID
+      const consumerSecret = body.client_secret
+
+      const oauth = OAuth({
+        consumer: {
+          key: consumerKey,
+          secret: consumerSecret,
+        },
+        signature_method: 'HMAC-SHA1',
+        hash_function(base_string, key) {
+          return crypto
+            .createHmac('sha1', key)
+            .update(base_string)
+            .digest('base64')
+        },
       })
-      .catch(error => {
-        console.error(error);
-        res.status(500).send(error);
-      });
-  });
 
-});
-});
+      const requestData = {
+        url: endpointUrl,
+        method: 'POST',
+      }
 
+      const headers = oauth.toHeader(
+        oauth.authorize(requestData, {
+          key: consumerKey,
+          secret: consumerSecret,
+        })
+      )
+
+      headers.Authorization = token
+
+      const requestConfig = {
+        method: 'post',
+        headers: headers,
+        url: endpointUrl,
+      }
+
+      axios(requestConfig)
+        .then((response) => {
+          console.log(response.data)
+          res.send(response.data.foods.food)
+        })
+        .catch((error) => {
+          console.error(error)
+          res.status(500).send(error)
+        })
+    })
+  })
+})
 
 module.exports = router
