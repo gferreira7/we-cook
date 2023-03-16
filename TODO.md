@@ -5,7 +5,6 @@
 ✅CRUD => Edit Page => Delete Video
 ✅Recipe Model
 - CRUD REVIEWS
-- Add Reviews
 - CRUD RECIPE
 
 # Search
@@ -16,7 +15,7 @@
         - highlight the selected one
         - even when coming from the watch page
     ✅account settings
-    -   watch video
+    - watch video
     - Loader = upload and delete take a long time - need a spinner
 
 # profile page
