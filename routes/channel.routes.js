@@ -4,11 +4,12 @@ require('dotenv').config()
 const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 
-const secured = require('../middleware/route-guard')
 const stream = require('stream')
 const fs = require('fs')
 const { promisify } = require('util')
 
+const secured = require('../middleware/route-guard')
+const { getFoodDetails } = require('../config/fatSecret.config')
 const {
   uploadVideo,
   getVideo,
@@ -280,7 +281,7 @@ router.get('/profile/:idFromDB/likedVideos', async (req, res, next) => {
   }
 
   const allVideos = await Video.find().populate('author')
-  
+
   // liked videos
   const videos = allVideos.filter((video) =>
     video.likes.includes(userFromDB._id)
@@ -377,10 +378,14 @@ router.post(
       videoToDB.recipe = recipeId._id
       const createdVideo = await Video.create(videoToDB)
 
-      const updatedRecipe = await Recipe.findByIdAndUpdate(recipeId, { video: createdVideo._id }, {new:true})
+      const updatedRecipe = await Recipe.findByIdAndUpdate(
+        recipeId,
+        { video: createdVideo._id },
+        { new: true }
+      )
 
       console.log(videoToDB, recipeToDB)
-      
+
       res.status(200).json(createdVideo._id)
     } catch (error) {
       console.error(error)

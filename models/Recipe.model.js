@@ -15,6 +15,7 @@ const ingredientSchema = new Schema({
     type: String,
     required: true,
   },
+
 })
 
 const recipeSchema = new Schema(
@@ -32,6 +33,7 @@ const recipeSchema = new Schema(
     author: {
       id: { type: Schema.Types.ObjectId, ref: 'User' },
     },
+    
   },
   {
     timestamps: true,

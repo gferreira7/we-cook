@@ -1,8 +1,5 @@
 const { Router } = require('express')
-const axios = require('axios')
-const request = require('request')
-const OAuth = require('oauth-1.0a')
-const crypto = require('crypto')
+
 const router = new Router()
 require('dotenv').config()
 const mongoose = require('mongoose')
@@ -12,139 +9,38 @@ const Video = require('../models/Video.model.js')
 const User = require('../models/User.model.js')
 const Recipe = require('../models/Recipe.model.js')
 const { timePassedSince, toHoursAndMinutes } = require('../controllers/helpers')
+const { getFoodDetails } = require('../config/fatSecret.config')
 
-const getFoodDetails = async (ingredientsArray) => {
-  let macros = []
-  const clientID = 'df668fcaf2094bcc850c96e2f589d6b4'
-  const clientSecret = 'aeec0d38440349799e18992a431b556a'
-  let token = ''
-
-  // Request access token
-  const tokenOptions = {
-    method: 'POST',
-    url: 'https://oauth.fatsecret.com/connect/token',
-    auth: {
-      user: clientID,
-      password: clientSecret,
-    },
-    headers: {
-      'content-type': 'application/x-www-form-urlencoded',
-    },
-    form: {
-      grant_type: 'client_credentials',
-      scope: 'basic',
-    },
-    json: true,
-  }
-
-  request(tokenOptions, function (error, response, body) {
-    let token = ''
-    // Request access token
-    const tokenOptions = {
-      method: 'POST',
-      url: 'https://oauth.fatsecret.com/connect/token',
-      auth: {
-        user: clientID,
-        password: clientSecret,
-      },
-      headers: {
-        'content-type': 'application/x-www-form-urlencoded',
-      },
-      form: {
-        grant_type: 'client_credentials',
-        scope: 'basic',
-      },
-      json: true,
-    }
-
-    request(tokenOptions, function (error, response, body) {
-      if (error) throw new Error(error)
-      token = `Bearer ` + body.access_token
-      // Make request to get food categories
-      const urlsArray = []
-      ingredientsArray.forEach((element) => {
-        urlsArray.push(
-          `https://platform.fatsecret.com/rest/server.api?POST&method=foods.search&search_expression=${element.ingredient}&max_results=1&format=json`
-        )
-      })
-      const consumerKey = clientID
-      const consumerSecret = body.client_secret
-
-      const oauth = OAuth({
-        consumer: {
-          key: consumerKey,
-          secret: consumerSecret,
-        },
-        signature_method: 'HMAC-SHA1',
-        hash_function(base_string, key) {
-          return crypto
-            .createHmac('sha1', key)
-            .update(base_string)
-            .digest('base64')
-        },
-      })
-
-      urlsArray.forEach((endpointUrl) => {
-        console.log('url we are sending ', endpointUrl)
-        let requestData = {
-          url: endpointUrl,
-          method: 'POST',
-        }
-
-        let headers = oauth.toHeader(
-          oauth.authorize(requestData, {
-            key: consumerKey,
-            secret: consumerSecret,
-          })
-        )
-
-        headers.Authorization = token
-
-        let requestConfig = {
-          method: 'post',
-          headers: headers,
-          url: endpointUrl,
-        }
-
-        axios(requestConfig)
-          .then((responseFood) => {
-            macros.push(responseFood.data.foods.food)
-           console.log('response from Axios', responseFood.data.foods.food)
-           pause();
-          })
-          .catch((err) => console.log(err))
-      })
-    })
-  })
-  console.log('inside func', macros)
-    return macros
-}
 
 
 router.get('/watch/:videoId', secured, async (req, res, next) => {
   let { videoId } = req.params
 
-  let userProfile = await User.findOne({ authId: req.user.id }).exec()
+  try {
+    let userProfile = await User.findOne({ authId: req.user.id }).exec()
+    const video = await Video.findById(videoId)
+      .populate('author')
+      .populate('recipe')
+    const timeSinceUpload = timePassedSince(video.createdAt.getTime())
 
-  const video = await Video.findById(videoId).populate('author')
-  const timeSinceUpload = timePassedSince(video.createdAt.getTime())
-
-  console.log(video.recipe._id)
-
-  const data = await Recipe.findById(video.recipe._id)
- // console.log('food before func', data.ingredients)
-
-  let macros = await getFoodDetails(data.ingredients)
-
-   console.log('food after func', macros)
-  const isUploader = req.user.id === video.author.authId
-   res.render('single-video', {
-    title: video.title,
-    userProfile,
-    video,
-    timeSinceUpload,
-    isUploader,
-  })
+    const nutritionInfo = await Promise.all(
+      video.recipe.ingredients.map(async (ingredient) => {
+        const response = await getFoodDetails(ingredient)
+        return response
+      })
+    )
+    const isUploader = req.user.id === video.author.authId
+    res.render('single-video', {
+      title: video.title,
+      userProfile,
+      video,
+      timeSinceUpload,
+      isUploader,
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ message: 'Server error' })
+  }
 })
 
 router.post('/search', secured, async (req, res, next) => {
