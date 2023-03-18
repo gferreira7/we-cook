@@ -11,8 +11,6 @@ const Recipe = require('../models/Recipe.model.js')
 const { timePassedSince, toHoursAndMinutes } = require('../controllers/helpers')
 const { getFoodDetails } = require('../config/fatSecret.config')
 
-
-
 router.get('/watch/:videoId', secured, async (req, res, next) => {
   let { videoId } = req.params
 
@@ -22,20 +20,36 @@ router.get('/watch/:videoId', secured, async (req, res, next) => {
       .populate('author')
       .populate('recipe')
     const timeSinceUpload = timePassedSince(video.createdAt.getTime())
+    
+    let nutritionInfo
+    if (video.recipe) {
+       nutritionInfo = await Promise.all(
+        video.recipe.ingredients.map(async (ingredient) => {
+          const response = await getFoodDetails(ingredient)
+          return response
+        })
+      )
+    }
 
-    const nutritionInfo = await Promise.all(
-      video.recipe.ingredients.map(async (ingredient) => {
-        const response = await getFoodDetails(ingredient)
-        return response
-      })
-    )
     const isUploader = req.user.id === video.author.authId
+
+    let relatedVideos
+    try {
+      relatedVideos = await Video.find({
+        tags: { $regex: `${video.tags[0]}`, $options: 'i' },
+      }).sort({ views: -1 })
+    } catch (error) {
+      console.log(error)
+    }
+
+    // res.status(200).json({relatedVideos, nutritionInfo})
     res.render('single-video', {
       title: video.title,
       userProfile,
       video,
       timeSinceUpload,
       isUploader,
+      relatedVideos
     })
   } catch (error) {
     console.log(error)
@@ -44,7 +58,14 @@ router.get('/watch/:videoId', secured, async (req, res, next) => {
 })
 
 router.post('/search', secured, async (req, res, next) => {
-  let { search, f_category, f_author, f_title, f_tags, f_all } = req.body
+  let {
+    search,
+    categoryFilter,
+    authorFilter,
+    titleFilter,
+    tagsFilter,
+    allFilter,
+  } = req.body
 
   let userProfile = await User.findOne({ authId: req.user.id }).exec()
 
@@ -52,17 +73,17 @@ router.post('/search', secured, async (req, res, next) => {
 
   const regex = new RegExp(search, 'i')
 
-  if (f_category == 'on') {
+  if (categoryFilter == 'on') {
     searchParams = { category: { $regex: regex } }
-  } else if (f_title == 'on') {
+  } else if (titleFilter == 'on') {
     searchParams = { title: { $regex: regex } }
-  } else if (f_tags == 'on') {
+  } else if (tagsFilter == 'on') {
     searchParams = { tags: { $regex: regex } }
   } else {
     searchParams = { title: { $regex: regex } }
   }
 
-  if (f_all == 'on') {
+  if (allFilter == 'on') {
     searchParams = {
       $or: [
         { title: { $regex: regex } },
@@ -71,42 +92,15 @@ router.post('/search', secured, async (req, res, next) => {
       ],
     }
   }
-  console.log(searchParams)
 
-  //falta ver como fazer pra o author pois está com a ref pra outra tabela
-  /* EXEMPLO CHATGPT
-  const videoTitle = 'My Video Title';
-  const userName = 'John Doe';
-  
-  Video.find({ title: videoTitle })
-    .populate({
-      path: 'author',
-      match: { name: userName }
-    })
-    .exec((err, video) => {
-      if (err) {
-        console.log(err);
-      } else if (!video) {
-        console.log(`No video found with title: ${videoTitle}`);
-      } else {
-        console.log(video);
-      }
-    }); */
-
-  if (f_author == 'on') {
+  if (authorFilter == 'on') {
     let videosArray = []
     let usersFromDB = await User.find({ channelName: { $regex: regex } })
-    console.log(typeof usersFromDB)
-    console.log(usersFromDB)
 
     usersFromDB.forEach((element) => {
-      console.log(typeof element)
-      console.log(element._id)
       Video.find({ author: element._id })
         .populate('author')
         .then((videos) => {
-          console.log('INSIDE FIND')
-          console.log(videos)
           videosArray.push(videos)
 
           res.render('video-search', {

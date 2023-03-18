@@ -1,6 +1,6 @@
 <!--VIdeos here -->
 
-<div class='videos'>
+<div class='videos-grid'>
 
   {{#each videos}}
     <a href='/watch/{{_id}}'>
@@ -9,7 +9,8 @@
         <div class='video-time'>{{durationInHMS}}</div>
         <div videoWrapper class='video-wrapper'>
 
-          <video muted=''>
+          <video class="vjs-16-9" muted='' poster='{{thumbnail}}'
+>
             <source height='300' src='{{url}}' type='video/mp4' />
           </video>
           <div class='author-img__wrapper video-author'>
@@ -32,7 +33,7 @@
         </div>
         <div class='video-name'>{{title}}</div>
         <div class='video-view'>{{views}}
-          views<span class='seperate video-seperate'>
+          views<span class='separate video-separate'>
 
           </span>
           {{!-- {{createdAt}} --}}
@@ -42,7 +43,3 @@
   {{/each}}
 
 </div>
-
-<script>
-
-</script>

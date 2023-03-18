@@ -8,7 +8,7 @@ const dislikeButton = document.querySelector('button[dislike-btn]')
 const likeCount = document.querySelector('span[like-count]')
 const dislikeCount = document.querySelector('span[dislike-count]')
 
-const cookTimeElement = document.querySelector('span[cookTime]')
+const cookTimeElement = document.querySelector('div[cookTime]')
 
 const updateViews = (videoId) => {
   axios

@@ -1,9 +1,9 @@
 {{#with video}}
-  <div class='watch-video'>
-    <div class='video-stream'>
-      <video
+  <div class='single-video-page'> 
+      
+        <video
         videoId='{{_id}}'
-        class='video-js vjs-default-skin anim'
+        class='video-js vjs-16-9 vjs-default-skin '
         width='640px'
         height='267px'
         controls
@@ -13,10 +13,62 @@
       >
         <source src='{{url}}' type='video/mp4' />
         <source src='{{url}}' type='video/webm' />
-      </video>
-      <div class='video-detail'>
+        </video>
+      <div class='recipe'>
+        <div class='recipe-header'>
+            <div>{{title}}</div>
+            <span>
+              <div cookTime={{recipe.cookTime}}></div>
+              <img
+              src='/images/clock.png'
+              alt='cooking-time'
+            />
+          </span>
+        </div>
+        <div class='recipe-content'>
+          <div
+            class='ingredients'
+            style='--delay: .1s'
+          >
+            {{#each recipe.ingredients}}
+              <div
+                class=''
+              >
+                <div>
+                  {{ingredient}}
+                  -
+                  {{quantity}}
+                  {{unit}}
+                  - 12 kcal
+                </div>
+      
+              </div>
+            {{/each}}
+          </div>
+          <div
+            class='ingredients'
+            style='--delay: .1s'
+          >
+            {{#each recipe.steps}}
+              <div
+                class=''
+              >
+                <div>
+                  {{this}}
+                </div>
+              </div>
+            {{/each}}
+          </div>
+          <div data-bring-import data-bring-language='en' style='display:none'>
+            <a href='https://www.getbring.com'>Bring! Einkaufsliste App f&uuml;r
+              iPhone und Android</a>
+          </div>
+        </div>
+
+      </div>
+      <div class='video-details'>
         <div class='video-content'>
-          <div class='video-p-wrapper anim' style='--delay: .1s'>
+          <div class='video-con-wrapper ' style='--delay: .1s'>
             <div class='author-img__wrapper video-author video-p'>
               <svg
                 viewBox='0 0 24 24'
@@ -83,8 +135,8 @@
           </div>
           <div class="video-info-footer">
             <div class="video-info">
-              <div class='video-p-title anim' style='--delay: .2s'>{{title}}</div>
-              <div class='video-p-subtitle anim' style='--delay: .3s'>
+              <div class='video-p-title' style='--delay: .2s'>{{title}}</div>
+              <div class='video-p-subtitle' style='--delay: .3s'>
                 <span class="subtitle-text">{{description}}</span>
                 <button class="btn btn-outline-success read-more-btn">Read More</button>  
               </div>
@@ -105,98 +157,24 @@
             </div>
           </div>
         </div>
-      </div>
     </div>
-    <div class='chat-stream'>
-      <div class='chat'>
-        <div class='chat-header anim'>{{title}}<span>
-            <span cookTime={{recipe.cookTime}} class='p-2'>...</span>
-            <img
-              src='/images/clock.png'
-              alt='cooking-time'
-              style='width:20px'
-            />
-          </span>
-        </div>
-        <div class='message-container'>
-          <div
-            class='message anim d-flex flex-column justify-content-center align-items-start'
-            style='--delay: .1s'
-          >
-            {{#each recipe.ingredients}}
-              <div
-                class='author-img__wrapper video-author video-p d-flex justify-content-between w-100 px-4'
-              >
-                <div>
-                  {{ingredient}}
-                  -
-                  {{quantity}}
-                  {{unit}}
-                </div>
-                <div>
-                  12 kcal
-                </div>
-              </div>
-            {{/each}}
-          </div>
-          <div
-            class='message anim d-flex flex-column justify-content-center align-items-start'
-            style='--delay: .1s'
-          >
-            {{#each recipe.steps}}
-              <div
-                class='author-img__wrapper video-author video-p d-flex justify-content-between w-100 px-4'
-              >
-                <div>
-                  {{this}}
-                </div>
-              </div>
-            {{/each}}
-          </div>
-          <div data-bring-import data-bring-language='en' style='display:none'>
-            <a href='https://www.getbring.com'>Bring! Einkaufsliste App f&uuml;r
-              iPhone und Android</a>
-          </div>
-        </div>
+      
+{{/with}}
+      <div class='related-videos-container'>
+          <div class="related-videos">
+        {{#each relatedVideos}}
+        <div class="">
 
-      </div>
-      <div class='chat-vid__container'>
-        <div class='chat-vid__title anim' style='--delay: .3s'>Related Videos</div>
-        <div class='chat-vid anim' style='--delay: .4s'>
-          <div class='chat-vid__wrapper'>
-            <img
-              class='chat-vid__img'
-              src='https://cdn.nohat.cc/thumb/f/720/3b55eddcfffa4e87897d.jpg'
-            />
-            <div class='chat-vid__content'>
-              <div class='chat-vid__name'>Prepare for your first skateboard jump</div>
-              <div class='chat-vid__by'>Jordan Wise</div>
-              <div class='chat-vid__info'>125.908 views
-                <span class='seperate'></span>2 days ago</div>
-            </div>
+            {{!-- <img src="{{thumbnail}}" alt=""> --}}
+            <div>{{title}}</div>
           </div>
+        {{/each}}
         </div>
-        <div class='chat-vid anim' style='--delay: .5s'>
-          <div class='chat-vid__wrapper'>
-            <img
-              class='chat-vid__img'
-              src='https://iamaround.it/wp-content/uploads/2015/02/pexels-photo-4663818.jpeg'
-            />
-            <div class='chat-vid__content'>
-              <div class='chat-vid__name'>Prepare for your first skateboard jump</div>
-              <div class='chat-vid__by'>Jordan Wise</div>
-              <div class='chat-vid__info'>125.908 views
-                <span class='seperate'></span>2 days ago</div>
-            </div>
-          </div>
-        </div>
-        <div class='chat-vid__button anim' style='--delay: .6s'>See All related
-          videos (32)</div>
       </div>
+
     </div>
   </div>
                                                                                       
-{{/with}}
 
 <script async='async' src='//platform.getbring.com/widgets/import.js'></script>
 <script src='/js/watch.js'></script>

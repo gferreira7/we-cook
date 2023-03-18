@@ -1,17 +1,17 @@
 const axios = require('axios')
 const OAuth = require('oauth-1.0a')
 const crypto = require('crypto')
-
+require('dotenv').config()
+ 
 const getFoodDetails = async (ingredientObj) => {
-    const clientID = 'df668fcaf2094bcc850c96e2f589d6b4'
-    const clientSecret = 'aeec0d38440349799e18992a431b556a'
   
+
     const tokenOptions = {
       method: 'POST',
       url: 'https://oauth.fatsecret.com/connect/token',
       auth: {
-        username: clientID,
-        password: clientSecret,
+        username: process.env.FAT_SECRET_CLIENT_ID,
+        password: process.env.FAT_SECRET_SECRET,
       },
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
@@ -26,8 +26,8 @@ const getFoodDetails = async (ingredientObj) => {
   
       const endpointUrl = `https://platform.fatsecret.com/rest/server.api?method=foods.search&search_expression=${ingredientObj}&max_results=1&format=json`
   
-      const consumerKey = clientID
-      const consumerSecret = clientSecret
+      const consumerKey = process.env.FAT_SECRET_CLIENT_ID
+      const consumerSecret = process.env.FAT_SECRET_SECRET
   
       const oauth = OAuth({
         consumer: {

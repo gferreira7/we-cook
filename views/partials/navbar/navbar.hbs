@@ -3,30 +3,30 @@
   {{#if userProfile.channelName}}
   <div class='search-bar'>
     <form role='search' method='POST' action='/search'>
-      <div style="display: flex">
+      <div class="search-wrapper">
         <input type='text' name='search' placeholder='Search' />
-        <a id="filterBTN"> <img id="filterIMG" width="20" src="../../images/png/down_white.png"> </img> </a>
+        <a id="filter-btn"> <img id="filter-img" width="20" src="../../images/png/down_white.png"> </img> </a>
       </div>
-      <div class="filters" id="filters">
+      <div class="search-filters" id="search-filters">
         <div>
-          <input type="checkbox" id="Title" name="f_title">
-          <label for="scales">Title</label>
-        </div>
-  <div>
-          <input type="checkbox" id="Title" name="f_author">
-          <label for="scales">Author</label>
+          <input type="checkbox" id="search-title" name="titleFilter">
+          <label for="search-title">Title</label>
         </div>
         <div>
-          <input type="checkbox" id="Category" name="f_category">
-          <label for="scales">Category</label>
+          <input type="checkbox" id="search-author" name="authorFilter">
+          <label for="search-author">Author</label>
         </div>
         <div>
-          <input type="checkbox" id="Tags" name="f_tags">
-          <label for="scales">Tags</label>
+          <input type="checkbox" id="search-category" name="categoryFilter">
+          <label for="search-category">Category</label>
+        </div>
+        <div>
+          <input type="checkbox" id="search-tags" name="tagsFilter">
+          <label for="search-tags">Tags</label>
         </div>
           <div>
-          <input type="checkbox" id="all" name="f_all">
-          <label for="scales">All</label>
+          <input type="checkbox" id="search-all" name="allFilter">
+          <label for="search-all">All</label>
         </div>
       </div>
     </form>
@@ -79,17 +79,16 @@
 
 
 <script>
-    let btn = document.getElementById("filterBTN")
-    let divF = document.getElementById("filters")
-    btn.addEventListener("click", () => {
-      if (divF.style.display == "none") {
-        divF.style.display = "flex";
-        document.getElementById("filterIMG").src = "../../images/png/up_white.png"
+    let filterBtn = document.getElementById("filter-btn")
+    let filtersDiv = document.getElementById("search-filters")
+    filterBtn.addEventListener("click", () => {
+      if (filtersDiv.style.display == "none") {
+        filtersDiv.style.display = "flex";
+        document.getElementById("filter-img").src = "../../images/png/up_white.png"
       }
       else {
-        divF.style.display = "none";
-        document.getElementById("filterIMG").src = "../../images/png/down_white.png"
-
+        filtersDiv.style.display = "none";
+        document.getElementById("filter-img").src = "../../images/png/down_white.png"
       }
 
     });

@@ -15,14 +15,7 @@ pages.forEach((page) => {
   const element = document.getElementById(page)
   if (pageFound) {
     element.classList.add('is-active')
-    /*
-    const sidebarLinks = document.querySelectorAll(".sidebar-link");
-    sidebarLinks.forEach(link => {
-      link.addEventListener("click", () => {
-        sidebarLinks.forEach(l => l.classList.remove("is-active"));
-        link.classList.add("is-active");
-      });
-    }); */
+  
   } else {
     element.classList.remove('is-active')
   }
