@@ -11,7 +11,7 @@ cloudinary.config({
 async function uploadVideo(buffer) {
     return new Promise((resolve, reject) => {
       // Create a read stream from the buffer
-      const stream = cloudinary.uploader.upload_stream(  {  resource_type: "video", folder: "video_uploads",},
+      const stream = cloudinary.uploader.upload_stream(  {  resource_type: "video", folder: "video_uploads",transformation: [{ height: "640", crop: "scale", quality: "50" }]},
         (error, result) => {
           if (error) {
             reject(error);
