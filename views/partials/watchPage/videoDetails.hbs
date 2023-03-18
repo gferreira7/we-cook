@@ -15,19 +15,21 @@
 
       <img class='author-img' src='{{author.profilePic}}' />
     </div>
-    <div class='video-p-detail'>
+    <div class='video-channel-detail'>
       <div class='video-p-name'>{{author.channelName}}</div>
       <div class='video-p-sub'>{{author.subscribers}} subscribers</div>
       <div class='video-p-sub'>{{views}} Views</div>
     </div>
-
+    <div>
+      <button class="btn btn-success review-modal anim">Leave a Review!</button>
+    </div>
     <div class='button-wrapper'>
       <a href='/profile/{{_id}}/manageVideos'>
         <button class='like'>
           Edit
         </button>
       </a>
-      <button class='like green'>
+      <button class='like'>
         <svg
           viewBox='0 0 24 24'
           fill='currentColor'
@@ -39,7 +41,7 @@
         </svg>
         Share
       </button>
-      <button like-btn class='like blue'>
+      <button like-btn class='like'>
         <span like-count>{{likes.length}}</span>
         <svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
           <path
@@ -51,7 +53,7 @@
           ></path>
         </svg>
       </button>
-      <button dislike-btn class='like red'>
+      <button dislike-btn class='like'>
         <span dislike-count>{{dislikes.length}}</span>
         <svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
           <path
@@ -65,33 +67,59 @@
       </button>
     </div>
   </div>
+  <div class='reviews-container'>
+    <textarea name="comment" cols="15" rows="6"></textarea>
+    <div class="rate">
+      <input type="radio" id="star5" name="rate" value="5" />
+      <label for="star5" title="text">5 stars</label>
+      <input type="radio" id="star4" name="rate" value="4" />
+      <label for="star4" title="text">4 stars</label>
+      <input type="radio" id="star3" name="rate" value="3" />
+      <label for="star3" title="text">3 stars</label>
+      <input type="radio" id="star2" name="rate" value="2" />
+      <label for="star2" title="text">2 stars</label>
+      <input type="radio" id="star1" name="rate" value="1" />
+      <label for="star1" title="text">1 star</label>
+  </div>
+    </div>
   <div class='video-info-footer'>
     <div class='video-info'>
       <div class='video-p-title' style='--delay: .2s'>{{title}}</div>
-      <div class='video-p-subtitle' style='--delay: .3s'>
-        <span class='subtitle-text'>{{description}}</span>
-        <button class='btn btn-outline-success read-more-btn'>Read More</button>
+      <div class='video-description-wrapper' style='--delay: .3s'>
+        <span class='video-description'>{{description}}</span>
+        <button class='btn btn-outline-success read-more-btn'>Expand</button>
       </div>
 
     </div>
-    <div class='reviews-container'>
-      <span>Tried it? Tell us about it</span>
-      <div class='review-form'>
-        <textarea
-          class='video-input'
-          rows='4'
-          cols='20'
-          type='text'
-          name='comment'
-        ></textarea>
-        <span class='rate'>
-          <i star='1'>★</i>
-          <i star='2'>★</i>
-          <i star='3'>★</i>
-          <i star='4'>★</i>
-          <i star='5'>★</i>
-        </span>
-      </div>
-    </div>
+    
   </div>
 </div>
+
+<script>
+  
+  const description = document.querySelector('.video-description-wrapper');
+  const readMoreBtn = description.querySelector('.read-more-btn');
+
+  readMoreBtn.addEventListener('click', () => {
+    description.classList.toggle('text-ellipsis');
+    if (description.classList.contains('text-ellipsis')) {
+      readMoreBtn.textContent = 'Collapse';
+    } else {
+      readMoreBtn.textContent = 'Expand';
+    }
+  })
+
+  const reviewsContainer = document.querySelector('.reviews-container')
+  const reviewModalBtn = document.querySelector('.review-modal');
+
+  reviewModalBtn.addEventListener('click', () => {
+    reviewsContainer.classList.toggle('expand');
+    if (reviewsContainer.classList.contains('expand')) {
+      reviewModalBtn.textContent = 'Hide Review';
+    } else {
+      reviewModalBtn.textContent = 'Leave a Review';
+    }
+  })
+  
+
+</script>

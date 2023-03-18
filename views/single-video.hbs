@@ -61,17 +61,7 @@ window.onload = () => {
     updateLikesAndDislikes(videoId, {updateCriteria: 'dislike' }) 
   }
 
-  const subtitle = document.querySelector('.video-p-subtitle');
-  const subtitleText = subtitle.querySelector('.subtitle-text');
-  const readMoreBtn = subtitle.querySelector('.read-more-btn');
 
-  readMoreBtn.addEventListener('click', () => {
-    subtitleText.classList.toggle('show-full');
-    if (subtitleText.classList.contains('show-full')) {
-      readMoreBtn.textContent = 'Read Less';
-    } else {
-      readMoreBtn.textContent = 'Read More';
-    }
-  }) 
+  
 }
 </script>
