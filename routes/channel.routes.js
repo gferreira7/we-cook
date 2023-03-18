@@ -19,16 +19,7 @@ const { toHoursAndMinutes } = require('../controllers/helpers')
 const mongoose = require('mongoose') // <== has to be added
 
 const multer = require('multer')
-
-let dest = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, '/tmp')
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname)
-  }
-})
-const upload = multer({ storage: dest })
+const upload = multer({ dest: 'uploads/' })
 
 
 // import models here
@@ -392,10 +383,8 @@ router.post(
         if (recipeToDB.ingredients) {
            nutritionInfo = await Promise.all(
             recipeToDB.ingredients.map(async (ingredient) => {
-              console.log(typeof ingredient)
-              console.log(ingredient)
+          
               const response = await getFoodDetails(ingredient)
-
               return response
             })
           )
@@ -405,10 +394,14 @@ router.post(
       } catch(error)  {
         console.error(error)
       }
-    
+      recipeToDB.ingredients = nutritionInfo;
       
+      console.log(recipeToDB)
 
       const recipeId = await Recipe.create(recipeToDB)
+
+      console.log("recipeId:" + recipeId)
+
 
       videoToDB.recipe = recipeId._id
       const createdVideo = await Video.create(videoToDB)
@@ -419,7 +412,7 @@ router.post(
         { new: true }
       )
 
-      console.log(videoToDB, recipeToDB)
+      console.log(videoToDB)
 
       res.status(200).json(createdVideo._id)
     } catch (error) {
