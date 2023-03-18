@@ -431,9 +431,9 @@ a {
   border-bottom: 1px solid var(--border-color);
 }
 
-.section-header{
+.section-header {
   font-size: 30px;
-  padding: 20px;  
+  padding: 20px;
   border-bottom: 1px solid var(--border-color);
 }
 
@@ -649,7 +649,6 @@ video {
 }
 
 .video-p {
-  
   -o-object-fit: cover;
   object-fit: cover;
   flex-shrink: 0;
@@ -679,7 +678,7 @@ video {
   .video-p-wrapper .button-wrapper {
     margin: 20px auto 0;
   }
-  .video-p-wrapper .video-p-detail {
+  .video-p-wrapper .video-channel-detail {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -739,15 +738,49 @@ video {
   border-radius: 20px;
 }
 
-.video-content-wrapper{
+.video-content-wrapper {
   display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  margin: 5px 15px;
+}
+
+.video-content-wrapper img {
+  margin-top: 10px;
+  width: 65px;
+  height: 65px;
+}
+
+.video-content-wrapper + div {
+  margin: 0 15px;
+}
+
+.video-channel-detail {
+  margin-right: auto;
+  margin-left: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.video-channel-detail,
+.video-p-name {
+  font-size: 1.3em;
+  font-weight: 400;
+  margin-bottom: 0;
 }
 
 .button-wrapper {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   margin-left: auto;
+}
+
+.button-wrapper,
+.like {
+  font-size: 1.2em;
 }
 
 .like {
@@ -789,12 +822,71 @@ video {
   width: 100%;
 }
 
+.video-description-wrapper {
+  max-height: 100px;
+  padding: 5px;
+  border-radius: 20px;
+  border: 1px solid var(--input-color);
+  overflow: scroll;
+}
+.video-description-wrapper.text-ellipsis {
+  max-height: none;
+}
+
+.reviews-container {
+  margin: 20px;
+  display: none;
+}
+
+.reviews-container.expand {
+  display: flex;
+  flex-direction: column;
+}
+
 .recipe-panel-right {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   margin-left: 30px;
 }
+
+.rate {
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+.rate > input:checked ~ label {
+    color: #ffc700;    
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #deb217;  
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+}
+
+/* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
 
 .recipe {
   background-color: var(--light-green-transparent);
@@ -839,7 +931,7 @@ video {
   margin-bottom: 18px;
 }
 
-.related-videos{
+.related-videos {
   background-color: var(--light-green-transparent);
   border-radius: 20px;
   padding: 0 20px;
@@ -858,7 +950,7 @@ video {
   margin-bottom: 18px;
   border-bottom: none;
 }
-.related-video img{
+.related-video img {
   width: 200px;
 }
 .video-js .vjs-control-bar {
