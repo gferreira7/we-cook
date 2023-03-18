@@ -24,7 +24,8 @@ router.get('/watch/:videoId', secured, async (req, res, next) => {
     let nutritionInfo
     if (video.recipe) {
        nutritionInfo = await Promise.all(
-        video.recipe.ingredients.map(async (ingredient) => {
+         video.recipe.ingredients.map(async (ingredient) => {
+          console.log(ingredient)
           const response = await getFoodDetails(ingredient)
           return response
         })
@@ -42,7 +43,7 @@ router.get('/watch/:videoId', secured, async (req, res, next) => {
       console.log(error)
     }
 
-    // res.status(200).json({relatedVideos, nutritionInfo})
+   //res.status(200).json({relatedVideos, nutritionInfo})
     res.render('single-video', {
       title: video.title,
       userProfile,

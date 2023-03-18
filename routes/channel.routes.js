@@ -373,6 +373,29 @@ router.post(
         recipeToDB.ingredients = JSON.parse(ingredientsList)
       }
       // save recipe ID to video Document
+
+      //recipe here
+      let nutritionInfo
+      try {
+        if (recipeToDB.ingredients) {
+           nutritionInfo = await Promise.all(
+            recipeToDB.ingredients.map(async (ingredient) => {
+              console.log(typeof ingredient)
+              console.log(ingredient)
+              const response = await getFoodDetails(ingredient)
+
+              return response
+            })
+          )
+
+        }
+        
+      } catch(error)  {
+        console.error(error)
+      }
+    
+      
+
       const recipeId = await Recipe.create(recipeToDB)
 
       videoToDB.recipe = recipeId._id
