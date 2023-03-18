@@ -435,8 +435,6 @@ a {
   font-size: 30px;
   padding: 20px;  
   border-bottom: 1px solid var(--border-color);
-
-
 }
 
 /* VIDEO LIST - used to display grid videos in the partial */
@@ -595,7 +593,7 @@ video {
 
 .video-author {
   position: absolute;
-  right: 10px;
+  left: 10px;
   transition: 0.4s;
   bottom: -25px;
 }
@@ -651,7 +649,7 @@ video {
 }
 
 .video-p {
-  margin-right: 12px;
+  
   -o-object-fit: cover;
   object-fit: cover;
   flex-shrink: 0;
@@ -739,6 +737,10 @@ video {
   background-color: var(--light-green-transparent);
   padding: 20px 30px;
   border-radius: 20px;
+}
+
+.video-content-wrapper{
+  display: flex;
 }
 
 .button-wrapper {
