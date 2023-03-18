@@ -77,6 +77,7 @@ router.get('/profile/:idFromDB', secured, async (req, res, next) => {
   }
 })
 
+
 router.get(
   '/profile/:idFromDB/accountSettings',
   secured,
