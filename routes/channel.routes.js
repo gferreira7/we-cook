@@ -28,7 +28,7 @@ let dest = multer.diskStorage({
     cb(null, file.originalname)
   }
 })
-const upload = multer({ dest: dest })
+const upload = multer({ storage: dest })
 
 
 // import models here
