@@ -8,14 +8,25 @@ const ingredientSchema = new Schema({
     required: true,
   },
   quantity: {
-    type: Number,
+    type: String,
     required: true,
   },
   unit: {
     type: String,
     required: true,
   },
-
+  calories: {
+    type: Number
+  },
+  carbs: {
+    type: Number
+  },
+  protein: {
+    type: Number
+  },
+  fat: {
+    type: Number
+  }
 })
 
 const recipeSchema = new Schema(

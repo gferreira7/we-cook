@@ -95,7 +95,7 @@ const getFoodDetails = async (ingredientObj) => {
         protein: protein
       };
       
-      console.log(objFood);
+    //  console.log(objFood);
       return objFood
     } catch (error) {
       console.log(error)
