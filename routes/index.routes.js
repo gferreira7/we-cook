@@ -3,6 +3,7 @@ const router = express.Router()
 const Video = require('../models/Video.model.js')
 const mongoose = require('mongoose') // <== has to be added
 const User = require('../models/User.model.js')
+const secured = require('../middleware/route-guard')
 
 router.get('/', (req, res, next) => {
   res.redirect('/home')
@@ -55,10 +56,14 @@ router.get('/subscriptions', async (req, res, next) => {
     title: 'subscriptions',
   })
 })
-router.get('/nutrition', async (req, res, next) => {
-  res.render('test', {
+router.get('/nutrition', secured, async (req, res, next) => {
+
+  
+  res.render('nutrition/chatpage', {
     title: 'nutrition',
   })
+
+
 })
 
 router.get('/messages', async (req, res, next) => {

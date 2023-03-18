@@ -31,8 +31,8 @@
       </div>
     </form>
   </div>
-  <div class='user-settings'>
-    <a href="/profile">
+  <div class='user-settings'style="cursor: pointer;" >
+    <a href="/profile" >
       <img class='user-img' src={{userProfile.profilePic}} alt='profile-pic' />
     </a>
     <div class="dropdown">
@@ -42,7 +42,7 @@
           </path>
         </svg>
       </div>
-      <div class="dropdown-content"
+      <div class="dropdown-content"> 
         <a href="/profile"> <img src="../../images/png/profile.png"> profile </a>
         <a href="/profile/{{userProfile._id}}/accountSettings"> <img src="../../images/png/settings.png">settings</a>
         <a href="/logout"> <img src="../../images/png/logout.png"> logout</a>
