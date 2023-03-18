@@ -1,0 +1,90 @@
+<div class='video-content'>
+  <div class='video-con-wrapper' style='--delay: .1s'>
+    <div class='author-img__wrapper video-author video-p'>
+      <svg
+        viewBox='0 0 24 24'
+        fill='none'
+        stroke='currentColor'
+        stroke-width='3'
+        stroke-linecap='round'
+        stroke-linejoin='round'
+        class='feather feather-check'
+      >
+        <path d='M20 6L9 17l-5-5'></path>
+      </svg>
+
+      <img class='author-img' src='{{author.profilePic}}' />
+    </div>
+    <div class='video-p-detail'>
+      <div class='video-p-name'>{{author.channelName}}</div>
+      <div class='video-p-sub'>{{author.subscribers}} subscribers</div>
+      <div class='video-p-sub'>{{views}} Views</div>
+    </div>
+
+    <div class='button-wrapper'>
+      <a href='/profile/{{_id}}/manageVideos'>
+        <button class='like'>
+          Edit
+        </button>
+      </a>
+      <button class='like green'>
+        <svg
+          viewBox='0 0 24 24'
+          fill='currentColor'
+          xmlns='http://www.w3.org/2000/svg'
+        >
+          <path
+            d='M21.435 2.582a1.933 1.933 0 00-1.93-.503L3.408 6.759a1.92 1.92 0 00-1.384 1.522c-.142.75.355 1.704 1.003 2.102l5.033 3.094a1.304 1.304 0 001.61-.194l5.763-5.799a.734.734 0 011.06 0c.29.292.29.765 0 1.067l-5.773 5.8c-.428.43-.508 1.1-.193 1.62l3.075 5.083c.36.604.98.946 1.66.946.08 0 .17 0 .251-.01.78-.1 1.4-.634 1.63-1.39l4.773-16.075c.21-.685.02-1.43-.48-1.943z'
+          ></path>
+        </svg>
+        Share
+      </button>
+      <button like-btn class='like blue'>
+        <span like-count>{{likes.length}}</span>
+        <svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+          <path
+            d='M8 10V20M8 10L4 9.99998V20L8 20M8 10L13.1956 3.93847C13.6886 3.3633 14.4642 3.11604 15.1992 3.29977L15.2467 3.31166C16.5885 3.64711 17.1929 5.21057 16.4258 6.36135L14 9.99998H18.5604C19.8225 9.99998 20.7691 11.1546 20.5216 12.3922L19.3216 18.3922C19.1346 19.3271 18.3138 20 17.3604 20L8 20'
+            stroke='#000000'
+            stroke-width='1.5'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+          ></path>
+        </svg>
+      </button>
+      <button dislike-btn class='like red'>
+        <span dislike-count>{{dislikes.length}}</span>
+        <svg viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+          <path
+            d='M8 14V4M8 14L4 14V4.00002L8 4M8 14L13.1956 20.0615C13.6886 20.6367 14.4642 20.884 15.1992 20.7002L15.2467 20.6883C16.5885 20.3529 17.1929 18.7894 16.4258 17.6387L14 14H18.5604C19.8225 14 20.7691 12.8454 20.5216 11.6078L19.3216 5.60779C19.1346 4.67294 18.3138 4.00002 17.3604 4.00002L8 4'
+            stroke='#000000'
+            stroke-width='1.5'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+          ></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class='video-info-footer'>
+    <div class='video-info'>
+      <div class='video-p-title' style='--delay: .2s'>{{title}}</div>
+      <div class='video-p-subtitle' style='--delay: .3s'>
+        <span class='subtitle-text'>{{description}}</span>
+        <button class='btn btn-outline-success read-more-btn'>Read More</button>
+      </div>
+    </div>
+  </div>
+      <div class="reviews-container">
+              <span>Tried it? Tell us about it</span>
+              <div class="review-form">
+                  <textarea class="video-input" rows="4" cols="20" type="text" name="comment"></textarea>
+                  <span class="rate">
+                    <i star=1>★</i>
+                    <i star=2>★</i>
+                    <i star=3>★</i>
+                    <i star=4>★</i>
+                    <i star=5>★</i>
+                  </span>
+              </div>
+      </div>
+</div>

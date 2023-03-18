@@ -1,0 +1,50 @@
+
+        <div class='recipe-header'>
+            <div>{{title}}</div>
+            <span>
+              <div cookTime={{recipe.cookTime}}></div>
+              <img
+              src='/images/clock.png'
+              alt='cooking-time'
+            />
+          </span>
+        </div>
+        <div class='recipe-content'>
+          <div
+            class='ingredients'
+            style='--delay: .1s'
+          >
+            {{#each recipe.ingredients}}
+              <div
+                class=''
+              >
+                <div>
+                  {{ingredient}}
+                  -
+                  {{quantity}}
+                  {{unit}}
+                  - 12 kcal
+                </div>
+      
+              </div>
+            {{/each}}
+          </div>
+          <div
+            class='ingredients'
+            style='--delay: .1s'
+          >
+            {{#each recipe.steps}}
+              <div
+                class=''
+              >
+                <div>
+                  {{this}}
+                </div>
+              </div>
+            {{/each}}
+          </div>
+          <div data-bring-import data-bring-language='en' style='display:none'>
+            <a href='https://www.getbring.com'>Bring! Einkaufsliste App f&uuml;r
+              iPhone und Android</a>
+          </div>
+        </div>

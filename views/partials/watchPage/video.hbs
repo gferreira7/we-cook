@@ -1,0 +1,13 @@
+<video
+  videoId='{{_id}}'
+  class='video-js vjs-16-9 vjs-default-skin'
+  width='640px'
+  height='267px'
+  controls
+  preload='none'
+  poster='{{thumbnail}}'
+  data-setup='{ "aspectRatio":"940:620", "playbackRates": [1, 1.5, 2] }'
+>
+  <source src='{{url}}' type='video/mp4' />
+  <source src='{{url}}' type='video/webm' />
+</video>

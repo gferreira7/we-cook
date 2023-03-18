@@ -679,15 +679,7 @@ video {
   }
 }
 
-.show .stream-area {
-  display: flex;
-}
-.show .main-header,
-.show .main-blogs,
-.show .small-header,
-.show .videos {
-  display: none;
-}
+
 
 .video-stream {
   width: 65%;
@@ -809,8 +801,6 @@ video {
   padding: 5px 8px;
   cursor: pointer;
   font-size: 18px;
-
-
 }
 .like.red {
   background-color: #ea5f5f8c;

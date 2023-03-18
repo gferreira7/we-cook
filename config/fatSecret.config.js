@@ -24,7 +24,7 @@ const getFoodDetails = async (ingredientObj) => {
         data: { access_token: token },
       } = await axios(tokenOptions)
   
-      const endpointUrl = `https://platform.fatsecret.com/rest/server.api?method=foods.search&search_expression=${ingredientObj}&max_results=1&format=json`
+      const endpointUrl = `https://platform.fatsecret.com/rest/server.api?method=foods.search&search_expression=${ingredientObj.ingredient}&max_results=1&format=json`
   
       const consumerKey = process.env.FAT_SECRET_CLIENT_ID
       const consumerSecret = process.env.FAT_SECRET_SECRET

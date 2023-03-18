@@ -25,8 +25,8 @@ img {
   --input-color: #c8e6c9;
   --light-green-transparent: rgba(200, 230, 201, 0.5);
   --light-green: rgba(200, 230, 201, 1);
-  /* --theme-bg: #a5d6a7; */
-  --theme-bg: #fff;
+  --theme-bg: #a5d6a7;
+  /* --theme-bg: #fff; */
   --body-color: #333333;
   --button-bg: #d1b26f;
   --border-color: rgba(0, 0, 0, 0.24);
@@ -656,11 +656,17 @@ video {
 
 /* main container */
 .single-video-page {
-  display: grid;
-  width: 100%;
-  grid-template-columns: repeat(2, 1fr);
-  grid-column-gap: 20px;
-  grid-row-gap: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 80vh;
+}
+
+.video-and-recipe-wrapper{
+  display: flex;
+  height: 40vh;
+}
+.details-and-related-videos{
+  display: flex;
 }
 
 @media screen and (max-width: 940px) {
@@ -683,13 +689,6 @@ video {
 }
 
 /* Left panel video + description */
-
-.single-video-page video {
-  -o-object-fit: cover;
-  object-fit: cover;
-  transition: 0.3s;
-  border-radius: 20px;
-}
 
 /* bottom left container */
 .video-details {
@@ -738,7 +737,7 @@ video {
 .recipe {
   background-color: var(--light-green-transparent);
   border-radius: 20px;
-  height: 100%;
+  flex-grow: 1;
 }
 
 .recipe-header {
