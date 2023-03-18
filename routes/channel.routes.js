@@ -343,6 +343,7 @@ router.post(
         cookTime,
         ingredientsList,
         tagsList,
+        portions
       } = req.body
 
       let userIdFromDB = await User.findOne({ authId: req.user.id }).exec()
@@ -360,6 +361,9 @@ router.post(
       }
       if (cookTime) {
         recipeToDB.cookTime = parseInt(cookTime)
+      }
+      if (portions) {
+        recipeToDB.portions = parseInt(portions)
       }
       if (tagsList) {
         videoToDB.tagsList = JSON.parse(tagsList)

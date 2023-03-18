@@ -89,10 +89,10 @@ const getFoodDetails = async (ingredientObj) => {
         ingredient: ingredientObj.ingredient,
         unit: ingredientObj.unit,
         quantity: ingredientObj.quantity,
-        calories: calories,
-        fat: fat,
-        carbs: carbs,
-        protein: protein
+        calories: parseInt(calories),
+        fat: parseInt(fat),
+        carbs: parseInt(carbs),
+        protein: parseInt(protein)
       };
       
     //  console.log(objFood);

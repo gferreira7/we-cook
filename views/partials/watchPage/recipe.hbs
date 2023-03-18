@@ -1,36 +1,75 @@
 <div class='recipe-header anim'>
   <div>{{title}}</div>
   <span>
-    <div cookTime={{recipe.cookTime}}>...</div>
+    <div cookTime="{{recipe.cookTime}}">{{recipe.cookTime}}m</div>
     <img src='/images/clock.png' alt='cooking-time' />
+  </span>
+    <span>
+    <div portion="{{recipe.portions}}">{{recipe.portions}}</div>
+    <img src='/images/icons/yum.png' alt='portion' />
   </span>
 </div>
 <div class='recipe-content'>
   <div class='ingredients' style='--delay: .1s'>
-    {{#each recipe.ingredients}}
-      <div class='ingredient'>
-        <div>
-          {{ingredient}}
-          -
-          {{quantity}}
-          {{unit}}
-          - 12 kcal
-        </div>
+    <table id="keywords" cellspacing="0" cellpadding="0" style='--delay: .1s ; width:100%;'>
+    <thead>
+      <tr>
+        <th  style="text-align:left;" ><span>Ingredient</span></th>
+        <th><span>Qt</span></th>
+        <th><span>Fat</span></th>
+        <th><span>Carbs</span></th>
+        <th><span>Protein</span></th>
+         <th><span>Kcal</span> </th>
+      </tr>
+    </thead>
+    <tbody>
+        {{#each recipe.ingredients}}
+        {{#if ingredient }}
+          <tr style='--delay: .2s'>
+            <td class="lalign" style="text-align:left;"> {{#if ingredient }} {{ingredient}} {{else }} . {{/if}}  </td>
+           <td> {{#if quantity}} {{quantity}}{{unit}}  {{else}} 0.0 {{/if}} </td>
+          <td> {{#if fat}} {{fat}}g   {{else }} 0.0g {{/if}} </td> 
+           <td> {{#if carbs}} {{carbs}}g  {{else }} 0.0g{{/if}}</td>
+          <td>{{#if protein}} {{protein}}g   {{else }} 0.0g {{/if}}</td> 
+         <td>{{#if calories}} {{calories}}kcal {{else }} 0.0Kcal {{/if}}</td>
+      </tr>
+     {{/if}} 
+    {{/each}}
 
-      </div>
-    {{/each}}
+    </tbody>
+  </table>
+  
   </div>
+  <hr>
   <div class='ingredients' style='--delay: .1s'>
-    {{#each recipe.steps}}
-      <div class=''>
-        <div>
-          {{this}}
-        </div>
-      </div>
+ <table id="keywords" cellspacing="0" cellpadding="0" style='--delay: .1s ; width:100%; text-align:left;'>
+    <thead>
+      <tr>
+        <th style="text-align:left;"> <span>Steps of Recipe 🧑‍🍳</span></th>
+      </tr>
+    </thead>
+    <tbody>
+  {{#each recipe.steps}}      
+  <tr style='--delay: .2s' >
+  <td class="lalign" style="text-align:left;" >   {{@index}}🔸{{this}} </td></tr>
     {{/each}}
+    </tbody>
+  </table>
+
   </div>
   <div data-bring-import data-bring-language='en' style='display:none'>
     <a href='https://www.getbring.com'>Bring! Einkaufsliste App f&uuml;r iPhone
       und Android</a>
   </div>
 </div>
+
+<script>
+addEventListener("load", (event) => {
+  $(function(){
+  $('#keywords').tablesorter(); 
+});
+
+});
+
+
+</script>

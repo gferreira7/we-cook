@@ -32,12 +32,16 @@
           <div class="select__arrow"></div>
         </div>     
       </div>
+      <span >Number of servings?</span>
+        <div class='video-input'> 
+          <input type="number" name='portions'></input>
+        </div>
 
       <span>Ingredients</span>
       <div main-ingredients-container>
         <div class='video-input ingredients-input'>
           <small>Qty</small> 
-          <input ingredient-quantity placeholder='150' name='ingredient-quantity'></input>
+          <input ingredient-quantity placeholder='150' name='ingredient-quantity' type="number"></input>
           <div class="select">
             <select ingredient-unit name="ingredient-unit">
               <option>unit</option>
@@ -186,7 +190,7 @@
     const firstInputDiv = document.querySelector('div[main-ingredients-container]').children[0]
     firstInputDiv.querySelector('input[ingredient]').value = ''
     firstInputDiv.querySelector('input[ingredient-quantity]').value = ''
-    firstInputDiv.querySelector('select[ingredient-unit]').value = ''
+    firstInputDiv.querySelector('select[ingredient-unit]').value = 'g'
 
     ingredientsInput.parentNode.appendChild(newListItem)
   } 

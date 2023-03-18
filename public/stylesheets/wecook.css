@@ -1288,3 +1288,49 @@ textarea {
 .author-detail {
   margin-left: 16px;
 }
+
+
+
+/*  RECIPE TABLE LAYOUT */
+
+table { border-collapse: collapse; border-spacing: 0; }
+/** page structure **/
+
+
+#keywords {
+  margin: 0 auto;
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+}
+
+#keywords thead {
+  cursor: pointer;
+  text-align: center;
+}
+#keywords thead tr th { 
+  font-weight: bold;
+  padding: 6px 2px;
+  padding-left: 3px;
+}
+#keywords thead tr th span { 
+  padding-right: 4px;
+  background-repeat: no-repeat;
+  background-position: 100% 100%;
+}
+
+#keywords thead tr th.headerSortUp, #keywords thead tr th.headerSortDown {
+  background: #acc8dd;
+}
+
+
+#keywords tbody tr { 
+  color: #555;
+}
+#keywords tbody tr td {
+  text-align: center;
+  padding: 6px 2px;
+  padding-left: 3px;
+}
+#keywords tbody tr td.lalign {
+  text-align: center;
+}

@@ -38,6 +38,7 @@ const recipeSchema = new Schema(
     steps: [String],
     mealType: String,
     cookTime: Number,
+    portions: Number,
     ingredients: {
       type: [ingredientSchema],
     },
