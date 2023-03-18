@@ -1,12 +1,13 @@
-{{#with relatedVideos}}
-
-          <div class="related-videos">
-        {{#each relatedVideos}}
-        <div class="">
-
-            {{!-- <img src="{{thumbnail}}" alt=""> --}}
-            <div>{{title}}</div>
-          </div>
-        {{/each}}
-        </div>
-    {{/with}}
+<div class='section-header'>Related Videos</div>
+{{#each relatedVideos}}
+  <div class='related-video'>
+    <img src='{{thumbnail}}' alt='' />
+    <div>
+      <div>{{title}}</div>
+      <div>
+        <div>{{author.channelName}}</div>
+        <div>{{views}}views</div>
+      </div>
+    </div>
+  </div>
+{{/each}}

@@ -20,11 +20,11 @@ router.get('/watch/:videoId', secured, async (req, res, next) => {
       .populate('author')
       .populate('recipe')
     const timeSinceUpload = timePassedSince(video.createdAt.getTime())
-    
+
     let nutritionInfo
     if (video.recipe) {
-       nutritionInfo = await Promise.all(
-         video.recipe.ingredients.map(async (ingredient) => {
+      nutritionInfo = await Promise.all(
+        video.recipe.ingredients.map(async (ingredient) => {
           console.log(ingredient)
           const response = await getFoodDetails(ingredient)
           return response
@@ -37,20 +37,22 @@ router.get('/watch/:videoId', secured, async (req, res, next) => {
     let relatedVideos
     try {
       relatedVideos = await Video.find({
-        tags: { $regex: `${video.tags[0]}`, $options: 'i' },
-      }).sort({ views: -1 })
+        category: { $regex: `${video.category}`, $options: 'i' },
+      })
+        .populate('author')
+        .sort({ views: -1 })
     } catch (error) {
       console.log(error)
     }
 
-   //res.status(200).json({relatedVideos, nutritionInfo})
+    console.log({ relatedVideos })
     res.render('single-video', {
       title: video.title,
       userProfile,
       video,
       timeSinceUpload,
       isUploader,
-      relatedVideos
+      relatedVideos,
     })
   } catch (error) {
     console.log(error)
