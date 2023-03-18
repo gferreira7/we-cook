@@ -35,6 +35,8 @@ const projectName = "We Cook";
 
 app.locals.appTitle = `${capitalize(projectName)}`;
 
+app.use(express.static(__dirname + '/tmp'));
+app.use('./tmp', express.static('tmp'));
 
 // 👇 Start handling routes here
 const indexRoutes = require("./routes/index.routes");

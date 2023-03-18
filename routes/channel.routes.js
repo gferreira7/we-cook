@@ -1,8 +1,6 @@
 const { Router } = require('express')
 const router = new Router()
 require('dotenv').config()
-const multer = require('multer')
-const upload = multer({ dest: 'uploads/' })
 
 const stream = require('stream')
 const fs = require('fs')
@@ -19,6 +17,19 @@ const {
 const { toHoursAndMinutes } = require('../controllers/helpers')
 
 const mongoose = require('mongoose') // <== has to be added
+
+const multer = require('multer')
+
+let dest = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, '/tmp')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+const upload = multer({ storage: dest })
+
 
 // import models here
 const Video = require('../models/Video.model')
@@ -76,6 +87,7 @@ router.get('/profile/:idFromDB', secured, async (req, res, next) => {
       })
   }
 })
+
 
 router.get(
   '/profile/:idFromDB/accountSettings',
