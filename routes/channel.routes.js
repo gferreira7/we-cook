@@ -406,8 +406,22 @@ router.post(
 
       console.log("recipeId:" + recipeId)
 
+      const now = new Date();
+
+      const day = now.getDate();
+      const month = now.getMonth() + 1; // Adiciona 1 porque os meses começam em zero
+      const year = now.getFullYear();
+      const hour = now.getHours();
+      videoToDB.uploadedDate = {
+        day: day,
+        month: month,
+        year: year,
+        hour: hour
+      }
 
       videoToDB.recipe = recipeId._id
+
+      console.log(videoToDB)
       const createdVideo = await Video.create(videoToDB)
 
       const updatedRecipe = await Recipe.findByIdAndUpdate(
