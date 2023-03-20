@@ -48,6 +48,8 @@ router.get('/profile', secured, async (req, res, next) => {
     uploadedVideos,
     likedVideos,
     userProfile: userFromDB,
+    currentUser: userFromDB,
+
   })
 })
 

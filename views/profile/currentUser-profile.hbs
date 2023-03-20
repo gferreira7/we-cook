@@ -1,11 +1,10 @@
-{{> dashboard}}
-
+ {{#with userProfile}}  
+{{> dashboard }}
+ {{/with}}
 <div class="anim" style="--delay: 0.2s">
 
   <div class="wrapper">
     <div class="side-menu" style="display:inline-block; ">
-
-  
       <a class="anim " href="/profile/{{userProfile._id}}/manageVideos" id="profile"
         style="--delay: 0.3s;display:inline-block; font-size: 1.5rem; cursor: pointer; ">
         <svg viewBox="0 0 24 24" fill="currentColor" style="margin-right: -2px;">
@@ -35,11 +34,7 @@
       </button>
     </div>
   </div>
-
-
   <hr>
-
-
   {{> videos/uploadVideo}}
   <div class="main-header anim" style="--delay: 0.8s font-weight:700;">
     My Videos
