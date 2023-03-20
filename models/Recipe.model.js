@@ -34,7 +34,6 @@ const recipeSchema = new Schema(
     video: {
       type: Schema.Types.ObjectId,
       ref: 'Video',
-      required: true,
     },
     // should convert to steps
     steps: [String],
