@@ -31,23 +31,24 @@ const User = require('../models/User.model')
 const Recipe = require('../models/Recipe.model')
 
 router.get('/profile', secured, async (req, res, next) => {
-  let userFromDB = await User.findOne({ authId: req.user.id }).exec()
+  let loggedInUser = await User.findOne({ authId: req.user.id })
   const allVideos = await Video.find().populate('author').populate('recipe')
 
   // My Uploads
   const uploadedVideos = allVideos.filter(
-    (video) => video.author.authId === userFromDB.authId
+    (video) => video.author._id === loggedInUser._id
   )
   // My liked Videos
   const likedVideos = allVideos.filter((video) =>
-    video.likes.includes(userFromDB._id)
+    video.likes.includes(loggedInUser._id)
   )
 
+  console.log()
   res.render('profile/currentUser-profile', {
     title: 'Profile',
     uploadedVideos,
     likedVideos,
-    userProfile: userFromDB,
+    userProfile: loggedInUser,
   })
 })
 
@@ -175,22 +176,25 @@ router.get(
   '/profile/:profileId/manageVideos',
   secured,
   async (req, res, next) => {
-    let userFromDB = await User.findOne({ authId: req.user.id }).exec()
+    const { profileId } = req.params
+    const loggedInUser = await User.findOne({ authId: req.user.id })
+    if (profileId === loggedInUser._id) {
+      try {
+        const videos = await Video.find({ author: profileId })
+          .populate('author')
+          .populate('recipe')
 
-    Video.find({ author: userFromDB._id })
-      .populate('author')
-      .populate('recipe')
-      .then((videos) => {
         res.render('profile/manage-videos', {
           title: 'Manage Videos',
           videos,
           currentUser: userFromDB,
         })
-      })
-      .catch((error) => {
-        console.log('Error while getting the videos from the DB: ', error)
-        next(error)
-      })
+      } catch (error) {
+        res.status(500).json(error)
+      }
+    } else {
+      res.redirect('/')
+    }
   }
 )
 
