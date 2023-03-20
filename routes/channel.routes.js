@@ -22,8 +22,8 @@ const multer = require('multer')
 // const upload = multer({ dest: 'uploads/' })
 const os = require('os')
 const path = require('path')
-const tmpFolder = path.join(os.tmpdir(), 'uploads')
-const upload = multer({ dest: tmpFolder })
+// const tmpFolder = path.join(os.tmpdir(), 'uploads')
+const upload = multer({ dest: os.tmpdir() })
 
 // import models here
 const Video = require('../models/Video.model')
