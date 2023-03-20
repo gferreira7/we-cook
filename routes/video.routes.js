@@ -21,7 +21,7 @@ router.get('/watch/:videoId', secured, async (req, res, next) => {
   let { videoId } = req.params
 
   try {
-    let userProfile = await User.findOne({ authId: req.user.id }).exec()
+    let currentUser = await User.findOne({ authId: req.user.id }).exec()
     const video = await Video.findById(videoId)
       .populate('author')
       .populate('recipe')
@@ -58,7 +58,7 @@ router.get('/watch/:videoId', secured, async (req, res, next) => {
     if (isUploader) {
       res.render('watch-page-uploader', {
         title: video.title,
-        userProfile,
+        currentUser,
         video,
         reviews,
         timeSinceUpload,
@@ -68,7 +68,7 @@ router.get('/watch/:videoId', secured, async (req, res, next) => {
          
     res.render('watch-page-viewer', {
       title: video.title,
-      userProfile,
+      currentUser,
       video,
       reviews,
       timeSinceUpload,
@@ -91,7 +91,7 @@ router.post('/search', secured, async (req, res, next) => {
     allFilter,
   } = req.body
 
-  let userProfile = await User.findOne({ authId: req.user.id }).exec()
+  let currentUser = await User.findOne({ authId: req.user.id }).exec()
 
   let searchParams = {}
 
@@ -129,7 +129,7 @@ router.post('/search', secured, async (req, res, next) => {
 
           res.render('video-search', {
             title: search,
-            userProfile,
+            currentUser,
             videos: videos,
             // show results page with count
             count: videos.length,
@@ -146,7 +146,7 @@ router.post('/search', secured, async (req, res, next) => {
       .then((videos) => {
         res.render('video-search', {
           title: search,
-          userProfile,
+          currentUser,
           videos: videos,
           // show results page with count
           count: videos.length,

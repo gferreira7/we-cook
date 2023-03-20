@@ -27,7 +27,7 @@ router.get('/home', async (req, res, next) => {
       console.log(currentUser)
       res.render('home', {
         title: 'Home',
-        userProfile: currentUser,
+        currentUser: currentUser,
         videos: videos,
       })
     })
@@ -40,7 +40,7 @@ router.get('/home', async (req, res, next) => {
 })
 
 router.get('/trending', secured, async (req, res, next) => {
-  let userProfile = await User.findOne({ authId: req.user.id })
+  let currentUser = await User.findOne({ authId: req.user.id })
   const trendingVideos = await Video.find({
     averageRating: { $gte: 4 },
     views: { $gte: 10 },
@@ -54,7 +54,7 @@ router.get('/trending', secured, async (req, res, next) => {
   res.render('trending', {
     title: 'Trending',
     videos: trendingVideos,
-    userProfile,
+    currentUser,
   })
 })
 

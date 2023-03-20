@@ -13,10 +13,11 @@
         <path d='M20 6L9 17l-5-5'></path>
       </svg>
 
-      <img class='author-img' src='{{author.profilePic}}' />
+  <img class='author-img' src='{{author.profilePic}}' />
+ 
     </div>
     <div class='video-channel-detail'>
-      <div class='video-p-name'>{{author.channelName}}</div>
+     <a href="/profile/{{author.channelName}}" style="cursor:pointer;"> <div class='video-p-name'>{{author.channelName}}</div></a> 
       <div class='video-p-sub'>{{averageRating}} ⭐</div>
       <div class='video-p-sub'>{{author.subscribers}} subscribers</div>
       <div class='video-p-sub'>{{views}} Views</div>

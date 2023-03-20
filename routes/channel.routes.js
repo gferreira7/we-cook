@@ -51,16 +51,40 @@ router.get('/profile', secured, async (req, res, next) => {
   })
 })
 
-router.get('/profile/:idFromDB', secured, async (req, res, next) => {
-  const { idFromDB } = req.params
+router.get('/profile/:channelName', secured, async (req, res, next) => {
+  const { channelName } = req.params
 
-  let userFromDB = await User.findById(idFromDB)
+  let userFromDB = await User.find({channelName : channelName})
+  console.log(userFromDB)
 
+  let userProfile = await User.findOne({ authId: req.user.id }).exec()
+    currentUser = userProfile
+
+console.log( "Current USER: ",currentUser)
+
+  Video.find({ author: userFromDB._id })
+  .populate('author')
+  .then((videos) => {
+    res.render('profile/otherUser-profile', {
+      title: 'Profile',
+      videos,
+      userProfile: userFromDB,
+      currentUser: currentUser
+    })
+  })
+  .catch((error) => {
+    console.log('Error while getting the videos from the DB: ', error)
+
+    // Call the error-middleware to display the error page to the user
+    next(error)
+  })
+
+/*
   if (!userFromDB) {
     res.status(500).json('message: this user no longer exists')
   } else if (userFromDB.authId === req.user.id) {
     res.redirect('/profile')
-  } else {
+  } else { 
     let currentUser = await User.findOne({ authId: req.user.id }).exec()
 
     Video.find({ author: idFromDB })
@@ -80,6 +104,10 @@ router.get('/profile/:idFromDB', secured, async (req, res, next) => {
         next(error)
       })
   }
+
+  */
+
+
 })
 
 router.get(
@@ -96,7 +124,7 @@ router.get(
         res.render('profile/account-settings', {
           title: 'Account Settings',
           videos,
-          userProfile: userFromDB,
+          currentUser: userFromDB,
         })
       })
       .catch((error) => {
@@ -177,7 +205,7 @@ router.get(
         res.render('profile/manage-videos', {
           title: 'Manage Videos',
           videos,
-          userProfile: userFromDB,
+          currentUser: userFromDB,
         })
       })
       .catch((error) => {
@@ -265,7 +293,7 @@ router.get('/profile/:idFromDB/uploadedVideos', async (req, res, next) => {
         title: 'Profile',
         videos,
         isChannelOwner,
-        userProfile: userFromDB,
+        currentUser: userFromDB,
       })
     })
     .catch((error) => {
@@ -299,7 +327,7 @@ router.get('/profile/:idFromDB/likedVideos', async (req, res, next) => {
     title: 'Profile',
     videos,
     isChannelOwner,
-    userProfile: userFromDB,
+    currentUser: userFromDB,
   })
 })
 
