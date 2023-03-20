@@ -1,46 +1,29 @@
 <!--VIdeos here -->
 
-<div class='videos-grid'>
-
-  {{#each videos}}
-    <a href='/watch/{{_id}}'>
-      <div class='video anim' style='--delay: .4s'>
-        <!--one video start-->
-        <div class='video-time'>{{durationInHMS}}</div>
-        <div videoWrapper class='video-wrapper'>
-
-          <video class='vjs-16-9' muted='' poster='{{thumbnail}}'>
-            <source height='300' src='{{url}}' type='video/mp4' />
-          </video>
-          <div class='author-img__wrapper video-author'>
-            <svg
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              stroke-width='3'
-              stroke-linecap='round'
-              stroke-linejoin='round'
-              class='feather feather-check'
-            >
-              <path d='M20 6L9 17l-5-5'></path>
-            </svg>
-            <img class='author-img' src='{{author.profilePic}}' />
-          </div>
-
-        </div>
-        <div>
-          <div channelName class='video-by'>
-            {{author.channelName}}
-          </div>
-          <div class='video-name'>{{title}}</div>
-          <div class='video-rating'>{{averageRating}} ⭐</div>
-          <div class='video-view'>{{views}} views </div>
-          <span class=''>
-            {{uploadedDate.day}}/{{uploadedDate.month}}/{{uploadedDate.year}}|{{uploadedDate.hour}}
-          </span>d
-        </div>
-      </div>
-    </a>
-  {{/each}}
-
+<div class="videos">
+    {{#each videos}}
+    <a href='/watch/{{_id}}'> 
+      <div class="video anim" style="--delay: .4s ; padding-bottom:0px; cursor:pointer;">
+            <div class="video-time"><!--{{durationInHMS}} |-->  {{averageRating}} ⭐</div>
+            <div class="video-wrapper">
+              <video muted="">
+                <source
+                  src="{{url}}"
+                  type="video/mp4">
+              </video>
+              <div class="author-img__wrapper video-author">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" class="feather feather-check">
+                  <path d="M20 6L9 17l-5-5" />
+                </svg>
+                <img class="author-img"
+                  src="{{author.profilePic}}" />
+              </div>
+            </div>
+            <div class="video-by">{{author.channelName}}</div>
+            <div class="video-name">{{title}} </div>
+            <div class="video-view" style="display:flex; flex-direction: row ; justify-content: space-between; padding-bottom:0px;">{{views}} views  <p style="font-weight: 100 ;" > {{uploadedDate.day}}/{{uploadedDate.month}}/{{uploadedDate.year}}</p></div>
+          </div> 
+          </a>
+        {{/each}}
 </div>

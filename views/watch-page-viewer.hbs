@@ -1,70 +1,72 @@
 <div class='single-video-page'>
-    <div class="video-panel-left">
- 
+  <div class="video-panel-left">
+
     {{#with video}}
-      {{>watchPage/video}}
-      
-      <div class='video-details'>
-     
-        {{>watchPage/videoDetailsViewer}}
-{{/with}}
-      </div>
-       <div class="review-list">
+    {{>watchPage/video}}
 
-        {{>watchPage/reviews reviews=reviews}}
-       </div>
+    <div class='video-details'>
 
+      {{>watchPage/videoDetailsViewer}}
+      {{/with}}
     </div>
-    <div class='recipe-panel-right'>
+    <div class="review-list">
 
+      {{>watchPage/reviews reviews=reviews}}
+    </div>
+
+  </div>
+  <div class='recipe-panel-right'>
+
+    <div class="chat-vid__container">
       <div class='recipe'>
-       
+
         {{>watchPage/recipe}}
       </div>
 
       <div class='related-videos'>
-       
-        {{>watchPage/relatedVideos}}  
+
+        {{>watchPage/relatedVideos}}
       </div>
+
     </div>
 
-</div>
+  </div>
 
 
-<script async='async' src='//platform.getbring.com/widgets/import.js'></script>
-<script src='/js/watch.js'></script>
-<script>
+  <script async='async' src='//platform.getbring.com/widgets/import.js'></script>
+  <script src='/js/watch.js'></script>
+  <script>
 
-/*Convert # of cooking time minutes to readable format*/ 
-let minutes = parseInt(cookTimeElement.getAttribute('cookTime'))
+    /*Convert # of cooking time minutes to readable format*/
+    let minutes = parseInt(cookTimeElement.getAttribute('cookTime'))
 
-if(minutes>=60) { 
-    const hours = Math.floor(minutes/60)    
-    minutes = Math.floor(minutes%60) 
-    cookTimeElement.innerHTML = `${hours}h${minutes}m` 
-}
-  
-window.onload = () => { 
-    
-  video.addEventListener('play', () => {
-    video.hasSentViewCount = false 
-  }) 
-  
-  video.addEventListener('timeupdate', () => {
-        if(video.currentTime >= minViewTime && !video.hasSentViewCount) {
-            video.hasSentViewCount = updateViews(videoId) 
-        } 
-    }) 
-  /*user can only like OR dislike a video*/ 
-  /*check in DB and update the DOM*/ 
-  likeButton.onclick = () =>{ 
-    updateLikesAndDislikes(videoId, { updateCriteria: 'like' }) 
-  } 
-  dislikeButton.onclick = () =>{ 
-    updateLikesAndDislikes(videoId, {updateCriteria: 'dislike' }) 
-  }
+    if (minutes >= 60) {
+      const hours = Math.floor(minutes / 60)
+      minutes = Math.floor(minutes % 60)
+      cookTimeElement.innerHTML = `${hours}h${minutes}m`
+    }
+
+    window.onload = () => {
+
+      video.addEventListener('play', () => {
+        video.hasSentViewCount = false
+      })
+
+      video.addEventListener('timeupdate', () => {
+        if (video.currentTime >= minViewTime && !video.hasSentViewCount) {
+          video.hasSentViewCount = updateViews(videoId)
+        }
+      })
+      /*user can only like OR dislike a video*/
+      /*check in DB and update the DOM*/
+      likeButton.onclick = () => {
+        updateLikesAndDislikes(videoId, { updateCriteria: 'like' })
+      }
+      dislikeButton.onclick = () => {
+        updateLikesAndDislikes(videoId, { updateCriteria: 'dislike' })
+      }
 
 
-  
-}
-</script>
+
+    }
+  </script>
