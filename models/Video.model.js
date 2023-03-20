@@ -17,6 +17,7 @@ const videoSchema = new Schema(
         id: { type: Schema.Types.ObjectId, ref: 'Review' },
       },
     ],
+    averageRating: Number,
     tags: [String],
     views: {
       type: Number,

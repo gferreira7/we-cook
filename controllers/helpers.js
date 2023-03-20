@@ -1,3 +1,5 @@
+const Review = require('../models/Review.model.js')
+
 const timePassedSince = (initialTime) => {
   const currentTime = new Date().getTime()
   let milisecondsSince = currentTime - initialTime
@@ -29,7 +31,20 @@ const toHoursAndMinutes = (totalSeconds) => {
   )}:${String(seconds).padStart(2, '0')}`
 }
 
+const getRating = async (videoId) => {
+  const reviews = await Review.find({ video: videoId })
+
+  if (reviews.length !== 0) {
+    let sum = reviews.reduce((acc, currentValue) => {
+      return acc + parseInt(currentValue.rating)
+    }, 0)
+    let average = (sum / reviews.length).toFixed(2)
+    return average
+  }
+}
+
 module.exports = {
   timePassedSince,
   toHoursAndMinutes,
+  getRating,
 }

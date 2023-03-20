@@ -17,6 +17,7 @@
     </div>
     <div class='video-channel-detail'>
       <div class='video-p-name'>{{author.channelName}}</div>
+      <div class='video-p-sub'>{{averageRating}} ⭐</div>
       <div class='video-p-sub'>{{author.subscribers}} subscribers</div>
       <div class='video-p-sub'>{{views}} Views</div>
     </div>
@@ -67,28 +68,29 @@
       </button>
     </div>
   </div>
-  <div class='reviews-container anim style='--delay: .2s''>
-    <textarea name="comment" cols="15" rows="6"></textarea>
+  <div class="reviews-container anim" style='--delay: .2s'>
+    <textarea comment name="comment" cols="15" rows="6"></textarea>
     <div class="rate">
-      <input type="radio" id="star5" name="rate" value="5" />
+      <input rating type="radio" id="star5" name="rate" value="5" />
       <label for="star5" title="text">5 stars</label>
-      <input type="radio" id="star4" name="rate" value="4" />
+      <input rating type="radio" id="star4" name="rate" value="4" />
       <label for="star4" title="text">4 stars</label>
-      <input type="radio" id="star3" name="rate" value="3" />
+      <input rating type="radio" id="star3" name="rate" value="3" />
       <label for="star3" title="text">3 stars</label>
-      <input type="radio" id="star2" name="rate" value="2" />
+      <input rating type="radio" id="star2" name="rate" value="2" />
       <label for="star2" title="text">2 stars</label>
-      <input type="radio" id="star1" name="rate" value="1" />
+      <input rating type="radio" id="star1" name="rate" value="1" />
       <label for="star1" title="text">1 star</label>
   </div>
+  <button review-submit-btn type="button" class="btn btn-success">Submit</button>
     </div>
   <div class='video-info-footer anim'>
     <div class='video-info'>
       <div class='video-p-title' style='--delay: .2s'>{{title}}</div>
       <div class='video-description-wrapper' style='--delay: .3s'>
         <span class='video-description'>{{description}}</span>
-        <button class='btn btn-outline-success read-more-btn'>Expand</button>
       </div>
+        <button class='btn btn-outline-success read-more-btn'>Expand</button>
 
     </div>
     
@@ -98,7 +100,7 @@
 <script>
   
   const description = document.querySelector('.video-description-wrapper');
-  const readMoreBtn = description.querySelector('.read-more-btn');
+  const readMoreBtn = document.querySelector('.read-more-btn');
 
   readMoreBtn.addEventListener('click', () => {
     description.classList.toggle('text-ellipsis');
@@ -121,5 +123,14 @@
     }
   })
   
+  const submitReviewBtn = document.querySelector('button[review-submit-btn]')
 
+  submitReviewBtn.onclick = (e) => {
+    const comment = document.querySelector('textarea[comment]').value
+    let chosenRating = ratings.filter(rating => rating.checked)
+    
+    let reviewData = {comment:comment, rating: chosenRating[0].value}
+    submitReview(videoId, {reviewData})
+    reviewModalBtn.click()
+  }
 </script>

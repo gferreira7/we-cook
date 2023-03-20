@@ -3,17 +3,17 @@ const { Schema, model } = require('mongoose')
 // TODO: Please make sure you edit the User model to whatever makes sense in this case
 const reviewSchema = new Schema(
   {
-    author: 
-    {
-      id: { type: Schema.Types.ObjectId, ref: "User" },
-      required:true,
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
     },
     comment: String,
     rating: Number,
-    video: 
-    {
-      id: { type: Schema.Types.ObjectId, ref: "Video" },
-      required:true,
+    video: {
+      type: Schema.Types.ObjectId,
+      ref: 'Video',
+      required: true,
     },
   },
   {
@@ -24,4 +24,3 @@ const reviewSchema = new Schema(
 const Review = model('Review', reviewSchema)
 
 module.exports = Review
-  

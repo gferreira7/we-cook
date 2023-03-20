@@ -1,0 +1,11 @@
+
+  {{#each reviews}}
+    <div class="posted-review">
+    
+      <div>{{this.author.channelName}}</div>
+    <img class="author-img" src="{{this.author.profilePic}}" alt="author-thumbnail">
+      <div>{{this.comment}}</div>
+      <div>{{this.rating}}</div>
+
+    </div>
+  {{/each}}

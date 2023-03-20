@@ -16,23 +16,25 @@ const ingredientSchema = new Schema({
     required: true,
   },
   calories: {
-    type: Number
+    type: Number,
   },
   carbs: {
-    type: Number
+    type: Number,
   },
   protein: {
-    type: Number
+    type: Number,
   },
   fat: {
-    type: Number
-  }
+    type: Number,
+  },
 })
 
 const recipeSchema = new Schema(
   {
     video: {
-      id: { type: Schema.Types.ObjectId, ref: 'Video' },
+      type: Schema.Types.ObjectId,
+      ref: 'Video',
+      required: true,
     },
     // should convert to steps
     steps: [String],
@@ -43,9 +45,10 @@ const recipeSchema = new Schema(
       type: [ingredientSchema],
     },
     author: {
-      id: { type: Schema.Types.ObjectId, ref: 'User' },
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
     },
-    
   },
   {
     timestamps: true,

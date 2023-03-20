@@ -1,13 +1,18 @@
-{{#with video}}
 <div class='single-video-page'>
     <div class="video-panel-left">
  
+    {{#with video}}
       {{>watchPage/video}}
       
       <div class='video-details'>
      
         {{>watchPage/videoDetails}}
+{{/with}}
       </div>
+       <div class="review-list">
+
+        {{>watchPage/reviews reviews=reviews}}
+       </div>
 
     </div>
     <div class='recipe-panel-right'>
@@ -16,7 +21,6 @@
        
         {{>watchPage/recipe}}
       </div>
-{{/with}}
 
       <div class='related-videos'>
        
@@ -53,7 +57,6 @@ window.onload = () => {
     }) 
   /*user can only like OR dislike a video*/ 
   /*check in DB and update the DOM*/ 
-  let data
   likeButton.onclick = () =>{ 
     updateLikesAndDislikes(videoId, { updateCriteria: 'like' }) 
   } 
