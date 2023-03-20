@@ -1,13 +1,22 @@
-<div class='section-header'>Related Videos</div>
-{{#each relatedVideos}}
-  <div class='related-video'>
-    <img src='{{thumbnail}}' alt='' />
-    <div>
-      <div>{{title}}</div>
-      <div>
-        <div>{{author.channelName}}</div>
-        <div>{{views}}views</div>
-      </div>
-    </div>
-  </div>
-{{/each}}
+
+         <!--   <div class="chat-vid__container">      </div>--> 
+     
+              <div class="chat-vid__title anim" style="--delay: .3s;  text-align: center;">     <div class='section-header' style="font-size: 20px; text">Related Videos</div></div>
+              {{#each relatedVideos}}
+                <a href='/watch/{{_id}}' style="cursor:pointer;"> 
+              <div class="chat-vid anim" style="--delay: .4s">
+                <div class="chat-vid__wrapper">
+                  <img class="chat-vid__img" src="{{thumbnail}}" />
+                  <div class="chat-vid__content">
+                    <div class="chat-vid__name">{{title}}</div>
+                    <div class="chat-vid__by">{{author.channelName}}</div>
+                    <div class="chat-vid__info">{{views}} views <span class="seperate"></span>{{averageRating}} ⭐</div>
+                  </div>
+                </div>
+              </div>
+                </a>
+                 {{/each}}
+       <a href='/home' style="cursor:pointer;">  <div class="chat-vid__button anim" style="--delay: .6s">See All related videos</div>   </a>
+        
+
+         
