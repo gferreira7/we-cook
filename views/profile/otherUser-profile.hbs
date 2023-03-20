@@ -1,29 +1,28 @@
 
 
 <div>
-
-   {{#with userProfile}}
+  {{#with userProfile}}
     {{> dashboard }}
-   {{/with}}
-
-{{> videos/uploadVideo}}
+    {{/with}}
   <div class="main-header anim" style="--delay: 0.8s font-weight:700;">
     My Videos
   </div>
-  {{> videos/uploadedVideos}}
-  <a href="/profile/{{_id}}/uploadedVideos">
+
+  {{> videos/uploadedVideos  videos}}
+
+  <a href="/profile/{{userProfile._id}}/uploadedVideos">
     <button class="btn btn-primary btn" type="button">See All</button> 
   </a>
   <div class="anim" style="--delay: 0.5s">
     Liked Videos
   </div>
   {{> videos/likedVideos}}
-  <a href="/profile/{{_id}}/likedVideos">
+  <a href="/profile/{{userProfile._id}}/likedVideos">
     <button class="btn btn-primary btn" type="button">See All</button> 
   </a>
 
 
 
-
+   
 
 </div>
