@@ -51,63 +51,42 @@ router.get('/profile', secured, async (req, res, next) => {
   })
 })
 
-router.get('/profile/:channelName', secured, async (req, res, next) => {
-  const { channelName } = req.params
+router.get('/profile/:profileId', secured, async (req, res, next) => {
+  try {
+    const { profileId } = req.params
 
-  let userFromDB = await User.find({channelName : channelName})
-  console.log(userFromDB)
+    let profileOwner = await User.findById(profileId)
+    console.log('profile of: ', profileOwner)
 
-  let userProfile = await User.findOne({ authId: req.user.id }).exec()
-    currentUser = userProfile
+    let loggedInUser = await User.findOne({ authId: req.user.id })
+    console.log('I am : ', loggedInUser)
 
-console.log( "Current USER: ",currentUser)
+    if (profileId === loggedInUser._id) {
+      res.redirect('/profile')
+    }
 
-  Video.find({ author: userFromDB._id })
-  .populate('author')
-  .then((videos) => {
+    const videos = await Video.find({ author: profileId }).populate('author')
+
+    // Profile's Uploads
+    const uploadedVideos = videos.filter(
+      (video) => video.author._id === profileId
+    )
+    // Profile's liked Videos
+    const likedVideos = videos.filter((video) =>
+      video.likes.includes(profileId)
+    )
+
     res.render('profile/otherUser-profile', {
       title: 'Profile',
       videos,
-      userProfile: userFromDB,
-      currentUser: currentUser
+      uploadedVideos,
+      likedVideos,
+      userProfile: profileOwner,
+      currentUser: loggedInUser,
     })
-  })
-  .catch((error) => {
-    console.log('Error while getting the videos from the DB: ', error)
-
-    // Call the error-middleware to display the error page to the user
-    next(error)
-  })
-
-/*
-  if (!userFromDB) {
-    res.status(500).json('message: this user no longer exists')
-  } else if (userFromDB.authId === req.user.id) {
-    res.redirect('/profile')
-  } else { 
-    let currentUser = await User.findOne({ authId: req.user.id }).exec()
-
-    Video.find({ author: idFromDB })
-      .populate('author')
-      .then((videos) => {
-        res.render('profile/otherUser-profile', {
-          title: 'Profile',
-          videos,
-          otherUser: userFromDB,
-          userProfile: currentUser,
-        })
-      })
-      .catch((error) => {
-        console.log('Error while getting the videos from the DB: ', error)
-
-        // Call the error-middleware to display the error page to the user
-        next(error)
-      })
+  } catch (error) {
+    res.status(500).json(error)
   }
-
-  */
-
-
 })
 
 router.get(

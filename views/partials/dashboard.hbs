@@ -1,32 +1,52 @@
-{{log this}}
-<div class="main-blogs">
-                    <div class="main-blog anim"  style="--delay: .1s; background-image: url({{{bannerImage}}});">
-                         {{!-- <div class="main-blog__title"> <br> <br> <br><br> <br> <br><br> <br> <br><br> <br> </div> --}}
-                        
-                        <div class="main-blog__author" >
-                            <div class="author-img__wrapper">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
-                                    stroke-linecap="round" stroke-linejoin="round" class="feather feather-check">
-                                    <path d="M20 6L9 17l-5-5" />
-                                </svg>
-                                <img class="author-img"
-                                    src="{{profilePic}}" />
-                            </div>
-                            <div class="author-detail" >
-                                <div class="author-name">{{userProfile.channelName}} | {{email}}</div>
-                                <div class="author-info">{{subscribers}} subscribers <span class="seperate"></span>{{channelViews}}</div>
-                                <div class="author-info" style="max-width:35rem">{{description}}</div>
-                            </div>
-                        </div>
-                         <div class="main-blog__time"> 
-                           <a  href="{{socialLinks.instagram}}">  <img  src="../../images/png/instagram_c.png"> </a>
-                            <a href="{{socialLinks.facebook}}">  <img  src="../../images/png/facebook_c.png"> </a>
-                           <a href="{{socialLinks.youtube}}">   <img   src="../../images/png/youtube_c.png"> </a>
-                            <a href="{{socialLinks.twitter}}"> <img   src="../../images/png/twitter_c.png"> </a>
-                           <a  href="{{socialLinks.discord}}">  <img  src="../../images/png/discord_c.png"> </a>
-                        <!--  Instagram | Facebook | Youtube | Twitter--> 
-                          </div>
-                    </div>
-                   
-                </div> <!--Blogs /Posts-->
+<div class='main-blogs'>
+  <div
+    class='main-blog anim'
+    style='--delay: .1s; background-image: url({{{bannerImage}}});'
+  >
+    {{! <div class="main-blog__title"> <br> <br> <br><br> <br> <br><br> <br> <br><br> <br> </div> }}
 
+    <div class='main-blog__author'>
+      <div class='author-img__wrapper'>
+        <svg
+          viewBox='0 0 24 24'
+          fill='none'
+          stroke='currentColor'
+          stroke-width='3'
+          stroke-linecap='round'
+          stroke-linejoin='round'
+          class='feather feather-check'
+        >
+          <path d='M20 6L9 17l-5-5'></path>
+        </svg>
+        <img class='author-img' src='{{profilePic}}' />
+      </div>
+      <div class='author-detail'>
+        <div class='author-name'>{{userProfile.channelName}} | {{email}}</div>
+        <div class='author-info'>{{subscribers}}
+          subscribers
+          <span class='seperate'></span>{{channelViews}}</div>
+        <div class='author-info' style='max-width:35rem'>{{description}}</div>
+      </div>
+    </div>
+    <div class='main-blog__time'>
+      <a href='{{socialLinks.instagram}}'>
+        <img src='../../images/png/instagram_c.png' />
+      </a>
+      <a href='{{socialLinks.facebook}}'>
+        <img src='../../images/png/facebook_c.png' />
+      </a>
+      <a href='{{socialLinks.youtube}}'>
+        <img src='../../images/png/youtube_c.png' />
+      </a>
+      <a href='{{socialLinks.twitter}}'>
+        <img src='../../images/png/twitter_c.png' />
+      </a>
+      <a href='{{socialLinks.discord}}'>
+        <img src='../../images/png/discord_c.png' />
+      </a>
+      <!--  Instagram | Facebook | Youtube | Twitter-->
+    </div>
+  </div>
+
+</div>
+<!--Blogs /Posts-->
