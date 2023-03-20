@@ -1,6 +1,28 @@
 const { Schema, model } = require('mongoose')
 
 // TODO: Please make sure you edit the User model to whatever makes sense in this case
+
+
+
+const dateSchema = new Schema({
+  day: {
+    type: String,
+    required: true,
+  },
+  month: {
+    type: String,
+    required: true,
+  },
+  year: {
+    type: String,
+    required: true,
+  },
+  hour: {
+    type: String,
+    required: true,
+  }
+})
+
 const videoSchema = new Schema(
   {
     title: {
@@ -57,8 +79,11 @@ const videoSchema = new Schema(
     },
     category:{
       type: String,
-    }
-  },
+    },
+    uploadedDate:{
+     type: dateSchema
+     }
+    },
   {
     timestamps: true,
   }
