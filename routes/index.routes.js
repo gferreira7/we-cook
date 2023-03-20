@@ -39,9 +39,20 @@ router.get('/home', async (req, res, next) => {
     })
 })
 
-router.get('/trending', async (req, res, next) => {
-  res.render('test', {
-    title: 'trending',
+router.get('/trending', secured, async (req, res, next) => {
+  let userProfile = await User.findOne({ authId: req.user.id })
+  const trendingVideos = await Video.find({
+    averageRating: { $gte: 4 },
+    views: { $gte: 10 },
+  }).sort({
+    averageRating: 'desc',
+    views: 'desc',
+  })
+  console.log(trendingVideos)
+  res.render('trending', {
+    title: 'Trending',
+    videos: trendingVideos,
+    userProfile,
   })
 })
 
@@ -57,13 +68,9 @@ router.get('/subscriptions', async (req, res, next) => {
   })
 })
 router.get('/nutrition', secured, async (req, res, next) => {
-
-  
   res.render('nutrition/chatpage', {
     title: 'nutrition',
   })
-
-
 })
 
 router.get('/messages', async (req, res, next) => {

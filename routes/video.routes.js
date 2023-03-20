@@ -10,7 +10,11 @@ const User = require('../models/User.model.js')
 const Recipe = require('../models/Recipe.model.js')
 const Review = require('../models/Review.model.js')
 
-const { timePassedSince, toHoursAndMinutes, getRating } = require('../controllers/helpers')
+const {
+  timePassedSince,
+  toHoursAndMinutes,
+  getRating,
+} = require('../controllers/helpers')
 const { getFoodDetails } = require('../config/fatSecret.config')
 
 router.get('/watch/:videoId', secured, async (req, res, next) => {
@@ -21,7 +25,7 @@ router.get('/watch/:videoId', secured, async (req, res, next) => {
     const video = await Video.findById(videoId)
       .populate('author')
       .populate('recipe')
-      .populate({path: 'reviews', populate: 'author', select: 'channelName'})
+      .populate({ path: 'reviews', populate: 'author', select: 'channelName' })
     const timeSinceUpload = timePassedSince(video.createdAt.getTime())
 
     let nutritionInfo
@@ -34,33 +38,43 @@ router.get('/watch/:videoId', secured, async (req, res, next) => {
         })
       )
     }
-    
+
     const isUploader = req.user.id === video.author.authId
-    
+
     let relatedVideos
     try {
       relatedVideos = await Video.find({
         category: { $regex: `${video.category}`, $options: 'i' },
       })
-      .populate('author')
-      .sort({ views: -1 })
+        .populate('author')
+        .sort({ views: -1 })
     } catch (error) {
       console.log(error)
     }
-    
-    
+
     const reviews = await Review.find({ video: videoId }).populate('author')
     console.log(reviews)
-   
-    res.render('single-video', {
+
+    if (isUploader) {
+      res.render('watch-page-uploader', {
+        title: video.title,
+        userProfile,
+        video,
+        reviews,
+        timeSinceUpload,
+        relatedVideos,
+      })
+    } else{
+         
+    res.render('watch-page-viewer', {
       title: video.title,
       userProfile,
       video,
       reviews,
       timeSinceUpload,
-      isUploader,
       relatedVideos,
     })
+    }
   } catch (error) {
     console.log(error)
     res.status(500).json({ message: 'Server error' })
@@ -207,7 +221,6 @@ router.post('/video/:videoId/update', async (req, res, next) => {
 })
 
 router.post('/video/:videoId/submitReview', async (req, res, next) => {
-  
   const { reviewData } = req.body
   const { videoId } = req.params
   const loggedInUser = await User.findOne({ authId: req.user.id })
@@ -221,10 +234,14 @@ router.post('/video/:videoId/submitReview', async (req, res, next) => {
 
   try {
     let newReview = await Review.create(reviewToDB)
-    
+
     if (newReview) {
       const averageRating = await getRating(videoId)
-      const updatedVideo = await Video.findByIdAndUpdate(videoId, {averageRating}, {new:true})
+      const updatedVideo = await Video.findByIdAndUpdate(
+        videoId,
+        { averageRating },
+        { new: true }
+      )
       res.status(200).json(updatedVideo)
     } else {
       res.status(500)
