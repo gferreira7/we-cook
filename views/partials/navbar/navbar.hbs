@@ -7,7 +7,7 @@
         <input type='text' name='search' placeholder='Search' />
         <a id="filter-btn"> <img id="filter-img" width="20" src="../../images/png/down_white.png"> </img> </a>
       </div>
-      <div class="search-filters" id="search-filters">
+      <div class="search-filters" >
         <div>
           <input type="checkbox" id="search-title" name="titleFilter">
           <label for="search-title">Title</label>
@@ -80,7 +80,8 @@
 
 <script>
     let filterBtn = document.getElementById("filter-btn")
-    let filtersDiv = document.getElementById("search-filters")
+    let filtersDiv = document.querySelector(".search-filters")
+    console.log(filterBtn, filtersDiv)
     filterBtn.addEventListener("click", () => {
       if (filtersDiv.style.display == "none") {
         filtersDiv.style.display = "flex";

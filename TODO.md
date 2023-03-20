@@ -1,15 +1,18 @@
 ## TODO List
 
-
+# CYCLIC ERRORS
+    -   HOME - filterBtn
+             - VideoStream
+             - likebtn = uploader
 # Backend
 ✅CRUD => Edit Page => Delete Video
 ✅Recipe Model
 - CRUD REVIEWS (gui)
-- Add Reviews
+✅ Add Reviews
 - CRUD RECIPE
 
 # Search
-- Search results by tag
+✅ Search results by tag
 
 # CSS - Fix layouts for every page
     ✅manage videos
@@ -35,7 +38,7 @@
 
 # Video Page
 ✅Likes/dislikes - Unique User Ids stored in Video Model
-- Add recipe View
+✅ Add recipe View
 - convert createdAt date to "4 days ago" for example
 
 # Particles JS

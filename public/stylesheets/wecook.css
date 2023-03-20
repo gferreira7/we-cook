@@ -132,7 +132,7 @@ a {
 }
 
 .sidebar {
-  cursor:pointer;
+  cursor: pointer;
   width: 220px;
   height: 100%;
   padding: 30px;
@@ -273,6 +273,8 @@ a {
 .search-bar {
   height: 34px;
   display: inline-block;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   max-width: 450px;
 }
@@ -297,11 +299,28 @@ a {
 /* filter navbar */
 .search-filters {
   display: none;
-  z-index: 100;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 200;
   padding: 5px;
+  width: auto;
+  background-color: var(--input-color);
+  padding: 10px 15px;
+  border-radius: 20px;
 }
+
+.search-filters > div {
+  display: flex;
+  align-items: center;
+}
+
+
+
 .search-wrapper {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 0rem 1rem;
 }
 
@@ -460,7 +479,6 @@ a {
   border-radius: 20px;
   overflow: hidden;
   transition: 0.4s;
-  
 }
 
 video {
@@ -570,8 +588,7 @@ video {
   z-index: 10;
 }
 .video:hover .video-by {
-
-   opacity: 0;
+  opacity: 0;
 }
 
 .video:hover .video-by::before {
@@ -851,39 +868,39 @@ video {
 }
 
 .rate {
-    float: left;
-    height: 46px;
-    padding: 0 10px;
+  float: left;
+  height: 46px;
+  padding: 0 10px;
 }
 .rate:not(:checked) > input {
-    position:absolute;
-    top:-9999px;
+  position: absolute;
+  top: -9999px;
 }
 .rate:not(:checked) > label {
-    float:right;
-    width:1em;
-    overflow:hidden;
-    white-space:nowrap;
-    cursor:pointer;
-    font-size:30px;
-    color: var(--body-color);
+  float: right;
+  width: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: pointer;
+  font-size: 30px;
+  color: var(--body-color);
 }
 .rate:not(:checked) > label:before {
-    content: '★ ';
+  content: '★ ';
 }
 .rate > input:checked ~ label {
-    color: #ffc700;    
+  color: #ffc700;
 }
 .rate:not(:checked) > label:hover,
 .rate:not(:checked) > label:hover ~ label {
-    color: #deb217;  
+  color: #deb217;
 }
 .rate > input:checked + label:hover,
 .rate > input:checked + label:hover ~ label,
 .rate > input:checked ~ label:hover,
 .rate > input:checked ~ label:hover ~ label,
 .rate > label:hover ~ input:checked ~ label {
-    color: #c59b08;
+  color: #c59b08;
 }
 
 .review-list {
@@ -903,8 +920,6 @@ video {
 
   border: 1px solid #263238;
 }
-
-
 
 .recipe {
   background-color: var(--light-green-transparent);
@@ -1401,13 +1416,13 @@ textarea {
   margin-left: 16px;
 }
 
-
-
 /*  RECIPE TABLE LAYOUT */
 
-table { border-collapse: collapse; border-spacing: 0; }
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
 /** page structure **/
-
 
 #keywords {
   margin: 0 auto;
@@ -1419,23 +1434,23 @@ table { border-collapse: collapse; border-spacing: 0; }
   cursor: pointer;
   text-align: center;
 }
-#keywords thead tr th { 
+#keywords thead tr th {
   font-weight: bold;
   padding: 6px 2px;
   padding-left: 3px;
 }
-#keywords thead tr th span { 
+#keywords thead tr th span {
   padding-right: 4px;
   background-repeat: no-repeat;
   background-position: 100% 100%;
 }
 
-#keywords thead tr th.headerSortUp, #keywords thead tr th.headerSortDown {
+#keywords thead tr th.headerSortUp,
+#keywords thead tr th.headerSortDown {
   background: #acc8dd;
 }
 
-
-#keywords tbody tr { 
+#keywords tbody tr {
   color: #555;
 }
 #keywords tbody tr td {
@@ -1446,7 +1461,6 @@ table { border-collapse: collapse; border-spacing: 0; }
 #keywords tbody tr td.lalign {
   text-align: center;
 }
-
 
 /*chat Page*/
 .chat-header {
@@ -1488,7 +1502,6 @@ table { border-collapse: collapse; border-spacing: 0; }
   max-height: 414px;
   overflow: auto;
   color: #fff;
-
 }
 .chat-footer {
   display: flex;
@@ -1526,7 +1539,7 @@ table { border-collapse: collapse; border-spacing: 0; }
   color: #6c6e78;
 }
 .chat-footer:before {
-  content: "";
+  content: '';
   position: absolute;
   background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg viewBox='0 0 24 24' fill='white' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M21.435 2.582a1.933 1.933 0 00-1.93-.503L3.408 6.759a1.92 1.92 0 00-1.384 1.522c-.142.75.355 1.704 1.003 2.102l5.033 3.094a1.304 1.304 0 001.61-.194l5.763-5.799a.734.734 0 011.06 0c.29.292.29.765 0 1.067l-5.773 5.8c-.428.43-.508 1.1-.193 1.62l3.075 5.083c.36.604.98.946 1.66.946.08 0 .17 0 .251-.01.78-.1 1.4-.634 1.63-1.39l4.773-16.075c.21-.685.02-1.43-.48-1.943z'/%3e%3c/svg%3e");
   background-repeat: no-repeat;
@@ -1565,9 +1578,9 @@ table { border-collapse: collapse; border-spacing: 0; }
   height: 80px;
   border-radius: 10px;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   -o-object-position: right;
-     object-position: right;
+  object-position: right;
   margin-right: 16px;
   transition: 0.3s;
 }
@@ -1577,7 +1590,8 @@ table { border-collapse: collapse; border-spacing: 0; }
 .chat-vid__content {
   max-width: 20ch;
 }
-.chat-vid__by, .chat-vid__info {
+.chat-vid__by,
+.chat-vid__info {
   color: var(--body-color);
   font-size: 13px;
 }
