@@ -48,13 +48,9 @@ router.get('/profile', secured, async (req, res, next) => {
     title: 'Profile',
     uploadedVideos,
     likedVideos,
-<<<<<<< HEAD
-    userProfile: userFromDB,
-    currentUser: userFromDB,
-
-=======
     userProfile: loggedInUser,
->>>>>>> 2f9d8d1f8ed4ee072810189ddd56a044c23f5271
+    currentUser: loggedInUser,
+
   })
 })
 
