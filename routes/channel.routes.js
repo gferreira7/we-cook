@@ -21,7 +21,6 @@ const mongoose = require('mongoose') // <== has to be added
 const multer = require('multer')
 const upload = multer({ dest: 'uploads/' })
 
-
 // import models here
 const Video = require('../models/Video.model')
 const User = require('../models/User.model')
@@ -78,7 +77,6 @@ router.get('/profile/:idFromDB', secured, async (req, res, next) => {
       })
   }
 })
-
 
 router.get(
   '/profile/:idFromDB/accountSettings',
@@ -343,7 +341,7 @@ router.post(
         cookTime,
         ingredientsList,
         tagsList,
-        portions
+        portions,
       } = req.body
 
       let userIdFromDB = await User.findOne({ authId: req.user.id }).exec()
@@ -385,43 +383,39 @@ router.post(
       let nutritionInfo
       try {
         if (recipeToDB.ingredients) {
-           nutritionInfo = await Promise.all(
+          nutritionInfo = await Promise.all(
             recipeToDB.ingredients.map(async (ingredient) => {
-          
               const response = await getFoodDetails(ingredient)
               return response
             })
           )
-
         }
-        
-      } catch(error)  {
+      } catch (error) {
         console.error(error)
       }
-      recipeToDB.ingredients = nutritionInfo;
-      
+      recipeToDB.ingredients = nutritionInfo
+
       console.log(recipeToDB)
 
       const recipeId = await Recipe.create(recipeToDB)
 
-      console.log("recipeId:" + recipeId)
+      console.log('recipeId:' + recipeId)
 
-      const now = new Date();
+      const now = new Date()
 
-      const day = now.getDate();
-      const month = now.getMonth() + 1; // Adiciona 1 porque os meses começam em zero
-      const year = now.getFullYear();
-      const hour = now.getHours();
+      const day = now.getDate()
+      const month = now.getMonth() + 1 // Adiciona 1 porque os meses começam em zero
+      const year = now.getFullYear()
+      const hour = now.getHours()
       videoToDB.uploadedDate = {
         day: day,
         month: month,
         year: year,
-        hour: hour
+        hour: hour,
       }
 
       videoToDB.recipe = recipeId._id
 
-      console.log(videoToDB)
       const createdVideo = await Video.create(videoToDB)
 
       const updatedRecipe = await Recipe.findByIdAndUpdate(
@@ -429,8 +423,6 @@ router.post(
         { video: createdVideo._id },
         { new: true }
       )
-
-      console.log(videoToDB)
 
       res.status(200).json(createdVideo._id)
     } catch (error) {

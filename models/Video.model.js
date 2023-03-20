@@ -2,8 +2,6 @@ const { Schema, model } = require('mongoose')
 
 // TODO: Please make sure you edit the User model to whatever makes sense in this case
 
-
-
 const dateSchema = new Schema({
   day: {
     type: String,
@@ -20,7 +18,7 @@ const dateSchema = new Schema({
   hour: {
     type: String,
     required: true,
-  }
+  },
 })
 
 const videoSchema = new Schema(
@@ -39,20 +37,24 @@ const videoSchema = new Schema(
         id: { type: Schema.Types.ObjectId, ref: 'Review' },
       },
     ],
-    averageRating: Number,
+    averageRating: { type: Number, default: 0 },
     tags: [String],
     views: {
       type: Number,
       default: 0,
     },
-    likes: [{
+    likes: [
+      {
         type: Schema.Types.ObjectId,
         ref: 'User',
-    }],
-    dislikes: [{
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-    }],
+      },
+    ],
+    dislikes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
     recipe: {
       type: Schema.Types.ObjectId,
       ref: 'Recipe',
@@ -72,18 +74,18 @@ const videoSchema = new Schema(
     },
     cloudId: { type: String },
     durationInSeconds: { type: Number },
-    durationInHMS: {type: String },
+    durationInHMS: { type: String },
     format: { type: String },
     file: {
       type: String,
     },
-    category:{
+    category: {
       type: String,
     },
-    uploadedDate:{
-     type: dateSchema
-     }
+    uploadedDate: {
+      type: dateSchema,
     },
+  },
   {
     timestamps: true,
   }
