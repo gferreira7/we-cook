@@ -7,7 +7,7 @@
 # Backend
 ✅CRUD => Edit Page => Delete Video
 ✅Recipe Model
-- CRUD REVIEWS (gui)
+- CRUD REVIEWS (gui) - delete video should delete recipe
 ✅ Add Reviews
 - CRUD RECIPE
 

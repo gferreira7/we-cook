@@ -34,7 +34,6 @@
 
 
 <script async='async' src='//platform.getbring.com/widgets/import.js'></script>
-<script src='/js/watch.js'></script>
 <script>
 
 /*Convert # of cooking time minutes to readable format*/ 
@@ -46,27 +45,4 @@ if(minutes>=60) {
     cookTimeElement.innerHTML = `${hours}h${minutes}m` 
 }
   
-window.onload = () => { 
-    
-  video.addEventListener('play', () => {
-    video.hasSentViewCount = false 
-  }) 
-  
-  video.addEventListener('timeupdate', () => {
-        if(video.currentTime >= minViewTime && !video.hasSentViewCount) {
-            video.hasSentViewCount = updateViews(videoId) 
-        } 
-    }) 
-  /*user can only like OR dislike a video*/ 
-  /*check in DB and update the DOM*/ 
-  likeButton.onclick = () =>{ 
-    updateLikesAndDislikes(videoId, { updateCriteria: 'like' }) 
-  } 
-  dislikeButton.onclick = () =>{ 
-    updateLikesAndDislikes(videoId, {updateCriteria: 'dislike' }) 
-  }
-
-
-  
-}
 </script>

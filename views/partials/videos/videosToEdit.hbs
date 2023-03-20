@@ -13,7 +13,7 @@
         <div class="video-view">{{views}} views<span class="seperate video-seperate"></span>{{createdAt}}</div>
       </div>
     </div>
-    {{/each}}
+    {{/each}} 
   </div>
 </div>
 
@@ -24,6 +24,7 @@
 
 
 <script>
+
   const videosCollection = document.querySelectorAll("div[videoId]")
   videosToUpdate = [...videosCollection]
   videosToUpdate.forEach(video => {
@@ -33,7 +34,6 @@
       let description = video.getAttribute('description')
       let thumbnail = video.getAttribute('thumbnail')
       let category = video.getAttribute('category')
-
 
 
       document.getElementById("edit-video-id").value = videoId

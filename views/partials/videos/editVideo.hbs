@@ -1,7 +1,11 @@
-<div class='sticky-top' style="margin:1rem">
-  <form action='/profile/{{userProfile._id}}/edit' method='post' enctype="multipart/form-data">
-    <input type="hidden" id='edit-video-id' name="videoId"></input>
-    <input type="hidden" profileId={{userProfile._id}} name="profileId"></input>
+<div class='sticky-top' style='margin:1rem'>
+  <form
+    action='/profile/{{userProfile._id}}/edit'
+    method='post'
+    enctype='multipart/form-data'
+  >
+    <input type='hidden' id='edit-video-id' name='videoId' />
+    <input type='hidden' profileId={{userProfile._id}} name='profileId' />
     <div>
       <div class='video-input'>
         <label>Title</label>
@@ -15,59 +19,86 @@
 
       <span>Category</span>
 
-      <div class="select">
+      <div class='select'>
         <select id='edit-video-category'>
           <option value='healthy'>Healthy</option>
           <option value='cheatMeal'>Cheat Meal</option>
         </select>
       </div>
-      <div class="select__arrow"></div>
+      <div class='select__arrow'></div>
 
-
-      <div class="file-drop-area" style="margin: 0.5rem; padding:1rem; ">
-        <span class="fake-btn">Thumbnail</span>
-        <span class="file-msg js-set-number">or drag and drop files here</span>
-        <input class="file-input" id='edit-video-thumbnail' name='thumbnail' type='file'>
+      <div class='file-drop-area' style='margin: 0.5rem; padding:1rem; '>
+        <span class='fake-btn'>Thumbnail</span>
+        <span class='file-msg js-set-number'>or drag and drop files here</span>
+        <input
+          class='file-input'
+          id='edit-video-thumbnail'
+          name='thumbnail'
+          type='file'
+        />
       </div>
 
-      <img id='thumbnail-preview' src='' alt='Thumbnail Preview'
-        style='max-width: 200px; max-height: 200px; margin-top: 10px; display:none;'>
+      <img
+        id='thumbnail-preview'
+        src=''
+        alt='Thumbnail Preview'
+        style='max-width: 200px; max-height: 200px; margin-top: 10px; display:none;'
+      />
 
+      <span>Recipe</span>
+      
+      <div
+        class='button-wrapper'
+        style='margin-top: 1rem; flex-direction: row-reverse;'
+      >
 
-
-      <div class="button-wrapper" style="margin-top: 1rem; flex-direction: row-reverse;">
-
-        <button type='submit' class="like green" style="margin: 0.5rem;">
-          <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+        <button type='submit' class='like green' style='margin: 0.5rem;'>
+          <svg
+            viewBox='0 0 24 24'
+            fill='currentColor'
+            xmlns='http://www.w3.org/2000/svg'
+          >
             <path
-              d="M21.435 2.582a1.933 1.933 0 00-1.93-.503L3.408 6.759a1.92 1.92 0 00-1.384 1.522c-.142.75.355 1.704 1.003 2.102l5.033 3.094a1.304 1.304 0 001.61-.194l5.763-5.799a.734.734 0 011.06 0c.29.292.29.765 0 1.067l-5.773 5.8c-.428.43-.508 1.1-.193 1.62l3.075 5.083c.36.604.98.946 1.66.946.08 0 .17 0 .251-.01.78-.1 1.4-.634 1.63-1.39l4.773-16.075c.21-.685.02-1.43-.48-1.943z" />
+              d='M21.435 2.582a1.933 1.933 0 00-1.93-.503L3.408 6.759a1.92 1.92 0 00-1.384 1.522c-.142.75.355 1.704 1.003 2.102l5.033 3.094a1.304 1.304 0 001.61-.194l5.763-5.799a.734.734 0 011.06 0c.29.292.29.765 0 1.067l-5.773 5.8c-.428.43-.508 1.1-.193 1.62l3.075 5.083c.36.604.98.946 1.66.946.08 0 .17 0 .251-.01.78-.1 1.4-.634 1.63-1.39l4.773-16.075c.21-.685.02-1.43-.48-1.943z'
+            ></path>
           </svg>
           Save Changes
         </button>
 
-        <button delete class="like red" style="margin: 0.5rem;">
+        <button delete class='like red' style='margin: 0.5rem;'>
 
-          <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" fill="currentColor" width="18" height="18"
-            viewBox="0 0 48 48">
-            <path fill-rule="evenodd" clip-rule="evenodd"
-              d="M 24 4 C 20.491685 4 17.570396 6.6214322 17.080078 10 L 10.238281 10 A 1.50015 1.50015 0 0 0 9.9804688 9.9785156 A 1.50015 1.50015 0 0 0 9.7578125 10 L 6.5 10 A 1.50015 1.50015 0 1 0 6.5 13 L 8.6386719 13 L 11.15625 39.029297 C 11.427329 41.835926 13.811782 44 16.630859 44 L 31.367188 44 C 34.186411 44 36.570826 41.836168 36.841797 39.029297 L 39.361328 13 L 41.5 13 A 1.50015 1.50015 0 1 0 41.5 10 L 38.244141 10 A 1.50015 1.50015 0 0 0 37.763672 10 L 30.919922 10 C 30.429604 6.6214322 27.508315 4 24 4 z M 24 7 C 25.879156 7 27.420767 8.2681608 27.861328 10 L 20.138672 10 C 20.579233 8.2681608 22.120844 7 24 7 z M 11.650391 13 L 36.347656 13 L 33.855469 38.740234 C 33.730439 40.035363 32.667963 41 31.367188 41 L 16.630859 41 C 15.331937 41 14.267499 40.033606 14.142578 38.740234 L 11.650391 13 z M 20.476562 17.978516 A 1.50015 1.50015 0 0 0 19 19.5 L 19 34.5 A 1.50015 1.50015 0 1 0 22 34.5 L 22 19.5 A 1.50015 1.50015 0 0 0 20.476562 17.978516 z M 27.476562 17.978516 A 1.50015 1.50015 0 0 0 26 19.5 L 26 34.5 A 1.50015 1.50015 0 1 0 29 34.5 L 29 19.5 A 1.50015 1.50015 0 0 0 27.476562 17.978516 z">
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            x='0px'
+            y='0px'
+            fill='currentColor'
+            width='18'
+            height='18'
+            viewBox='0 0 48 48'
+          >
+            <path
+              fill-rule='evenodd'
+              clip-rule='evenodd'
+              d='M 24 4 C 20.491685 4 17.570396 6.6214322 17.080078 10 L 10.238281 10 A 1.50015 1.50015 0 0 0 9.9804688 9.9785156 A 1.50015 1.50015 0 0 0 9.7578125 10 L 6.5 10 A 1.50015 1.50015 0 1 0 6.5 13 L 8.6386719 13 L 11.15625 39.029297 C 11.427329 41.835926 13.811782 44 16.630859 44 L 31.367188 44 C 34.186411 44 36.570826 41.836168 36.841797 39.029297 L 39.361328 13 L 41.5 13 A 1.50015 1.50015 0 1 0 41.5 10 L 38.244141 10 A 1.50015 1.50015 0 0 0 37.763672 10 L 30.919922 10 C 30.429604 6.6214322 27.508315 4 24 4 z M 24 7 C 25.879156 7 27.420767 8.2681608 27.861328 10 L 20.138672 10 C 20.579233 8.2681608 22.120844 7 24 7 z M 11.650391 13 L 36.347656 13 L 33.855469 38.740234 C 33.730439 40.035363 32.667963 41 31.367188 41 L 16.630859 41 C 15.331937 41 14.267499 40.033606 14.142578 38.740234 L 11.650391 13 z M 20.476562 17.978516 A 1.50015 1.50015 0 0 0 19 19.5 L 19 34.5 A 1.50015 1.50015 0 1 0 22 34.5 L 22 19.5 A 1.50015 1.50015 0 0 0 20.476562 17.978516 z M 27.476562 17.978516 A 1.50015 1.50015 0 0 0 26 19.5 L 26 34.5 A 1.50015 1.50015 0 1 0 29 34.5 L 29 19.5 A 1.50015 1.50015 0 0 0 27.476562 17.978516 z'
+            >
             </path>
           </svg>
 
           Delete Video
         </button>
+        <a class='like' href='/profile' style='margin: 0.5rem;'>
+          <img
+            style=' width: 18px;  flex-shrink: 0; margin-right: 10px;padding: 0;'
+            src='../../../images/png/back.png'
+          />
+          Return
+        </a>
+      </div>
+    </div>
 
-        <a class="like"  href="/profile" style="margin: 0.5rem;">
-          <img style=" width: 18px;  flex-shrink: 0; margin-right: 10px;padding: 0;" src="../../../images/png/back.png" > Return 
-     </a>
-     
-     </div>
-    </form>
- 
+  </form>
 
-  
-  </div>
-
+</div>
 
 
 <script>
@@ -97,3 +128,4 @@
     }
   }
 </script>
+

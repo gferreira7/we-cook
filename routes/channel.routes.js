@@ -165,13 +165,14 @@ router.post(
 )
 
 router.get(
-  '/profile/:idFromDB/manageVideos',
+  '/profile/:profileId/manageVideos',
   secured,
   async (req, res, next) => {
     let userFromDB = await User.findOne({ authId: req.user.id }).exec()
 
     Video.find({ author: userFromDB._id })
       .populate('author')
+      .populate('recipe')
       .then((videos) => {
         res.render('profile/manage-videos', {
           title: 'Manage Videos',
@@ -181,15 +182,13 @@ router.get(
       })
       .catch((error) => {
         console.log('Error while getting the videos from the DB: ', error)
-
-        // Call the error-middleware to display the error page to the user
         next(error)
       })
   }
 )
 
 router.post(
-  '/profile/:profileId/edit/',
+  '/profile/:profileId/video/edit/',
   secured,
   upload.single('thumbnail'),
   async (req, res, next) => {
@@ -224,24 +223,28 @@ router.post(
   }
 )
 
-router.post('/profile/:profileId/delete', secured, async (req, res, next) => {
-  const { profileId } = req.params
-  try {
-    const { videoId } = req.body
+router.post(
+  '/profile/:profileId/video/delete',
+  secured,
+  async (req, res, next) => {
+    const { profileId } = req.params
+    try {
+      const { videoId } = req.body
 
-    console.log(videoId, 'in the route')
+      console.log(videoId, 'in the route')
 
-    const deletedVideo = await Video.findByIdAndDelete(videoId)
+      const deletedVideo = await Video.findByIdAndDelete(videoId)
 
-    if (!deletedVideo) {
-      throw new Error('Video not found')
+      if (!deletedVideo) {
+        throw new Error('Video not found')
+      }
+
+      res.redirect(`/profile/${profileId}/manageVideos`)
+    } catch (error) {
+      next(error)
     }
-
-    res.redirect(`/profile/${profileId}/manageVideos`)
-  } catch (error) {
-    next(error)
   }
-})
+)
 
 router.get('/profile/:idFromDB/uploadedVideos', async (req, res, next) => {
   const { idFromDB } = req.params
