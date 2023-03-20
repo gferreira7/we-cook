@@ -1616,3 +1616,19 @@ table {
 .chat-vid__button:hover {
   background-color: #5847d0;
 }
+
+/* Manage Videos Page */
+
+.edit-recipe-modal{
+  display:none
+  
+}
+.edit-recipe-modal.show-recipe-modal{
+  display:flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+
+

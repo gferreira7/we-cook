@@ -45,8 +45,32 @@
         style='max-width: 200px; max-height: 200px; margin-top: 10px; display:none;'
       />
 
-      <span>Recipe</span>
-      
+      <button
+        recipeModalBtn
+        type='button'
+        class='btn btn-outline-secondary'
+      >Edit Recipe</button>
+      <div editRecipeModal class='edit-recipe-modal'>
+        <div>
+          <span>Meal Type</span>
+          <div class='select'>
+            <select name='mealType'>
+              <option value="Breakfast">Breakfast</option>
+              <option value="Main Course">Main Course</option>
+              <option value="Side Dish">Side Dish</option>
+              <option value="Snack">Snack</option>
+              <option value="Soup">Soup</option>
+              <option value="Appettizer">Appettizer</option>
+              <option value="Salad">Salad</option>
+              <option value="Drink">Drink</option>
+            </select>
+            <div class='select__arrow'></div>
+          </div>
+        </div>
+        <div>ingredients</div>
+        <div>steps</div>
+      </div>
+
       <div
         class='button-wrapper'
         style='margin-top: 1rem; flex-direction: row-reverse;'
@@ -65,7 +89,7 @@
           Save Changes
         </button>
 
-        <button delete class='like red' style='margin: 0.5rem;'>
+        <button delete type='button' class='like red' style='margin: 0.5rem;'>
 
           <svg
             xmlns='http://www.w3.org/2000/svg'
@@ -100,14 +124,23 @@
 
 </div>
 
-
 <script>
   window.onload = (e) => {
 
     const deleteBtn = document.querySelector('button[delete]')
     const profileId = document.querySelector('input[profileId]').getAttribute('profileId')
 
-
+    const recipeModalBtn = document.querySelector('button[recipeModalBtn]')
+    const editRecipeModal = document.querySelector('div[editRecipeModal]')
+    
+    recipeModalBtn.addEventListener('click', () => {
+    editRecipeModal.classList.toggle('show-recipe-modal');
+    if (editRecipeModal.classList.contains('show-edit-recipe-modal')) {
+      recipeModalBtn.textContent = 'Hide';
+    } else {
+      recipeModalBtn.textContent = 'Edit Recipe';
+    }
+  })
 
     deleteBtn.onclick = (e) => {
       const videoId = document.getElementById('edit-video-id').value
@@ -128,4 +161,3 @@
     }
   }
 </script>
-
