@@ -1,14 +1,14 @@
 <div class='single-video-page'>
     <div class="video-panel-left">
  
-    {{#with video}}
+{{#with video}}
       {{>watchPage/video}}
       
       <div class='video-details'>
      
         {{>watchPage/videoDetailsUploader}}
-{{/with}}
       </div>
+{{/with}}
        <div class="review-list">
 
         {{>watchPage/reviews reviews=reviews}}
@@ -16,11 +16,13 @@
 
     </div>
     <div class='recipe-panel-right'>
+    {{#with video}}
 
       <div class='recipe'>
        
         {{>watchPage/recipe}}
       </div>
+{{/with}}
 
       <div class='related-videos'>
        

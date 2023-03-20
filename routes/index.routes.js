@@ -44,10 +44,12 @@ router.get('/trending', secured, async (req, res, next) => {
   const trendingVideos = await Video.find({
     averageRating: { $gte: 4 },
     views: { $gte: 10 },
-  }).sort({
-    averageRating: 'desc',
-    views: 'desc',
   })
+    .populate('author')
+    .sort({
+      averageRating: 'desc',
+      views: 'desc',
+    })
   console.log(trendingVideos)
   res.render('trending', {
     title: 'Trending',
