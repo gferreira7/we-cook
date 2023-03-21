@@ -50,7 +50,6 @@ router.get('/trending', secured, async (req, res, next) => {
       averageRating: 'desc',
       views: 'desc',
     })
-  console.log(trendingVideos)
   res.render('trending', {
     title: 'Trending',
     videos: trendingVideos,

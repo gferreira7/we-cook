@@ -1,29 +1,37 @@
-<div class="videos" style="width:100%; display:flex " >
+<div class='videos' style='width:100%; display:flex '>
   <div>
     {{#each videos}}
-    <div videoId={{_id}} class='anim d-flex justify-content-evenly align-items-center' style='--delay: .4s; background-color: var(--video-bg); margin:1rem; '
-      title="{{title}}" description="{{description}}" thumbnail="{{thumbnail}}" category="{{category}}" mealType="{{recipe.mealType}}" steps="{{recipe.steps}}" ingredients="{{recipe.ingredients}}">
-      <div class="video anim" style="--delay: .4s"> <!--one video start-->
-          <video muted="" style="width:100%; display:flex" height="100">
-            <source  src="{{url}}" type="video/mp4">
+      <div
+        videoId={{_id}}
+        class='anim d-flex justify-content-evenly align-items-center'
+        style='--delay: .4s; background-color: var(--video-bg); margin:1rem; '
+        title='{{title}}'
+        description='{{description}}'
+        thumbnail='{{thumbnail}}'
+        category='{{category}}'
+      >
+        <div class='video anim' style='--delay: .4s'>
+          <!--one video start-->
+          <video muted='' style='width:100%; display:flex' height='100'>
+            <source src='{{url}}' type='video/mp4' />
           </video>
         </div>
-        <div  style="display:inline ;">
-        <div class="video-name">{{title}}</div>
-        <div class="video-view">{{views}} views<span class="seperate video-seperate"></span>{{createdAt}}</div>
+        <div style='display:inline ;'>
+          <div class='video-name'>{{title}}</div>
+          <div class='video-view'>{{views}}
+            views<span
+              class='seperate video-seperate'
+            ></span>{{createdAt}}</div>
+        </div>
       </div>
-    </div>
-    {{/each}} 
+    {{/each}}
   </div>
 </div>
 
 
-
-
-
-
-
 <script>
+
+
 
   const videosCollection = document.querySelectorAll("div[videoId]")
   videosToUpdate = [...videosCollection]
@@ -34,27 +42,14 @@
       let description = video.getAttribute('description')
       let thumbnail = video.getAttribute('thumbnail')
       let category = video.getAttribute('category')
-      let mealType = video.getAttribute('mealType')
-      let ingredients = video.getAttribute('ingredients')
-      let steps = video.getAttribute('steps')
+   
+      
 
 
       document.getElementById("edit-video-id").value = videoId
       document.getElementById("edit-video-title").value = title
       document.getElementById("edit-video-description").value = description
-      document.getElementById("edit-ingredients").value = ingredients
-      document.getElementById("edit-steps").value = steps
 
-    console.log(video)
-      {{!-- console.log(steps, mealType, ingredients) --}}
-      {{!-- let mealTypeSelect = document.getElementById("edit-meal-type")
-      let mealTypeOptions = mealTypeSelect.options
-      for (let i = 0; i < mealTypeOptions.length; i++) {
-        if (mealTypeOptions[i].textContent === mealType) {
-          mealTypeOptions[i].selected = true
-          break
-        }
-      } --}}
 
       let categorySelect = document.getElementById("edit-video-category")
       let categoryOptions = categorySelect.options

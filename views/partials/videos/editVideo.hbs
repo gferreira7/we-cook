@@ -1,11 +1,12 @@
 <div class='sticky-top' style='margin:1rem'>
   <form
-    action='/profile/{{userProfile._id}}/edit'
+    editForm
+    action='/profile/{{currentUser._id}}/video/edit'
     method='post'
     enctype='multipart/form-data'
   >
     <input type='hidden' id='edit-video-id' name='videoId' />
-    <input type='hidden' profileId={{userProfile._id}} name='profileId' />
+    <input type='hidden' profileId={{currentUser._id}} name='profileId' />
     <div>
       <div class='video-input'>
         <label>Title</label>
@@ -51,24 +52,8 @@
         class='btn btn-outline-secondary'
       >Edit Recipe</button>
       <div editRecipeModal class='edit-recipe-modal'>
-        <div id="edit-meal-type">
-          <span>Meal Type</span>
-          <div class='select'>
-            <select name='mealType'>
-              <option value="Breakfast">Breakfast</option>
-              <option value="Main Course">Main Course</option>
-              <option value="Side Dish">Side Dish</option>
-              <option value="Snack">Snack</option>
-              <option value="Soup">Soup</option>
-              <option value="Appettizer">Appettizer</option>
-              <option value="Salad">Salad</option>
-              <option value="Drink">Drink</option>
-            </select>
-            <div class='select__arrow'></div>
-          </div>
-        </div>
-        <div id="edit-ingredients"></div>
-        <div id="edit-steps" steps></div>
+        Save changes to Video?
+        <button recipeModalSubmit type="submit">Yes</button>
       </div>
 
       <div
@@ -127,23 +112,13 @@
 <script>
   window.onload = (e) => {
 
-    const deleteBtn = document.querySelector('button[delete]')
+    const form = document.querySelector('form[editForm]')
     const profileId = document.querySelector('input[profileId]').getAttribute('profileId')
+    const videoId = document.getElementById('edit-video-id').value
 
-    const recipeModalBtn = document.querySelector('button[recipeModalBtn]')
-    const editRecipeModal = document.querySelector('div[editRecipeModal]')
-    
-    recipeModalBtn.addEventListener('click', () => {
-    editRecipeModal.classList.toggle('show-recipe-modal');
-    if (editRecipeModal.classList.contains('show-edit-recipe-modal')) {
-      recipeModalBtn.textContent = 'Hide';
-    } else {
-      recipeModalBtn.textContent = 'Edit Recipe';
-    }
-  })
-
+    console.log(videoId)
+    const deleteBtn = document.querySelector('button[delete]')
     deleteBtn.onclick = (e) => {
-      const videoId = document.getElementById('edit-video-id').value
 
       axios.post(`/profile/${profileId}/delete`, { videoId }, {
         headers: {
@@ -159,5 +134,45 @@
         });
 
     }
+    const recipeModalBtn = document.querySelector('button[recipeModalBtn]')
+    const editRecipeModal = document.querySelector('div[editRecipeModal]')
+
+    
+    recipeModalBtn.addEventListener('click', () => {
+    editRecipeModal.classList.toggle('show-recipe-modal');
+    if (editRecipeModal.classList.contains('show-edit-recipe-modal')) {
+      recipeModalBtn.textContent = 'Cancel';
+    } else {
+      recipeModalBtn.textContent = 'Edit Recipe';
+    }
+  })
+
+    const recipeModalSubmit = document.querySelector('button[recipeModalSubmit]')
+    
+    recipeModalSubmit.onclick = (e) => {
+      e.preventDefault()
+
+      const formData = new FormData(form)
+      let needsRecipeEdit = true
+
+      formData.append('needsRecipeEdit', JSON.stringify(needsRecipeEdit))
+
+      '/profile/{{currentUser._id}}/video/edit'
+       axios.post(`/profile/${profileId}/video/edit`, formData, {
+                headers: {
+                  'Content-Type': 'multipart/form-data'
+                }          
+            })
+            .then((response) => {
+               console.log('RES:',response.data);
+              window.location.href = `/profile/${profileId}/editFull/${videoId}`
+            })
+            .catch( (error) =>{
+                console.log('ERROR',error);
+            });
+          
+    }
+
+
   }
 </script>

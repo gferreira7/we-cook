@@ -1,3 +1,4 @@
+{{#with video}}
 <div class='video-content'>
   <div class='video-content-wrapper anim' style='--delay: .1s'>
     <div class='author-img__wrapper video-author video-p'>
@@ -21,9 +22,10 @@
       <div class='video-p-sub'>{{author.subscribers}} subscribers</div>
       <div class='video-p-sub'>{{views}} Views</div>
     </div>
- 
+ {{/with}}
+
     <div class='button-wrapper'>
-      <a href='/profile/{{_id}}/manageVideos'>
+      <a href='/profile/{{currentUser._id}}/manageVideos'>
         <button class='like'>
           Edit
         </button>
@@ -60,6 +62,8 @@
   </div>
   <button review-submit-btn type="button" class="btn btn-success">Submit</button>
     </div>
+{{#with video}}
+
   <div class='video-info-footer anim'>
     <div class='video-info'>
       <div class='video-p-title' style='--delay: .2s'>{{title}}</div>
@@ -72,7 +76,7 @@
     
   </div>
 </div>
-
+{{/with}}
 <script>
   
   const description = document.querySelector('.video-description-wrapper');

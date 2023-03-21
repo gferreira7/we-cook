@@ -62,22 +62,22 @@ router.get('/profile/:channelName', secured, async (req, res, next) => {
     if (profileOwner._id.equals(loggedInUser._id)) {
       res.redirect('/profile')
     }
-    
+
     const videos = await Video.find({ author: profileOwner._id }).populate(
       'author'
-      )
-      console.log(profileOwner._id.equals(loggedInUser._id))
-      
-      // Profile's Uploads
-      
-      const uploadedVideos = videos.filter((video) => {
-        return video.author._id.equals(profileOwner._id)
-      })
+    )
+
+    // Profile's Uploads
+
+    const uploadedVideos = videos.filter((video) => {
+      return video.author._id.equals(profileOwner._id)
+    })
 
     // Profile's liked Videos
     const likedVideos = videos.filter((video) =>
       video.likes.includes(profileOwner._id)
     )
+
     res.render('profile/otherUser-profile', {
       title: 'Profile',
       videos,
@@ -87,7 +87,7 @@ router.get('/profile/:channelName', secured, async (req, res, next) => {
       currentUser: loggedInUser,
     })
   } catch (error) {
-    res.status(500).json({'message': error})
+    res.status(500).json({ message: error })
   }
 })
 
@@ -181,23 +181,35 @@ router.get(
     const profileUser = await User.findById(profileId)
     const loggedInUser = await User.findOne({ authId: req.user.id })
 
-    if (profileUser._id.equals(loggedInUser._id)) {
-      try {
-        const videos = await Video.find({ author: profileId })
-          .populate('author')
-          .populate('recipe')
+    try {
+      if (profileUser._id.equals(loggedInUser._id)) {
+        try {
+          const videos = await Video.find({ author: profileId })
+            .populate('author')
+            .populate({
+              path: 'recipe',
+              populate: {
+                path: 'ingredients',
+                select: 'quantity',
+              },
+            })
 
-        res.render('profile/manage-videos', {
-          title: 'Manage Videos',
-          videos,
-          currentUser: loggedInUser,
-        })
-      } catch (error) {
-        console.log(error)
-        res.status(500).json(error)
+          console.log(videos[0].recipe.ingredients)
+
+          res.render('profile/manage-videos', {
+            title: 'Manage Videos',
+            videos,
+            currentUser: loggedInUser,
+          })
+        } catch (error) {
+          console.log(error)
+          res.status(500).json(error)
+        }
+      } else {
+        res.redirect('/')
       }
-    } else {
-      res.redirect('/')
+    } catch (error) {
+      console.log(error)
     }
   }
 )
@@ -208,8 +220,8 @@ router.post(
   upload.single('thumbnail'),
   async (req, res, next) => {
     const { profileId } = req.params
-    const { title, description, category, videoId } = req.body
-
+    const { title, description, category, videoId, needsRecipeEdit } = req.body
+    console.log('edit recipe: ', needsRecipeEdit)
     const newVideoInfo = {}
 
     // Check if thumbnail image is provided
@@ -233,8 +245,50 @@ router.post(
     let updatedVideo = await Video.findByIdAndUpdate(videoId, newVideoInfo, {
       new: true,
     }).exec()
+    if(needsRecipeEdit){
+      res.status(200).json(videoId)
+    } else{
+      res.redirect(`/watch/${videoId}`)
+    }
+  }
+)
 
-    res.redirect(`/watch/${videoId}`)
+router.get(
+  '/profile/:profileId/editFull/:videoId',
+  secured,
+  async (req, res, next) => {
+    const { profileId, videoId } = req.params
+
+    const profileUser = await User.findById(profileId)
+    const loggedInUser = await User.findOne({ authId: req.user.id })
+
+    try {
+      if (profileUser._id.equals(loggedInUser._id)) {
+        try {
+          const video = await Video.findById(videoId)
+            .populate('author')
+            .populate({
+              path: 'recipe',
+              populate: {
+                path: 'ingredients',
+              },
+            })
+
+          res.render('profile/edit-full-video', {
+            title: 'Edit Video',
+            video,
+            currentUser: loggedInUser,
+          })
+        } catch (error) {
+          console.log(error)
+          res.status(500).json(error)
+        }
+      } else {
+        res.redirect('/')
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 )
 
