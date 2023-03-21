@@ -21,3 +21,24 @@
   </a>
 
 </div>
+
+<script src='/js/subscribe.js'></script>
+
+<script>
+    window.onload = () => {
+
+    let subBtn = document.getElementById("subscribe");
+    let action = subBtn.getAttribute("action")
+    let id = document.getElementById("userId").textContent;
+
+   subBtn.onclick = () => {
+    console.log(id)
+        console.log(action)
+
+        submitSubscribe(id , { updateCriteria: action })
+      }
+
+   
+}
+
+</script>
