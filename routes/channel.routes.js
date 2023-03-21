@@ -33,7 +33,8 @@ const Recipe = require('../models/Recipe.model')
 router.get('/profile', secured, async (req, res, next) => {
   let loggedInUser = await User.findOne({ authId: req.user.id })
   const allVideos = await Video.find().populate('author').populate('recipe')
-
+  
+  console.log(allVideos)
   // My Uploads
   const uploadedVideos = allVideos.filter((video) => {
     return video.author._id.equals(loggedInUser._id)
