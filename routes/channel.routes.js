@@ -36,21 +36,23 @@ router.get('/profile', secured, async (req, res, next) => {
   
   console.log(allVideos)
   // My Uploads
-
-  const uploadedVideos = allVideos.filter(
-    (video) => video.author.authId === loggedInUser.authId
-  )
+  const uploadedVideos = allVideos.filter((video) => {
+    return video.author._id.equals(loggedInUser._id)
+  })
   // My liked Videos
   const likedVideos = allVideos.filter((video) =>
     video.likes.includes(loggedInUser._id)
   )
+<<<<<<< HEAD
+=======
+  console.log(uploadedVideos)
+>>>>>>> ae7f3b3b87c0b058009ddad3e8f3afc0c2611921
   res.render('profile/currentUser-profile', {
     title: 'Profile',
     uploadedVideos,
     likedVideos,
     userProfile: loggedInUser,
     currentUser: loggedInUser,
-
   })
 })
 
@@ -58,27 +60,29 @@ router.get('/profile/:channelName', secured, async (req, res, next) => {
   try {
     const { channelName } = req.params
 
-    let profileOwner = await User.findOne({channelName : channelName})
-    console.log('profile of: ', profileOwner)
-
+    let profileOwner = await User.findOne({ channelName: channelName })
     let loggedInUser = await User.findOne({ authId: req.user.id })
-    console.log('I am : ', loggedInUser)
 
-    if (profileOwner._id === loggedInUser._id) {
+    if (profileOwner._id.equals(loggedInUser._id)) {
       res.redirect('/profile')
     }
+    
+    const videos = await Video.find({ author: profileOwner._id }).populate(
+      'author'
+      )
+      console.log(profileOwner._id.equals(loggedInUser._id))
+      
+      // Profile's Uploads
+      
+      const uploadedVideos = videos.filter((video) => {
+        return video.author._id.equals(profileOwner._id)
+      })
 
-    const videos = await Video.find({ author: profileOwner._id }).populate('author')
-
-    // Profile's Uploads
-    const uploadedVideos = videos.filter(
-      (video) => video.author._id === profileOwner._id
-    )
     // Profile's liked Videos
     const likedVideos = videos.filter((video) =>
       video.likes.includes(profileOwner._id)
     )
-     res.render('profile/otherUser-profile', {
+    res.render('profile/otherUser-profile', {
       title: 'Profile',
       videos,
       uploadedVideos,
@@ -86,9 +90,8 @@ router.get('/profile/:channelName', secured, async (req, res, next) => {
       userProfile: profileOwner,
       currentUser: loggedInUser,
     })
-   
   } catch (error) {
-    res.status(500).json(error)
+    res.status(500).json({'message': error})
   }
 })
 
@@ -179,8 +182,10 @@ router.get(
   secured,
   async (req, res, next) => {
     const { profileId } = req.params
+    const profileUser = await User.findById(profileId)
     const loggedInUser = await User.findOne({ authId: req.user.id })
-    if (profileId === loggedInUser._id) {
+
+    if (profileUser._id.equals(loggedInUser._id)) {
       try {
         const videos = await Video.find({ author: profileId })
           .populate('author')
@@ -189,9 +194,10 @@ router.get(
         res.render('profile/manage-videos', {
           title: 'Manage Videos',
           videos,
-          currentUser: userFromDB,
+          currentUser: loggedInUser,
         })
       } catch (error) {
+        console.log(error)
         res.status(500).json(error)
       }
     } else {
