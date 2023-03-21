@@ -43,10 +43,7 @@ router.get('/profile', secured, async (req, res, next) => {
   const likedVideos = allVideos.filter((video) =>
     video.likes.includes(loggedInUser._id)
   )
-<<<<<<< HEAD
-=======
   console.log(uploadedVideos)
->>>>>>> ae7f3b3b87c0b058009ddad3e8f3afc0c2611921
   res.render('profile/currentUser-profile', {
     title: 'Profile',
     uploadedVideos,
