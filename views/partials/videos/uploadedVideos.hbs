@@ -1,3 +1,31 @@
+<<<<<<< HEAD
+<div class="videos-grid">
+    {{#each uploadedVideos}}
+    <a href='/watch/{{_id}}'> 
+      <div class="video anim" style="--delay: .4s ; padding-bottom:0px; cursor:pointer;">
+            <div class="video-time"><!--{{durationInHMS}} |-->  {{averageRating}} ⭐</div>
+            <div class="video-wrapper">
+              <video muted="">
+                <source
+                  src="{{this.url}}"
+                  type="video/mp4">
+              </video>
+              <div class="author-img__wrapper video-author">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+                  stroke-linejoin="round" class="feather feather-check">
+                  <path d="M20 6L9 17l-5-5" />
+                </svg>
+                <img class="author-img"
+                  src="{{author.profilePic}}" />
+              </div>
+            </div>
+            <div class="video-by">{{author.channelName}}</div>
+            <div class="video-name">{{title}} </div>
+            <div class="video-view" style="display:flex; flex-direction: row ; justify-content: space-between; padding-bottom:0px;">{{views}} views  <p style="font-weight: 100 ;" > {{uploadedDate.day}}/{{uploadedDate.month}}/{{uploadedDate.year}}</p></div>
+          </div> 
+          </a>
+        {{/each}}
+=======
 <div class='videos-grid'>
   {{#each uploadedVideos}}
   
@@ -40,4 +68,5 @@
       </div>
     </a>
   {{/each}}
+>>>>>>> 36d8e0935e78f45c6472e6d8e5a6d766ae19b7e4
 </div>
