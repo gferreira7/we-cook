@@ -72,29 +72,30 @@ router.get('/profile/:channelName', secured, async (req, res, next) => {
 
     // Profile's Uploads
 
-    const uploadedVideos = videos.filter((video) => {
+    const allUploads = videos.filter((video) => {
       return video.author._id.equals(profileOwner._id)
     })
 
- 
-   //subscribe
-
-   let action = false;
-   const subscribe = profileOwner.subscribers.find(sub => sub._id.equals(loggedInUser._id))
-   
-   if (subscribe) {
-     action = true;
-   }
-   
-   console.log(action);
-   profileOwner.follower = action;
-
-
     // Profile's liked Videos
-    const likedVideos = videos.filter((video) =>
+    const allLikedVideos = videos.filter((video) =>
       video.likes.includes(profileOwner._id)
     )
+    const uploadedVideos = allUploads.slice(0, 3)
+    const likedVideos = allLikedVideos.slice(0, 3)
 
+    //subscribe
+
+    let action = false
+    const subscribe = profileOwner.subscribers.find((sub) =>
+      sub._id.equals(loggedInUser._id)
+    )
+
+    if (subscribe) {
+      action = true
+    }
+
+    console.log(action)
+    profileOwner.follower = action
 
     res.render('profile/otherUser-profile', {
       title: 'Profile',
@@ -512,22 +513,22 @@ router.post('/channel/:channelName/subscribe', async (req, res, next) => {
   const { updateCriteria } = req.body
   const currentUser = await User.findOne({ authId: req.user.id })
 
-  let channelFromDB = await User.findOne({channelName : channelName})
+  let channelFromDB = await User.findOne({ channelName: channelName })
   let updatedVideo
-console.log(updateCriteria)
+  console.log(updateCriteria)
   if (updateCriteria === 'sub') {
-     updatedVideo =  await User.findByIdAndUpdate(channelFromDB._id, { $addToSet: { subscribers: currentUser._id } })
-      console.log(updatedVideo)
-      res.status(200).json(updatedVideo)
-  }else if ( updateCriteria === 'unsub') {
-
-    updatedVideo =  await User.findByIdAndUpdate(channelFromDB._id, { $pull: { subscribers: currentUser._id } })
+    updatedVideo = await User.findByIdAndUpdate(channelFromDB._id, {
+      $addToSet: { subscribers: currentUser._id },
+    })
+    console.log(updatedVideo)
+    res.status(200).json(updatedVideo)
+  } else if (updateCriteria === 'unsub') {
+    updatedVideo = await User.findByIdAndUpdate(channelFromDB._id, {
+      $pull: { subscribers: currentUser._id },
+    })
     console.log(updatedVideo)
     res.status(200).json(updatedVideo)
   }
-
-
 })
-
 
 module.exports = router

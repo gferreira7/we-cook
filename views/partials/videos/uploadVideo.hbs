@@ -1,130 +1,156 @@
-<div id="upload-form" style="display:none;" >
-    <form id='upload-video' action='/upload' method='post' enctype='multipart/form-data'>
-    
-      <label>Title </label> 
-      <div class='video-input'>
-        <textarea name='title' type='text' placeholder='Video tile' /> </textarea>
-      </div>
-      
-      <span >Description</span>
-      <div  class='video-input'> 
-        <textarea name='description' ></textarea>
-      </div>
+<div id='upload-form' style='display:none;'>
+  <form
+    id='upload-video'
+    action='/upload'
+    method='post'
+    enctype='multipart/form-data'
+  >
 
-       <span >Cooking time</span>
-        <div class='video-input'> 
-          <textarea name='cookTime'></textarea>
-        </div>
-      
-      <span>Meal Type</span>
-      <div class='video-input'>
-        <div class="select">
-          <select name="mealType">
-            <option active>Breakfast</option>
-            <option>Main Course</option>
-            <option>Side Dish</option>
-            <option>Snack</option>
-            <option>Soup</option>
-            <option>Appettizer</option>
-            <option>Salad</option>
-            <option>Drink</option>
-          </select>
-          <div class="select__arrow"></div>
-        </div>     
-      </div>
-      <span >Number of servings?</span>
-        <div class='video-input'> 
-          <input type="number" name='portions'></input>
-        </div>
-
-      <span>Ingredients</span>
-      <div main-ingredients-container>
-        <div class='video-input ingredients-input'>
-          <small>Qty</small> 
-          <input ingredient-quantity placeholder='150' name='ingredient-quantity' type="number"></input>
-          <div class="select">
-            <select ingredient-unit name="ingredient-unit">
-              <option>unit</option>
-              <option>ml</option>
-              <option>cl</option>
-              <option>dl</option>
-              <option>L</option>
-              <option selected>g</option>
-              <option>kg</option>
-              <option>tsp</option>
-              <option>tbsp</option>
-              <option>cup</option>
-            </select>
-            <div class="select__arrow"></div>
-          </div>
-          <input ingredient name='ingredient' type='text' placeholder='brown sugar' /> </input>
-          <button class="btn btn-success" type="button" add-ingredient>+</button>
-          <button class="btn btn-danger" type="button" remove-ingredient>-</button>   
-        </div>
-      </div>
-      
-      <div main-steps-container>
-        <div>Steps</div>  
-        <div class='video-input d-flex'> 
-          <input step-input name='step-input' ></input>
-          <button class="btn btn-success w-25" type="button" add-step>+</button>
-        </div>
-        <div new-step-wrapper class="d-flex justify-content-center align-items-center pb-3">
-          <div new-steps-container class="video-input"></div>
-        </div>
-      </div>
-      
-      <span >Category</span>
-      <div class="select">
-        <select name="category">
-          <option>Healthy</option>
-          <option>Cheat Meal</option>
-        </select>
-      <div class="select__arrow"></div>
+    <label>Title </label>
+    <div class='video-input'>
+      <textarea name='title' type='text' placeholder='Video tile'> </textarea>
     </div>
-      <div main-tags-container>
-        <div>Tags</div>  
-        <div class='video-input d-flex'> 
-          <input tag-input name='tag-input' ></input>
-          <button class="btn btn-success w-25" type="button" add-tag>+</button>
-        </div>
-        <div new-tags-wrapper class="d-flex justify-content-center align-items-center pb-3">
-          <div new-tags-container class="video-input"></div>
-        </div>
-      </div>
-    
-      <div class="d-flex justify-content-center align-items-center pb-3 w-100">
-        <span >Upload Video file and Thumbnail</span>
-      </div>
 
-  <div class="file-drop-area">
-    <span class="fake-btn">Choose files</span>
-    <span class="file-msg js-set-number">or drag and drop files here</span>
-    <input class="file-input" name='video' type='file' id='formFile'>
-  </div>
+    <span>Description</span>
+    <div class='video-input'>
+      <textarea name='description'></textarea>
+    </div>
 
-<div class="file-drop-area">
-  <span class="fake-btn">Choose files</span>
-   <span class="file-msg js-set-number">or drag and drop files here</span>
-     <input class="file-input" name='image' type='file' id='formFile'>
-</div>
-<center> 
-  <div class='form-text' style="color:gray">
-    Please make sure you're uploading original content
-  </div>
-</center>
-    
-    <div class='modal-footer' style="display:flex">
-      
-      <button closeModalBtn class='btn btn-secondary me-4'
-        type='button'>Cancel</button>
-      <button uploadBtn class='btn btn-success'
-        type='submit'>Upload</button>
+    <span>Cooking time</span>
+    <div class='video-input'>
+      <textarea name='cookTime'></textarea>
+    </div>
+
+    <span>Meal Type</span>
+    <div class='video-input'>
+      <div class='select'>
+        <select name='mealType'>
+          <option active>Breakfast</option>
+          <option>Main Course</option>
+          <option>Side Dish</option>
+          <option>Snack</option>
+          <option>Soup</option>
+          <option>Appettizer</option>
+          <option>Salad</option>
+          <option>Drink</option>
+        </select>
+        <div class='select__arrow'></div>
+      </div>
+    </div>
+    <span>Number of servings?</span>
+    <div class='video-input'>
+      <input type='number' name='portions' />
+    </div>
+
+    <span>Ingredients</span>
+    <div main-ingredients-container>
+      <div class='video-input ingredients-input'>
+        <small>Qty</small>
+        <input
+          ingredient-quantity
+          placeholder='150'
+          name='ingredient-quantity'
+          type='number'
+        />
+        <div class='select'>
+          <select ingredient-unit name='ingredient-unit'>
+            <option>unit</option>
+            <option>ml</option>
+            <option>cl</option>
+            <option>dl</option>
+            <option>L</option>
+            <option selected>g</option>
+            <option>kg</option>
+            <option>tsp</option>
+            <option>tbsp</option>
+            <option>cup</option>
+          </select>
+          <div class='select__arrow'></div>
+        </div>
+        <input
+          ingredient
+          name='ingredient'
+          type='text'
+          placeholder='brown sugar'
+        />
+        <button class='btn btn-success' type='button' add-ingredient>+</button>
+        <button
+          class='btn btn-danger'
+          type='button'
+          remove-ingredient
+        >-</button>
+      </div>
+    </div>
+
+    <div main-steps-container>
+      <div>Steps</div>
+      <div class='video-input d-flex'>
+        <input step-input name='step-input' />
+        <button class='btn btn-success w-25' type='button' add-step>+</button>
+      </div>
+      <div
+        new-step-wrapper
+        class='d-flex justify-content-center align-items-center pb-3'
+      >
+        <div new-steps-container class='video-input'></div>
+      </div>
+    </div>
+
+    <span>Category</span>
+    <div class='select'>
+      <select name='category'>
+        <option>Healthy</option>
+        <option>Cheat Meal</option>
+      </select>
+      <div class='select__arrow'></div>
+    </div>
+    <div main-tags-container>
+      <div>Tags</div>
+      <div class='video-input d-flex'>
+        <input tag-input name='tag-input' />
+        <button class='btn btn-success w-25' type='button' add-tag>+</button>
+      </div>
+      <div
+        new-tags-wrapper
+        class='d-flex justify-content-center align-items-center pb-3'
+      >
+        <div new-tags-container class='video-input'></div>
+      </div>
+    </div>
+
+    <div class='d-flex justify-content-center align-items-center pb-3 w-100'>
+      <span>Upload Video file and Thumbnail</span>
+    </div>
+
+    <div class='file-drop-area'>
+      <span class='fake-btn'>Choose files</span>
+      <span class='file-msg js-set-number'>or drag and drop files here</span>
+      <input class='file-input' name='video' type='file' id='formFile' />
+    </div>
+
+    <div class='file-drop-area'>
+      <span class='fake-btn'>Choose files</span>
+      <span class='file-msg js-set-number'>or drag and drop files here</span>
+      <input class='file-input' name='image' type='file' id='formFile' />
+    </div>
+    <center>
+      <div class='form-text' style='color:gray'>
+        Please make sure you're uploading original content
+      </div>
+    </center>
+
+    <div class='modal-footer' style='display:flex'>
+
+      <button
+        closeModalBtn
+        class='btn btn-secondary me-4'
+        type='button'
+      >Cancel</button>
+      <button uploadBtn class='btn btn-success' type='submit'>Upload</button>
     </div>
   </form>
 
 </div>
-
 
 <script>
 

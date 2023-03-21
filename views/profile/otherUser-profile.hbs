@@ -1,8 +1,12 @@
-
-
 <div>
     {{> dashboard }}
-   
+  {{#with userProfile}}
+    <span style="display: none;" id="userId">{{channelName}} </span>
+    <div class='author-info'>   {{description}}
+ </div>
+
+    {{/with}}
+
   <div class="main-header anim" style="--delay: 0.8s font-weight:700;">
     My Videos
   </div>
@@ -32,13 +36,11 @@
     let id = document.getElementById("userId").textContent;
 
    subBtn.onclick = () => {
-    console.log(id)
-        console.log(action)
+      submitSubscribe(id , { updateCriteria: action }).then(response => {
 
-        submitSubscribe(id , { updateCriteria: action })
-      }
-
-   
+        location.reload()
+      }).catch(err => console.log(err))
+    }
 }
 
 </script>
