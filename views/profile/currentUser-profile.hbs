@@ -40,18 +40,14 @@
   <div class="main-header anim" style="--delay: 0.8s font-weight:700;">
     My Videos
   </div>
-   {{#with uploadedVideos}}  
   {{> videos/uploadedVideos}}
-  {{/with}}
   <a href="/profile/{{userProfile._id}}/uploadedVideos">
     <button class="btn btn-primary btn" type="button">See All</button> 
   </a>
   <div class="anim" style="--delay: 0.5s">
     Liked Videos
   </div>
-     {{#with likedVideos}}  
     {{> videos/likedVideos}}
-   {{/with}}
   <a href="/profile/{{userProfile._id}}/likedVideos">
     <button class="btn btn-primary btn" type="button">See All</button> 
   </a>
