@@ -1,87 +1,113 @@
-<div class='videos' style='width:100%; display:flex '>
-  <div>
-    {{#each videos}}
-      <div
-        videoId={{_id}}
-        class='anim d-flex justify-content-evenly align-items-center'
-        style='--delay: .4s; background-color: var(--video-bg); margin:1rem; '
-        title='{{title}}'
-        description='{{description}}'
-        thumbnail='{{thumbnail}}'
-        category='{{category}}'
-      >
-        <div class='video anim' style='--delay: .4s'>
-          <!--one video start-->
-          <video muted='' style='width:100%; display:flex' height='100'>
-            <source src='{{url}}' type='video/mp4' />
-          </video>
-        </div>
-        <div style='display:inline ;'>
-          <div class='video-name'>{{title}}</div>
-          <div class='video-view'>{{views}}
-            views<span
-              class='seperate video-seperate'
-            ></span>{{createdAt}}</div>
-        </div>
+<div profileId={{currentUser._id}} editVideosDiv class='videos-grid'>
+
+  {{#each videos}}
+
+    <div videoId={{_id}} class='video anim' style='--delay: .4s;'>
+      <div class='video-time'>{{durationInHMS}}<!-- |-->
+        {{averageRating}}
+        ⭐</div>
+      <div class='video-wrapper'>
+        <video muted=''>
+          <source src='{{url}}#t=1' type='video/mp4' />
+        </video>
+
       </div>
-    {{/each}}
-  </div>
+
+      <div class='video-name'>{{title}} </div>
+      <div class='video-view'>{{views}}
+        views
+        <p style='font-weight: 100 ;'>
+          {{uploadedDate.day}}/{{uploadedDate.month}}/{{uploadedDate.year}}
+        </p>
+      </div>
+    <div class='button-wrapper edit-videos' style='--delay: .05s;'>
+      <button videoId={{_id}} deleteBtn type='button' class='like red'>
+
+        <svg
+          xmlns='http://www.w3.org/2000/svg'
+          x='0px'
+          y='0px'
+          fill='currentColor'
+          width='18'
+          height='18'
+          viewBox='0 0 48 48'
+        >
+          <path
+            fill-rule='evenodd'
+            clip-rule='evenodd'
+            d='M 24 4 C 20.491685 4 17.570396 6.6214322 17.080078 10 L 10.238281 10 A 1.50015 1.50015 0 0 0 9.9804688 9.9785156 A 1.50015 1.50015 0 0 0 9.7578125 10 L 6.5 10 A 1.50015 1.50015 0 1 0 6.5 13 L 8.6386719 13 L 11.15625 39.029297 C 11.427329 41.835926 13.811782 44 16.630859 44 L 31.367188 44 C 34.186411 44 36.570826 41.836168 36.841797 39.029297 L 39.361328 13 L 41.5 13 A 1.50015 1.50015 0 1 0 41.5 10 L 38.244141 10 A 1.50015 1.50015 0 0 0 37.763672 10 L 30.919922 10 C 30.429604 6.6214322 27.508315 4 24 4 z M 24 7 C 25.879156 7 27.420767 8.2681608 27.861328 10 L 20.138672 10 C 20.579233 8.2681608 22.120844 7 24 7 z M 11.650391 13 L 36.347656 13 L 33.855469 38.740234 C 33.730439 40.035363 32.667963 41 31.367188 41 L 16.630859 41 C 15.331937 41 14.267499 40.033606 14.142578 38.740234 L 11.650391 13 z M 20.476562 17.978516 A 1.50015 1.50015 0 0 0 19 19.5 L 19 34.5 A 1.50015 1.50015 0 1 0 22 34.5 L 22 19.5 A 1.50015 1.50015 0 0 0 20.476562 17.978516 z M 27.476562 17.978516 A 1.50015 1.50015 0 0 0 26 19.5 L 26 34.5 A 1.50015 1.50015 0 1 0 29 34.5 L 29 19.5 A 1.50015 1.50015 0 0 0 27.476562 17.978516 z'
+          >
+          </path>
+        </svg>
+
+        Delete Video
+      </button>
+
+        <a href="/profile/{{author._id}}/edit/{{_id}}">
+          <button videoId={{_id}} editBtn type='submit' class='like green'>
+        <svg
+          viewBox='0 0 24 24'
+          fill='currentColor'
+          xmlns='http://www.w3.org/2000/svg'
+        >
+          <path
+            d='M21.435 2.582a1.933 1.933 0 00-1.93-.503L3.408 6.759a1.92 1.92 0 00-1.384 1.522c-.142.75.355 1.704 1.003 2.102l5.033 3.094a1.304 1.304 0 001.61-.194l5.763-5.799a.734.734 0 011.06 0c.29.292.29.765 0 1.067l-5.773 5.8c-.428.43-.508 1.1-.193 1.62l3.075 5.083c.36.604.98.946 1.66.946.08 0 .17 0 .251-.01.78-.1 1.4-.634 1.63-1.39l4.773-16.075c.21-.685.02-1.43-.48-1.943z'
+          ></path>
+        </svg>
+        Edit Video
+      </button>
+</a>
+
+    </div>
+    </div>
+
+  {{/each}}
+
 </div>
 
-
 <script>
+  window.onload = (e) => { 
+    const profileId = document.querySelector('div[profileId]').getAttribute('profileId')
+
+    const videosCollection = document.querySelectorAll("div[videoId]") 
+    videosToUpdate = [...videosCollection] 
+    
+    videosToUpdate.forEach(video => {
+        let buttonWrapper = video.querySelector('.button-wrapper')
+        let detailsWrapper = video.querySelector('.video-view')
+        video.addEventListener('mouseover', () => {
+            buttonWrapper.classList.add('show-buttons', 'anim')
+            detailsWrapper.classList.add('show-buttons')
+        })
+        video.addEventListener('mouseleave', () =>   {
+            buttonWrapper.classList.remove('show-buttons', 'anim')
+            detailsWrapper.classList.remove('show-buttons')
+        })
 
 
-
-  const videosCollection = document.querySelectorAll("div[videoId]")
-  videosToUpdate = [...videosCollection]
-  videosToUpdate.forEach(video => {
-    video.onclick = (e) => {
-      let videoId = video.getAttribute('videoId')
-      let title = video.getAttribute('title')
-      let description = video.getAttribute('description')
-      let thumbnail = video.getAttribute('thumbnail')
-      let category = video.getAttribute('category')
-   
-      
-
-
-      document.getElementById("edit-video-id").value = videoId
-      document.getElementById("edit-video-title").value = title
-      document.getElementById("edit-video-description").value = description
-
-
-      let categorySelect = document.getElementById("edit-video-category")
-      let categoryOptions = categorySelect.options
-      for (let i = 0; i < categoryOptions.length; i++) {
-        if (categoryOptions[i].textContent === category) {
-          categoryOptions[i].selected = true
-          break
+        const deleteBtn = document.querySelectorAll('button[deleteBtn]')
+        
+        deleteBtn.forEach(button => {
+            button.onclick = (e) => {
+            console.log('hey')
+            let videoId = button.getAttribute('videoId') 
+            axios.post(`/profile/${profileId}/delete/`, {videoId}, {
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded'
+                }          
+            })
+            .then((response) => {
+               console.log('RES:',response.data);
+              location.reload()
+            })
+            .catch( (error) =>{
+                console.log('ERROR',error);
+            });
         }
-      }
 
-      let thumbnailInput = document.getElementById("edit-video-thumbnail")
-      thumbnailInput.value = ""
-      let thumbnailPreview = document.getElementById("thumbnail-preview")
-      if (thumbnail !== null) {
-        thumbnailPreview.src = thumbnail
-        thumbnailPreview.style.display = "flex";
-      } else {
-        thumbnailPreview.src = ""
-      }
+        })
 
-      thumbnailInput.addEventListener("change", function () {
-        let file = this.files[0];
-        if (file) {
-          let reader = new FileReader();
-          reader.onload = function (event) {
-            thumbnailPreview.src = event.target.result;
-          }
-          reader.readAsDataURL(file);
-        } else {
-          thumbnailPreview.src = "";
-        }
-      });
-    }
-  })
+    })
+  }
+
 </script>

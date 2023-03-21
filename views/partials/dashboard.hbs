@@ -1,3 +1,5 @@
+  {{#with currentUser}}
+
 <div class='main-blogs'>
   <div
     class='main-blog anim'
@@ -21,7 +23,7 @@
         <img class='author-img' src='{{profilePic}}' />
       </div>
       <div class='author-detail'>
-        <div class='author-name'>{{this.channelName}} | {{email}}</div>
+        <div class='author-name'>{{channelName}} | {{email}}</div>
         <div class='author-info'>{{subscribers}}
           subscribers
           <span class='seperate'></span>{{channelViews}}</div>
@@ -49,4 +51,5 @@
   </div>
 
 </div>
-<!--Blogs /Posts-->
+
+{{/with}}

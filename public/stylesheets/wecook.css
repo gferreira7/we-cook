@@ -315,8 +315,6 @@ a {
   align-items: center;
 }
 
-
-
 .search-wrapper {
   display: flex;
   justify-content: space-between;
@@ -460,7 +458,6 @@ a {
 
 /* VIDEO LIST - used to display grid videos in the partial */
 
-
 .author-img {
   width: 52px;
   height: 52px;
@@ -468,7 +465,7 @@ a {
   padding: 4px;
   border-radius: 50%;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 .author-img__wrapper {
   position: relative;
@@ -562,7 +559,7 @@ a {
   position: relative;
 }
 .video-by:before {
-  content: "";
+  content: '';
   background-color: #22b07d;
   width: 6px;
   height: 6px;
@@ -621,7 +618,6 @@ video {
   cursor: pointer;
   transition: 0.4s;
 }
-
 
 /* Watch page */
 .single-video-page {
@@ -1005,7 +1001,7 @@ video {
   padding-left: 36px;
   left: 14px;
   width: calc(100% - 28px);
-  
+
   right: 0;
   border-radius: 10px;
   height: 4em;
@@ -1582,9 +1578,9 @@ table {
   height: 80px;
   border-radius: 10px;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
   -o-object-position: right;
-     object-position: right;
+  object-position: right;
   margin-right: 16px;
   transition: 0.3s;
 }
@@ -1594,7 +1590,8 @@ table {
 .chat-vid__content {
   max-width: 20ch;
 }
-.chat-vid__by, .chat-vid__info {
+.chat-vid__by,
+.chat-vid__info {
   color: var(--body-color);
   font-size: 13px;
 }
@@ -1622,7 +1619,27 @@ table {
 
 /* Manage Videos Page */
 
-.edit-recipe-modal{
+.button-wrapper.edit-videos {
+  display: none;
+}
+
+.button-wrapper.edit-videos.show-buttons {
+  display: flex;
+  width: 100%;
+  position: absolute;
+  justify-content: space-around;
+  align-items: center;
+  bottom: 3vh;
+}
+
+/* .edit-videos button {
+  font-size: 1.2rem;
+} */
+
+.video-view.show-buttons {
+  color: var(--video-bg);
+}
+/* .edit-recipe-modal{
   display:none
   
 }
@@ -1631,7 +1648,4 @@ table {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-}
-
-
-
+} */

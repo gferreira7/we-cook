@@ -1,4 +1,4 @@
-<div class='sticky-top' style='margin:1rem'>
+<div class=''>
   <form
     editForm
     action='/profile/{{currentUser._id}}/video/edit'
@@ -53,7 +53,7 @@
       >Edit Recipe</button>
       <div editRecipeModal class='edit-recipe-modal'>
         Save changes to Video?
-        <button recipeModalSubmit type="submit">Yes</button>
+        <button recipeModalSubmit type='submit'>Yes</button>
       </div>
 
       <div
@@ -110,9 +110,9 @@
 </div>
 
 <script>
-  window.onload = (e) => {
+   {{!-- window.onload = (e) => {
 
-    const form = document.querySelector('form[editForm]')
+ const form = document.querySelector('form[editForm]')
     const profileId = document.querySelector('input[profileId]').getAttribute('profileId')
     const videoId = document.getElementById('edit-video-id').value
 
@@ -174,5 +174,5 @@
     }
 
 
-  }
+  } --}}
 </script>

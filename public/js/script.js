@@ -71,21 +71,25 @@ trending.addEventListener('click', () => {
   sidebarLinks.forEach((link) => link.classList.remove('is-active'))
   trending.classList.add('is-active')
 })
-videoLinks.forEach((video) => {
-  video.addEventListener('click', () => {
-    const source = video.querySelector('source').getAttribute('src')
-    const title = video.querySelector('.video-name').textContent
-    const person = video.querySelector('.video-by').textContent
-    const img = video.querySelector('.author-img').getAttribute('src')
-    const videoStream = document.querySelector('.video-stream video')
-    const videoTitle = document.querySelector('.video-p-title')
-    const videoPerson = document.querySelector('.video-p-name')
-    const videoDetailImg = document.querySelector('.video-detail .author-img')
-    videoStream.pause()
-    videoStream.setAttribute('src', source)
-    videoStream.load()
-    videoTitle.textContent = title
-    videoPerson.textContent = person
-    videoDetailImg.setAttribute('src', img)
+
+if(!window.location.href.includes('profile')){
+
+  videoLinks.forEach((video) => {
+    video.addEventListener('click', () => {
+      const source = video.querySelector('source').getAttribute('src')
+      const title = video.querySelector('.video-name').textContent
+      const person = video.querySelector('.video-by').textContent
+      const img = video.querySelector('.author-img').getAttribute('src')
+      const videoStream = document.querySelector('.video-stream video')
+      const videoTitle = document.querySelector('.video-p-title')
+      const videoPerson = document.querySelector('.video-p-name')
+      const videoDetailImg = document.querySelector('.video-detail .author-img')
+      videoStream.pause()
+      videoStream.setAttribute('src', source)
+      videoStream.load()
+      videoTitle.textContent = title
+      videoPerson.textContent = person
+      videoDetailImg.setAttribute('src', img)
+    })
   })
-})
+}

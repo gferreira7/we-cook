@@ -33,17 +33,19 @@ const Recipe = require('../models/Recipe.model')
 router.get('/profile', secured, async (req, res, next) => {
   let loggedInUser = await User.findOne({ authId: req.user.id })
   const allVideos = await Video.find().populate('author').populate('recipe')
-  
+
   console.log(allVideos)
   // My Uploads
-  const uploadedVideos = allVideos.filter((video) => {
+  const allUploads = allVideos.filter((video) => {
     return video.author._id.equals(loggedInUser._id)
   })
   // My liked Videos
-  const likedVideos = allVideos.filter((video) =>
+  const allLikedVideos = allVideos.filter((video) =>
     video.likes.includes(loggedInUser._id)
   )
-  console.log(uploadedVideos)
+  const uploadedVideos = allUploads.slice(0, 3)
+  const likedVideos = allLikedVideos.slice(0, 3)
+
   res.render('profile/currentUser-profile', {
     title: 'Profile',
     uploadedVideos,
@@ -93,28 +95,17 @@ router.get('/profile/:channelName', secured, async (req, res, next) => {
 })
 
 router.get(
-  '/profile/:idFromDB/accountSettings',
+  '/profile/:profileId/accountSettings',
   secured,
   async (req, res, next) => {
-    const { idFromDB } = req.params
+    const { profileId } = req.params
 
-    let userFromDB = await User.findById(idFromDB).exec()
+    let currentUser = await User.findById(profileId)
 
-    Video.find({ author: userFromDB._id })
-      .populate('author')
-      .then((videos) => {
-        res.render('profile/account-settings', {
-          title: 'Account Settings',
-          videos,
-          currentUser: userFromDB,
-        })
-      })
-      .catch((error) => {
-        console.log('Error while getting the videos from the DB: ', error)
-
-        // Call the error-middleware to display the error page to the user
-        next(error)
-      })
+    res.render('profile/account-settings', {
+      title: 'Account Settings',
+      currentUser,
+    })
   }
 )
 
@@ -195,8 +186,6 @@ router.get(
               },
             })
 
-          console.log(videos[0].recipe.ingredients)
-
           res.render('profile/manage-videos', {
             title: 'Manage Videos',
             videos,
@@ -246,16 +235,16 @@ router.post(
     let updatedVideo = await Video.findByIdAndUpdate(videoId, newVideoInfo, {
       new: true,
     }).exec()
-    if(needsRecipeEdit){
+    if (needsRecipeEdit) {
       res.status(200).json(videoId)
-    } else{
+    } else {
       res.redirect(`/watch/${videoId}`)
     }
   }
 )
 
 router.get(
-  '/profile/:profileId/editFull/:videoId',
+  '/profile/:profileId/edit/:videoId',
   secured,
   async (req, res, next) => {
     const { profileId, videoId } = req.params
@@ -263,58 +252,47 @@ router.get(
     const profileUser = await User.findById(profileId)
     const loggedInUser = await User.findOne({ authId: req.user.id })
 
-    try {
-      if (profileUser._id.equals(loggedInUser._id)) {
-        try {
-          const video = await Video.findById(videoId)
-            .populate('author')
-            .populate({
-              path: 'recipe',
-              populate: {
-                path: 'ingredients',
-              },
-            })
-
-          res.render('profile/edit-full-video', {
+    //logged in user is accessing own profile
+    if (profileUser._id.equals(loggedInUser._id)) {
+      try {
+        const video = await Video.findById(videoId)
+          .populate('author')
+          .populate({
+            path: 'recipe',
+            populate: {
+              path: 'ingredients',
+            },
+          })
+        if (video) {
+          res.render('profile/edit-video', {
             title: 'Edit Video',
             video,
             currentUser: loggedInUser,
           })
-        } catch (error) {
-          console.log(error)
-          res.status(500).json(error)
         }
-      } else {
-        res.redirect('/')
+      } catch (error) {
+        res.status.json(error)
       }
-    } catch (error) {
-      console.log(error)
     }
   }
 )
 
-router.post(
-  '/profile/:profileId/video/delete',
-  secured,
-  async (req, res, next) => {
-    const { profileId } = req.params
-    try {
-      const { videoId } = req.body
+router.post('/profile/:profileId/delete/', secured, async (req, res, next) => {
+  const { profileId } = req.params
+  const { videoId } = req.body
 
-      console.log(videoId, 'in the route')
+  try {
+    const deletedVideo = await Video.findByIdAndDelete(videoId)
 
-      const deletedVideo = await Video.findByIdAndDelete(videoId)
-
-      if (!deletedVideo) {
-        throw new Error('Video not found')
-      }
-
-      res.redirect(`/profile/${profileId}/manageVideos`)
-    } catch (error) {
-      next(error)
+    if (!deletedVideo) {
+      throw new Error('Video not found')
     }
+
+    res.status(200).json({ videoId })
+  } catch (error) {
+    next(error)
   }
-)
+})
 
 router.get('/profile/:idFromDB/uploadedVideos', async (req, res, next) => {
   const { idFromDB } = req.params
