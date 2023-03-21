@@ -74,10 +74,25 @@ router.get('/profile/:channelName', secured, async (req, res, next) => {
       return video.author._id.equals(profileOwner._id)
     })
 
+ 
+   //subscribe
+
+   let action = false;
+   const subscribe = profileOwner.subscribers.find(sub => sub._id.equals(loggedInUser._id))
+   
+   if (subscribe) {
+     action = true;
+   }
+   
+   console.log(action);
+   profileOwner.follower = action;
+
+
     // Profile's liked Videos
     const likedVideos = videos.filter((video) =>
       video.likes.includes(profileOwner._id)
     )
+
 
     res.render('profile/otherUser-profile', {
       title: 'Profile',
@@ -513,5 +528,28 @@ router.get('/history', async (req, res, next) => {
     title: 'history',
   })
 })
+
+router.post('/channel/:channelName/subscribe', async (req, res, next) => {
+  const { channelName } = req.params
+  const { updateCriteria } = req.body
+  const currentUser = await User.findOne({ authId: req.user.id })
+
+  let channelFromDB = await User.findOne({channelName : channelName})
+  let updatedVideo
+console.log(updateCriteria)
+  if (updateCriteria === 'sub') {
+     updatedVideo =  await User.findByIdAndUpdate(channelFromDB._id, { $addToSet: { subscribers: currentUser._id } })
+      console.log(updatedVideo)
+      res.status(200).json(updatedVideo)
+  }else if ( updateCriteria === 'unsub') {
+
+    updatedVideo =  await User.findByIdAndUpdate(channelFromDB._id, { $pull: { subscribers: currentUser._id } })
+    console.log(updatedVideo)
+    res.status(200).json(updatedVideo)
+  }
+
+
+})
+
 
 module.exports = router

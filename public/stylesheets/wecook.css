@@ -1345,8 +1345,8 @@ textarea {
   display: flex;
   align-items: center;
   position: absolute;
-  bottom: 15vh;
-  left: 15vh;
+  bottom: 5vh;
+  left: 5vh;
 }
 .main-blog__author.tips {
   flex-direction: column-reverse;
@@ -1392,14 +1392,16 @@ textarea {
 }
 
 .main-blog__time {
-  background: rgba(21, 13, 13, 0.44);
+  /* background: rgba(21, 13, 13, 0.44); */
   color: #fff;
   padding: 3px 8px;
   font-size: 12px;
   border-radius: 6px;
   position: absolute;
-  right: -10px;
-  bottom: 20px;
+  right:  -5vh;
+  bottom: 1vh;
+justify-content: space-around;
+  
 }
 .main-blog__time img {
   max-width: 15%;

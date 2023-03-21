@@ -36,9 +36,11 @@ const userSchema = new Schema(
     },
     bannerImage: {
       type: String,
+      default: "/images/png/wecook_logo.png"
+
     },
     description: String,
-    subscribers: { type: Number, default: 0 },
+    subscribers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     channelViews: { type: Number, default: 0 },
     channelLikes: { type: Number, default: 0 },
     socialLinks: {
@@ -47,7 +49,7 @@ const userSchema = new Schema(
       facebook: String,
       discord: String,
       youtube: String,
-    }
+    },
   },
   {
     timestamps: true,
