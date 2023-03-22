@@ -1709,11 +1709,13 @@ div[sliderOutput] {
   width: 0%;
   opacity: 0;
   transition: width 0.8s ease;
+  display: none;
 }
 .edit-modal-container.edit-modal-expand{
   width: 100%;
   opacity: 1;
   transition: width 0.8s ease;
+  display: block;
 }
 
 .button-wrapper.edit-page{
