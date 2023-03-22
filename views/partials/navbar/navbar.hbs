@@ -5,7 +5,7 @@
     <form role='search' method='POST' action='/search'>
       <div class="search-wrapper">
         <input type='text' name='search' placeholder='Search' />
-        <a id="filter-btn"> <img id="filter-img" width="20" src="../../images/png/down_white.png"> </img> </a>
+        <a id="filter-btn"> <img id="filter-img" width="20" src="/images/png/down_white.png"> </img> </a>
       </div>
       <div class="search-filters" >
         <div>
@@ -43,9 +43,9 @@
         </svg>
       </div>
       <div class="dropdown-content"> 
-        <a href="/profile"> <img src="../../images/png/profile.png"> profile </a>
-        <a href="/profile/{{currentUser._id}}/accountSettings"> <img src="../../images/png/settings.png">settings</a>
-        <a href="/logout"> <img src="../../images/png/logout.png"> logout</a>
+        <a href="/profile"> <img src="/images/png/profile.png"> profile </a>
+        <a href="/profile/{{currentUser._id}}/accountSettings"> <img src="/images/png/settings.png">settings</a>
+        <a href="/logout"> <img src="/images/png/logout.png"> logout</a>
       </div>
     </div>
 
@@ -67,7 +67,7 @@
   <div class='user-settings'>
     <div class="button-wrapper" style="">
       <a class="like" href="/login">
-        <img src="../../images/png/login.png" width="30%" style="margin-right:5px">
+        <img src="/images/png/login.png" width="30%" style="margin-right:5px">
         Login
       </a>
     </div>
@@ -85,11 +85,11 @@
     filterBtn.addEventListener("click", () => {
       if (filtersDiv.style.display == "none") {
         filtersDiv.style.display = "flex";
-        document.getElementById("filter-img").src = "../../images/png/up_white.png"
+        document.getElementById("filter-img").src = "/images/png/up_white.png"
       }
       else {
         filtersDiv.style.display = "none";
-        document.getElementById("filter-img").src = "../../images/png/down_white.png"
+        document.getElementById("filter-img").src = "/images/png/down_white.png"
       }
 
     });
