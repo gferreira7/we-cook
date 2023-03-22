@@ -21,6 +21,8 @@ hbs.registerPartials(path.join(partialsDir, 'videos'));
 hbs.registerPartials(path.join(partialsDir, 'navbar'));
 hbs.registerPartials(path.join(partialsDir, 'channel'));
 
+
+
 const app = express();
 
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware

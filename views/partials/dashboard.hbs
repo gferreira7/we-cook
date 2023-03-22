@@ -70,21 +70,22 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form action="/messages" method="POST">
           <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">Title:</label>
-            <input type="text" class="form-control" id="recipient-name">
+            <input name="recipient" value="{{this._id}}" style="display: none;"> 
+            <label for="recipient-name" class="col-form-label">Recipient: {{this.channelName}} | {{this.username}}  </label>
           </div>
           <div class="mb-3">
             <label for="message-text" class="col-form-label">Message:</label>
-            <textarea class="form-control" id="message-text"></textarea>
+            <textarea class="form-control" id="text_sms" name="text_sms"></textarea>
           </div>
+             <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" id="send_sms">Send message</button>
+      </div>
         </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
-      </div>
+   
     </div>
   </div>
 </div>

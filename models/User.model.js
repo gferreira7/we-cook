@@ -50,6 +50,8 @@ const userSchema = new Schema(
       discord: String,
       youtube: String,
     },
+    chat : [{ type: Schema.Types.ObjectId, ref: 'Chat' }],
+
   },
   {
     timestamps: true,

@@ -812,6 +812,20 @@ video {
   cursor: pointer;
   font-size: 18px;
 }
+
+.chatReturn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  border: 1px;
+  font-family: var(--button-font);
+  border-radius: 8px;
+  padding: 5px 8px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
 .like.red {
   background-color: #ea5f5f8c;
 }
@@ -1468,13 +1482,13 @@ table {
 .chat-header {
   display: flex;
   align-items: center;
-  padding: 20px 0;
+  padding: 10px 0;
   font-size: 16px;
   font-weight: 600;
   color: #fff;
   position: sticky;
   top: 0;
-  background-color: #252836;
+  background-color: var(--video-bg);
   left: 0;
   z-index: 1;
   border-bottom: 1px solid var(--border-color);
@@ -1497,28 +1511,40 @@ table {
   margin-left: 30px;
 }
 
+
+
 .chat {
-  background-color: #252836;
+  position: relative; /* adicione esta linha para tornar a posição do chat relativa */
+  background-color: var(--video-bg);
   border-radius: 20px;
   padding: 0 20px;
-  max-height: 414px;
-  overflow: auto;
+  min-height: calc(100% + 20px);
   color: #fff;
+  min-width: 100%;
+  overflow: auto;
+
+}
+.chat form {
+  position: sticky; /* adicione esta linha para tornar a posição do chat-footer absoluta */
+  bottom:0;
+  width: 100%;
+
 }
 .chat-footer {
+  position: sticky; /* adicione esta linha para tornar a posição do chat-footer absoluta */
   display: flex;
   align-items: center;
-  position: sticky;
-  bottom: 0;
-  left: 0;
   width: calc(100% + 20px);
   padding-bottom: 12px;
-  background-color: #252836;
+  background-color: var(--video-bg);
+  border-radius: 20px;
+
+
 }
 .chat-footer input {
   width: 100%;
   border: 0;
-  background-color: #2d303e;
+  background-color: var(--input-color);
   border-radius: 20px;
   font-size: 12px;
   color: #fff;
@@ -1651,3 +1677,37 @@ table {
   justify-content: space-around;
   align-items: center;
 } */
+
+
+/*chat `*/
+.bubble {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 5px;
+  color: #F9FBFF;
+  font-size: rem;
+  padding: 10px 10px 10px 12px;
+  border-radius: 20px;
+}
+.incoming {
+  position: absolute;
+  width: 50%;
+  height: 100%;
+  padding: 10px;
+}
+.incoming .bubble {
+  background: #b2b2b2;
+}
+.outgoing {
+  position: absolute;
+  padding: 0px;
+  padding-right: 60px;
+  right: 0;
+  top: 25%;
+  width: 50%;
+  height: 100%;
+}
+.outgoing .bubble {
+  background: #79C7C5;
+  float: right;
+}
