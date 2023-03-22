@@ -1,5 +1,15 @@
 const Review = require('../models/Review.model.js')
+const possibleTimes = ['15m','30m', '45m', '1h', '1h15m','1h30m','1h45m', 'over 2h',]
 
+const cookTimeConvert = (index) =>{
+  let convertedTime = {
+    stringFormat : '',
+    minutes: 0
+  }
+  convertedTime.stringFormat = possibleTimes[index]
+  convertedTime.minutes = (parseInt(index) + 1) * 15
+  return convertedTime
+}
 const timePassedSince = (initialTime) => {
   const currentTime = new Date().getTime()
   let milisecondsSince = currentTime - initialTime
@@ -47,4 +57,5 @@ module.exports = {
   timePassedSince,
   toHoursAndMinutes,
   getRating,
+  cookTimeConvert
 }

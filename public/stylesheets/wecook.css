@@ -1334,12 +1334,7 @@ textarea {
   color: var(--body-color);
 }
 
-/* My classes */
-.ingredients-input {
-  display: flex;
-  justify-content: left;
-  align-items: center;
-}
+
 
 .added-ingredient {
   opacity: 0.6;
@@ -1408,10 +1403,9 @@ textarea {
   font-size: 12px;
   border-radius: 6px;
   position: absolute;
-  right:  -5vh;
+  right: -5vh;
   bottom: 1vh;
-justify-content: space-around;
-  
+  justify-content: space-around;
 }
 .main-blog__time img {
   max-width: 15%;
@@ -1660,23 +1654,73 @@ table {
   bottom: 3vh;
 }
 
-/* .edit-videos button {
-  font-size: 1.2rem;
-} */
+
+/* Edit Video Page */
+.edit-videos-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
 
 .video-view.show-buttons {
   color: var(--video-bg);
 }
-/* .edit-recipe-modal{
-  display:none
-  
+.edit-tags {
+  display: block;
 }
-.edit-recipe-modal.show-recipe-modal{
-  display:flex;
+
+.ingredients-input {
+  display: block;
+}
+.ingredients-input > * {
+  display: flex;
+}
+
+.steps-container{
+  display: flex;
   flex-direction: column;
-  justify-content: space-around;
+}
+
+.step-input{
+  display: flex;
+}
+/* Profile Page */
+
+/* Upload Form */
+
+.edit-control-panel{
+  display: flex;
+  padding: 3em;
+}
+
+.cooking-time {
+  display: flex;
   align-items: center;
-} */
+  padding: 0 3vw;
+}
+
+div[sliderOutput] {
+  padding: 0 2em;
+  font-size: 1rem;
+}
+
+
+.edit-modal-container{
+  width: 0%;
+  opacity: 0;
+  transition: width 0.8s ease;
+}
+.edit-modal-container.edit-modal-expand{
+  width: 100%;
+  opacity: 1;
+  transition: width 0.8s ease;
+}
+
+.button-wrapper.edit-page{
+  display: flex;
+  justify-content: space-around;
+}
+
 
 
 /*chat `*/

@@ -35,11 +35,10 @@ const recipeSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: 'Video',
     },
-    // should convert to steps
-    steps: [String],
+    cookTime: { minutes: Number, stringFormat: String },
     mealType: String,
-    cookTime: Number,
     portions: Number,
+    steps: [String],
     ingredients: {
       type: [ingredientSchema],
     },

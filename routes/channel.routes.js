@@ -14,7 +14,7 @@ const {
   uploadImg,
 } = require('../config/cloudinary.config')
 
-const { toHoursAndMinutes } = require('../controllers/helpers')
+const { toHoursAndMinutes, cookTimeConvert } = require('../controllers/helpers')
 
 const mongoose = require('mongoose') // <== has to be added
 
@@ -34,7 +34,6 @@ router.get('/profile', secured, async (req, res, next) => {
   let loggedInUser = await User.findOne({ authId: req.user.id })
   const allVideos = await Video.find().populate('author').populate('recipe')
 
-  console.log(allVideos)
   // My Uploads
   const allUploads = allVideos.filter((video) => {
     return video.author._id.equals(loggedInUser._id)
@@ -94,7 +93,6 @@ router.get('/profile/:channelName', secured, async (req, res, next) => {
       action = true
     }
 
-    console.log(action)
     profileOwner.follower = action
 
     res.render('profile/otherUser-profile', {
@@ -133,7 +131,6 @@ router.post(
     { name: 'profilePic', maxCount: 1 },
   ]),
   async (req, res, next) => {
-    console.log(req.files)
     const { idFromDB } = req.params
     const {
       channelName,
@@ -220,45 +217,6 @@ router.get(
   }
 )
 
-router.post(
-  '/profile/:profileId/video/edit/',
-  secured,
-  upload.single('thumbnail'),
-  async (req, res, next) => {
-    const { profileId } = req.params
-    const { title, description, category, videoId, needsRecipeEdit } = req.body
-    console.log('edit recipe: ', needsRecipeEdit)
-    const newVideoInfo = {}
-
-    // Check if thumbnail image is provided
-    if (req.file !== undefined) {
-      const thumbnail = req.file
-      const uploadedThumbnail = await uploadImg(thumbnail.path)
-      newVideoInfo.thumbnail = uploadedThumbnail
-      fs.unlinkSync(thumbnail.path.toString())
-    }
-
-    if (title) {
-      newVideoInfo.title = title
-    }
-    if (description) {
-      newVideoInfo.description = description
-    }
-    if (category) {
-      newVideoInfo.category = category
-    }
-
-    let updatedVideo = await Video.findByIdAndUpdate(videoId, newVideoInfo, {
-      new: true,
-    }).exec()
-    if (needsRecipeEdit) {
-      res.status(200).json(videoId)
-    } else {
-      res.redirect(`/watch/${videoId}`)
-    }
-  }
-)
-
 router.get(
   '/profile/:profileId/edit/:videoId',
   secured,
@@ -273,12 +231,8 @@ router.get(
       try {
         const video = await Video.findById(videoId)
           .populate('author')
-          .populate({
-            path: 'recipe',
-            populate: {
-              path: 'ingredients',
-            },
-          })
+          .populate('recipe')
+
         if (video) {
           res.render('profile/edit-video', {
             title: 'Edit Video',
@@ -293,6 +247,92 @@ router.get(
   }
 )
 
+router.post(
+  '/profile/:profileId/edit/:videoId',
+  secured,
+  upload.single('thumbnail'),
+  async (req, res, next) => {
+    const { profileId, videoId } = req.params
+    const {
+      title,
+      description,
+      category,
+      tags,
+      cookTime,
+      portions,
+      mealType,
+      ingredients,
+      steps,
+    } = req.body
+    const newVideoInfo = {}
+    const newRecipeInfo = {}
+
+    try {
+      if (title) {
+        newVideoInfo.title = title
+      }
+      if (description) {
+        newVideoInfo.description = description
+      }
+      if (category) {
+        newVideoInfo.category = category
+      }
+      if (tags) {
+        newVideoInfo.tags = JSON.parse(tags)
+      }
+      // Check if thumbnail image is provided
+      if (req.file !== undefined) {
+        const thumbnail = req.file
+        const uploadedThumbnail = await uploadImg(thumbnail.path)
+        newVideoInfo.thumbnail = uploadedThumbnail
+        fs.unlinkSync(thumbnail.path.toString())
+      }
+
+      if (cookTime) {
+        newRecipeInfo.cookTime = cookTimeConvert(cookTime)
+      }
+      if (portions) {
+        newRecipeInfo.portions = portions
+      }
+      if (mealType) {
+        newRecipeInfo.mealType = mealType
+      }
+      if (steps) {
+        newRecipeInfo.steps = JSON.parse(steps)
+      }
+      let nutritionInfo
+      if (ingredients) {
+        
+        nutritionInfo = await Promise.all(
+          JSON.parse(ingredients).map(async (ingredient) => {
+            const response = await getFoodDetails(ingredient)
+            return response
+          })
+        )
+        newRecipeInfo.ingredients = nutritionInfo
+       console.log(newRecipeInfo.ingredients)
+      
+      }
+
+      //MISSING CALORIE UPDATES FOR THE NEW ING
+ 
+
+      let updatedVideo = await Video.findByIdAndUpdate(videoId, newVideoInfo, {
+        new: true,
+      })
+      let updatedRecipe = await Recipe.findByIdAndUpdate(
+        updatedVideo.recipe,
+        newRecipeInfo,
+        {
+          new: true,
+        }
+      )
+      res.status(200).json({ updatedRecipe, updatedVideo })
+    } catch (error) {
+      res.status(500).json(error)
+    }
+  }
+)
 router.post('/profile/:profileId/delete/', secured, async (req, res, next) => {
   const { profileId } = req.params
   const { videoId } = req.body
@@ -429,7 +469,7 @@ router.post(
         recipeToDB.mealType = mealType
       }
       if (cookTime) {
-        recipeToDB.cookTime = parseInt(cookTime)
+        recipeToDB.cookTime = cookTimeConvert(cookTime)
       }
       if (portions) {
         recipeToDB.portions = parseInt(portions)
@@ -466,16 +506,12 @@ router.post(
       }
       recipeToDB.ingredients = nutritionInfo
 
-      console.log(recipeToDB)
-
       const recipeId = await Recipe.create(recipeToDB)
-
-      console.log('recipeId:' + recipeId)
 
       const now = new Date()
 
       const day = now.getDate()
-      const month = now.getMonth() + 1 // Adiciona 1 porque os meses começam em zero
+      const month = now.getMonth() + 1
       const year = now.getFullYear()
       const hour = now.getHours()
       videoToDB.uploadedDate = {
@@ -515,18 +551,15 @@ router.post('/channel/:channelName/subscribe', async (req, res, next) => {
 
   let channelFromDB = await User.findOne({ channelName: channelName })
   let updatedVideo
-  console.log(updateCriteria)
   if (updateCriteria === 'sub') {
     updatedVideo = await User.findByIdAndUpdate(channelFromDB._id, {
       $addToSet: { subscribers: currentUser._id },
     })
-    console.log(updatedVideo)
     res.status(200).json(updatedVideo)
   } else if (updateCriteria === 'unsub') {
     updatedVideo = await User.findByIdAndUpdate(channelFromDB._id, {
       $pull: { subscribers: currentUser._id },
     })
-    console.log(updatedVideo)
     res.status(200).json(updatedVideo)
   }
 })
