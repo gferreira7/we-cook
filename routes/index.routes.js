@@ -123,6 +123,13 @@ router.get('/messages/:id', secured ,async (req, res, next) => {
     }
   });
 
+  chatDM.forEach(async (chat) => {
+    if(currentUser._id == chat.recipient ) { 
+      let view = await Chat.findByIdAndUpdate(chat._id, { viewed: true });
+    }
+    
+  });
+
   console.log(chatDM)
 
   res.render('chat/dmchat', {
@@ -134,6 +141,18 @@ router.get('/messages/:id', secured ,async (req, res, next) => {
   })
   
 })
+router.get('/notification', secured ,async (req, res, next) => { 
+  let currentUser = await User.findOne({ authId: req.user.id }).populate('chat').exec();
+  let notification = await Chat.find({ recipient: currentUser._id, viewed: false })
+    .populate('sender')
+    .lean()
+    .exec();
+    console.log(notification)
+
+    res.json(notification)
+})
+
+
 
 router.post('/messages/:recipient', secured, async (req, res, next) => {
   const {text_sms} = req.body
@@ -211,8 +230,9 @@ router.post('/user/find', secured, async (req, res, next) => {
 
   }
 
-
 })
+
+
 
 
 module.exports = router

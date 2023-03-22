@@ -2,6 +2,22 @@ const axios = require('axios')
 const OAuth = require('oauth-1.0a')
 const crypto = require('crypto')
 require('dotenv').config()
+
+function convertQuantityToGrams(quantity, unit) {
+  switch (unit) {
+    case "g":
+      return quantity;
+    case "kg":
+      return quantity * 1000;
+    case "oz":
+      return quantity * 28.35;
+    case "lb":
+      return quantity * 453.592;
+    default:
+      return quantity;
+  }
+}
+
  
 const getFoodDetails = async (ingredientObj) => {
   
@@ -80,20 +96,31 @@ const getFoodDetails = async (ingredientObj) => {
         return null;
       }
       
-      const calories = parseFloat(match[1]) * ingredientObj.quantity / 100;
-      const fat = parseFloat(match[2]) * ingredientObj.quantity / 100;
-      const carbs = parseFloat(match[3]) * ingredientObj.quantity / 100;
-      const protein = parseFloat(match[4]) * ingredientObj.quantity / 100;
+
       
-      let objFood = {
-        ingredient: ingredientObj.ingredient,
-        unit: ingredientObj.unit,
-        quantity: ingredientObj.quantity,
-        calories: parseInt(calories),
-        fat: parseInt(fat),
-        carbs: parseInt(carbs),
-        protein: parseInt(protein)
-      };
+    const caloriesPer100g = parseFloat(match[1]);
+const fatPer100g = parseFloat(match[2]);
+const carbsPer100g = parseFloat(match[3]);
+const proteinPer100g = parseFloat(match[4]);
+
+const quantityInGrams = convertQuantityToGrams(ingredientObj.quantity, ingredientObj.unit);
+const calories = (caloriesPer100g / 100) * quantityInGrams;
+const fat = (fatPer100g / 100) * quantityInGrams;
+const carbs = (carbsPer100g / 100) * quantityInGrams;
+const protein = (proteinPer100g / 100) * quantityInGrams;
+
+let objFood = {
+  ingredient: ingredientObj.ingredient,
+  unit: ingredientObj.unit,
+  quantity: ingredientObj.quantity,
+  calories: parseInt(calories),
+  fat: parseInt(fat),
+  carbs: parseInt(carbs),
+  protein: parseInt(protein)
+};
+
+
+
       
     //  console.log(objFood);
       return objFood
