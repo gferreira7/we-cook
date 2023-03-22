@@ -11,32 +11,25 @@ router.get('/', (req, res, next) => {
 
 /* GET home page */
 router.get('/home', async (req, res, next) => {
-  let currentUser = { name: { givenName: '' } }
 
-  if (req.user === undefined) {
-    currentUser.firstName = 'Guest'
-    currentUser.profilePic = '/images/icons/account.png'
-  } else {
-    let userProfile = await User.findOne({ authId: req.user.id }).exec()
-    currentUser = userProfile
+  let currentUser
+  let videos = await Video.find().populate('author')
+  
+  try {
+    currentUser = await User.findOne({ authId: req.user.id })
+
+    res.render('home', {
+      title: 'Home',
+      currentUser,
+      videos,
+    })
+  } catch (error) {
+    res.render('home', {
+      title: 'Home',
+      videos,
+    })
+    
   }
-
-  Video.find()
-    .populate('author')
-    .then((videos) => {
-      console.log(currentUser)
-      res.render('home', {
-        title: 'Home',
-        currentUser: currentUser,
-        videos: videos,
-      })
-    })
-    .catch((error) => {
-      console.log('Error while getting the videos from the DB: ', error)
-
-      // Call the error-middleware to display the error page to the user
-      next(error)
-    })
 })
 
 router.get('/trending', secured, async (req, res, next) => {

@@ -17,10 +17,10 @@
     </div>
 
     <span>Cooking time</span>
-    <div class='video-input'>
-      <textarea name='cookTime'></textarea>
-    </div>
-
+    <div class='video-input cooking-time'>
+      <input cookTime type="range" min="0" max="7" value="3" name="cookTime">
+      <div sliderOutput></div>
+    </div>   
     <span>Meal Type</span>
     <div class='video-input'>
       <div class='select'>
@@ -159,7 +159,6 @@
     const ingredientsList = []
     const tagsList = []
     const stepsList = []
-    
   
     //Open and close Upload Form 
     let uploadModal = document.querySelector("div[uploadModal]")
@@ -182,8 +181,18 @@
           uploadModal.scrollIntoView({behavior:"smooth"})
         }
 
+  const slider = document.querySelector("input[cookTime]");
+  const sliderOutput = document.querySelector('div[sliderOutput]');
+  const possibleTimes = ['15m','30m', '45m', '1h', '1h15m','1h30m','1h45m', 'over 2h']
 
-        //INGREDIENTS INPUT
+  //default value
+  sliderOutput.innerHTML = possibleTimes[slider.value]
+// Update the current slider value (each time you drag the slider handle)
+  slider.oninput = function() {
+    sliderOutput.innerHTML = possibleTimes[slider.value]
+  } 
+
+    //INGREDIENTS INPUT
 
     //Adding new ingredients to Recipe 
     const addIngredientButton = document.querySelector('button[add-ingredient]')
@@ -263,8 +272,6 @@
 
   //Steps
 
-
-    
     //Adding new Steps to Recipe 
     const addStepButton= document.querySelector('button[add-step]')
     

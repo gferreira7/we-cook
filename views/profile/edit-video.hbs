@@ -1,178 +1,550 @@
-<div class=''>
+<div
+  profileId='{{currentUser._id}}'
+  videoId='{{video._id}}'
+  class='edit-videos-main'
+>
   <form
     editForm
-    action='/profile/{{currentUser._id}}/video/edit'
+    action='/profile/{{currentUser._id}}/edit/{{video._id}}'
     method='post'
     enctype='multipart/form-data'
   >
-    <input type='hidden' id='edit-video-id' name='videoId' />
-    <input type='hidden' profileId={{currentUser._id}} name='profileId' />
-    <div>
-      <div class='video-input'>
-        <label>Title</label>
-        <input id='edit-video-title' name='title' type='text' />
-      </div>
+    {{#with video}}
 
-      <div class='video-input'>
-        <label>Description</label>
-        <textarea id='edit-video-description' name='description'></textarea>
-      </div>
-
-      <span>Category</span>
-
-      <div class='select'>
-        <select id='edit-video-category'>
-          <option value='healthy'>Healthy</option>
-          <option value='cheatMeal'>Cheat Meal</option>
-        </select>
-      </div>
-      <div class='select__arrow'></div>
-
-      <div class='file-drop-area' style='margin: 0.5rem; padding:1rem; '>
-        <span class='fake-btn'>Thumbnail</span>
-        <span class='file-msg js-set-number'>or drag and drop files here</span>
-        <input
-          class='file-input'
-          id='edit-video-thumbnail'
-          name='thumbnail'
-          type='file'
-        />
-      </div>
-
-      <img
-        id='thumbnail-preview'
-        src=''
-        alt='Thumbnail Preview'
-        style='max-width: 200px; max-height: 200px; margin-top: 10px; display:none;'
-      />
-
-      <button
-        recipeModalBtn
-        type='button'
-        class='btn btn-outline-secondary'
-      >Edit Recipe</button>
-      <div editRecipeModal class='edit-recipe-modal'>
-        Save changes to Video?
-        <button recipeModalSubmit type='submit'>Yes</button>
-      </div>
-
-      <div
-        class='button-wrapper'
-        style='margin-top: 1rem; flex-direction: row-reverse;'
-      >
-
-        <button type='submit' class='like green' style='margin: 0.5rem;'>
-          <svg
-            viewBox='0 0 24 24'
-            fill='currentColor'
-            xmlns='http://www.w3.org/2000/svg'
+      <div class='edit-videos-wrapper'>
+        <div class="edit-control-panel">
+             
+            <button videoModalBtn type="button"  class='btn btn-outline-success section-header'>Video</button>
+          
+            <button recipeModalBtn type="button" class='btn btn-outline-success section-header'>Recipe</button>          
+         
+          <div
+            class='button-wrapper edit-page'
           >
-            <path
-              d='M21.435 2.582a1.933 1.933 0 00-1.93-.503L3.408 6.759a1.92 1.92 0 00-1.384 1.522c-.142.75.355 1.704 1.003 2.102l5.033 3.094a1.304 1.304 0 001.61-.194l5.763-5.799a.734.734 0 011.06 0c.29.292.29.765 0 1.067l-5.773 5.8c-.428.43-.508 1.1-.193 1.62l3.075 5.083c.36.604.98.946 1.66.946.08 0 .17 0 .251-.01.78-.1 1.4-.634 1.63-1.39l4.773-16.075c.21-.685.02-1.43-.48-1.943z'
-            ></path>
-          </svg>
-          Save Changes
-        </button>
+            <button 
+              submitBtn
+              type='submit' class='like green' style='margin: 0.5rem;'>
+              <svg
+                viewBox='0 0 24 24'
+                fill='currentColor'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path
+                  d='M21.435 2.582a1.933 1.933 0 00-1.93-.503L3.408 6.759a1.92 1.92 0 00-1.384 1.522c-.142.75.355 1.704 1.003 2.102l5.033 3.094a1.304 1.304 0 001.61-.194l5.763-5.799a.734.734 0 011.06 0c.29.292.29.765 0 1.067l-5.773 5.8c-.428.43-.508 1.1-.193 1.62l3.075 5.083c.36.604.98.946 1.66.946.08 0 .17 0 .251-.01.78-.1 1.4-.634 1.63-1.39l4.773-16.075c.21-.685.02-1.43-.48-1.943z'
+                ></path>
+              </svg>
+              Save Changes
+            </button>
 
-        <button delete type='button' class='like red' style='margin: 0.5rem;'>
+            <button delete type='button' class='like red' style='margin: 0.5rem;'>
 
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            x='0px'
-            y='0px'
-            fill='currentColor'
-            width='18'
-            height='18'
-            viewBox='0 0 48 48'
-          >
-            <path
-              fill-rule='evenodd'
-              clip-rule='evenodd'
-              d='M 24 4 C 20.491685 4 17.570396 6.6214322 17.080078 10 L 10.238281 10 A 1.50015 1.50015 0 0 0 9.9804688 9.9785156 A 1.50015 1.50015 0 0 0 9.7578125 10 L 6.5 10 A 1.50015 1.50015 0 1 0 6.5 13 L 8.6386719 13 L 11.15625 39.029297 C 11.427329 41.835926 13.811782 44 16.630859 44 L 31.367188 44 C 34.186411 44 36.570826 41.836168 36.841797 39.029297 L 39.361328 13 L 41.5 13 A 1.50015 1.50015 0 1 0 41.5 10 L 38.244141 10 A 1.50015 1.50015 0 0 0 37.763672 10 L 30.919922 10 C 30.429604 6.6214322 27.508315 4 24 4 z M 24 7 C 25.879156 7 27.420767 8.2681608 27.861328 10 L 20.138672 10 C 20.579233 8.2681608 22.120844 7 24 7 z M 11.650391 13 L 36.347656 13 L 33.855469 38.740234 C 33.730439 40.035363 32.667963 41 31.367188 41 L 16.630859 41 C 15.331937 41 14.267499 40.033606 14.142578 38.740234 L 11.650391 13 z M 20.476562 17.978516 A 1.50015 1.50015 0 0 0 19 19.5 L 19 34.5 A 1.50015 1.50015 0 1 0 22 34.5 L 22 19.5 A 1.50015 1.50015 0 0 0 20.476562 17.978516 z M 27.476562 17.978516 A 1.50015 1.50015 0 0 0 26 19.5 L 26 34.5 A 1.50015 1.50015 0 1 0 29 34.5 L 29 19.5 A 1.50015 1.50015 0 0 0 27.476562 17.978516 z'
-            >
-            </path>
-          </svg>
+              <svg
+                xmlns='http://www.w3.org/2000/svg'
+                x='0px'
+                y='0px'
+                fill='currentColor'
+                width='18'
+                height='18'
+                viewBox='0 0 48 48'
+              >
+                <path
+                  fill-rule='evenodd'
+                  clip-rule='evenodd'
+                  d='M 24 4 C 20.491685 4 17.570396 6.6214322 17.080078 10 L 10.238281 10 A 1.50015 1.50015 0 0 0 9.9804688 9.9785156 A 1.50015 1.50015 0 0 0 9.7578125 10 L 6.5 10 A 1.50015 1.50015 0 1 0 6.5 13 L 8.6386719 13 L 11.15625 39.029297 C 11.427329 41.835926 13.811782 44 16.630859 44 L 31.367188 44 C 34.186411 44 36.570826 41.836168 36.841797 39.029297 L 39.361328 13 L 41.5 13 A 1.50015 1.50015 0 1 0 41.5 10 L 38.244141 10 A 1.50015 1.50015 0 0 0 37.763672 10 L 30.919922 10 C 30.429604 6.6214322 27.508315 4 24 4 z M 24 7 C 25.879156 7 27.420767 8.2681608 27.861328 10 L 20.138672 10 C 20.579233 8.2681608 22.120844 7 24 7 z M 11.650391 13 L 36.347656 13 L 33.855469 38.740234 C 33.730439 40.035363 32.667963 41 31.367188 41 L 16.630859 41 C 15.331937 41 14.267499 40.033606 14.142578 38.740234 L 11.650391 13 z M 20.476562 17.978516 A 1.50015 1.50015 0 0 0 19 19.5 L 19 34.5 A 1.50015 1.50015 0 1 0 22 34.5 L 22 19.5 A 1.50015 1.50015 0 0 0 20.476562 17.978516 z M 27.476562 17.978516 A 1.50015 1.50015 0 0 0 26 19.5 L 26 34.5 A 1.50015 1.50015 0 1 0 29 34.5 L 29 19.5 A 1.50015 1.50015 0 0 0 27.476562 17.978516 z'
+                >
+                </path>
+              </svg>
 
-          Delete Video
-        </button>
-        <a class='like' href='/profile' style='margin: 0.5rem;'>
+              Delete Video
+            </button>
+            <a class='like' href='/profile' style='margin: 0.5rem;'>
+              <img
+                style=' width: 18px;  flex-shrink: 0; margin-right: 10px;padding: 0;'
+                src='../../../images/png/back.png'
+              />
+              Return
+            </a>
+          </div>
+        </div>
+       <div style="display: flex;">
+ <div editVideoSection class='edit-modal-container edit-modal-expand'>
+
+          <div class='video-input'>
+            <label>Title</label>
+            <input
+              id='edit-video-title'
+              name='title'
+              type='text'
+              value='{{title}}'
+            />
+          </div>
+
+          <div class='video-input'>
+            <label>Description</label>
+            <textarea
+              id='edit-video-description'
+              name='description'
+            >{{description}}</textarea>
+          </div>
+
+          <span>Category</span>
+
+          <div class='select'>
+            <select category='{{category}}' name="category">
+              <option value='healthy'>Healthy</option>
+              <option value='cheatMeal'>Cheat Meal</option>
+            </select>
+          </div>
+          <div class='select__arrow'></div>
+
+          <div class='file-drop-area' style='margin: 0.5rem; padding:1rem; '>
+            <span class='fake-btn'>Thumbnail</span>
+            <span class='file-msg js-set-number'>or drag and drop files here</span>
+            <input
+              thumbnail='{{thumbnail}}'
+              thumbnailInput
+              class='file-input'
+              id='edit-video-thumbnail'
+              name='thumbnail'
+              type='file'
+            />
+          </div>
+
           <img
-            style=' width: 18px;  flex-shrink: 0; margin-right: 10px;padding: 0;'
-            src='../../../images/png/back.png'
+            thumbnailPreview
+            src='{{thumbnail}}'
+            alt='Thumbnail Preview'
+            style='max-width: 200px; max-height: 200px; margin-top: 10px; display:none;'
           />
-          Return
-        </a>
-      </div>
-    </div>
 
+          <div class="edit-tags video-input" tags="{{tags}}">
+            <div>Tags</div>
+            <div class="newTagWrapper">
+              <input class="" newTagInput type="text">
+              <button type="button" addNewTagBtn>ADD</button>
+            </div>
+          </div>
+        </div>
+    
+        <div editRecipeSection class='edit-modal-container'>
+          <span>Cooking time</span>
+          <div class='video-input cooking-time'>
+            <input cookTime cookingIndex="{{recipe.cookTime.stringFormat}}" type="range" min="0" max="7" name="cookTime">
+            <div sliderOutput></div>
+          </div> 
+          
+          <span>Number of servings?</span>
+          <div class='video-input'>
+            <input portions={{recipe.portions}} type='number' name='portions' min="1" value="{{recipe.portions}}"/>
+          </div>
+          
+          <span>Meal Type</span>
+          <div class='video-input'> 
+            <div class='select'>
+              <select mealType="{{recipe.mealType}}" name='mealType'>
+                <option value="Breakfast">Breakfast</option>
+                <option value="Main Course">Main Course</option>
+                <option value="Side Dish">Side Dish</option>
+                <option value="Snack">Snack</option>
+                <option value="Soup">Soup</option>
+                <option value="Appettizer">Appettizer</option>
+                <option value="Salad">Salad</option>
+                <option value="Drink">Drink</option>
+              </select>
+              <div class='select__arrow'></div>
+            </div>
+          </div>
+
+          <span>Ingredients</span>
+          <div>
+            <div main-ingredients-container class='video-input ingredients-input'>
+              <div newIngredient>
+                <small>Qty</small>
+                <input
+                  ingredient-quantity
+                  placeholder='150'
+                  name='ingredient-quantity'
+                  type='number'
+                />
+                <div class='select'>
+                  <select ingredient-unit name='ingredient-unit'>
+                    <option>unit</option>
+                    <option>ml</option>
+                    <option>cl</option>
+                    <option>dl</option>
+                    <option>L</option>
+                    <option selected>g</option>
+                    <option>kg</option>
+                    <option>tsp</option>
+                    <option>tbsp</option>
+                    <option>cup</option>
+                  </select>
+                  <div class='select__arrow'></div>
+                </div>
+                <input
+                  ingredient
+                  name='ingredient'
+                  type='text'
+                  placeholder='brown sugar'
+                />
+                <button class='btn btn-success' type='button' add-ingredient>+</button>
+              </div>
+    
+              {{#each recipe.ingredients}}
+              <div ingredientDiv class="ingredient">
+                  <small>Qty</small>
+                <input
+                  ingredient-quantity
+                  placeholder='150'
+                  name='ingredient-quantity'
+                  type='number'
+                  value={{quantity}}
+                />
+                <div class='select'>
+                  <select unit={{unit}} ingredient-unit name='ingredient-unit'>
+                    <option>unit</option>
+                    <option>ml</option>
+                    <option>cl</option>
+                    <option>dl</option>
+                    <option>L</option>
+                    <option selected>g</option>
+                    <option>kg</option>
+                    <option>tsp</option>
+                    <option>tbsp</option>
+                    <option>cup</option>
+                  </select>
+                  <div class='select__arrow'></div>
+                </div>
+                <input
+                  ingredient
+                  name='ingredient'
+                  type='text'
+                  placeholder='brown sugar'
+                  value="{{ingredient}}"
+                />
+                <button
+                  class='btn btn-danger'
+                  type='button'
+                  remove-ingredient
+                >-</button>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+          <div>
+            <div>Steps</div>
+            <div mainStepsContainer>
+                <div class="video-input step-input">
+                  <input newStepInput name='step-input' />
+                  <button class='btn btn-success w-25' type='button' add-step>+</button>
+                </div>
+                
+                {{#each recipe.steps}}
+                <div class="video-input step-input">
+                  <input stepInput name='step-input' value="{{this}}" />
+                  <button class='btn btn-danger w-25' type='button' remove-step>-</button>
+                </div>
+                {{/each}}
+            </div>
+             
+          </div>
+        </div>
+       </div>
+      </div>
+      
   </form>
 
 </div>
-
+{{/with}}
+<script src="/js/edit-video.js"></script>
 <script>
-   {{!-- window.onload = (e) => {
 
- const form = document.querySelector('form[editForm]')
-    const profileId = document.querySelector('input[profileId]').getAttribute('profileId')
-    const videoId = document.getElementById('edit-video-id').value
+  window.onload = (e) => {
 
-    console.log(videoId)
-    const deleteBtn = document.querySelector('button[delete]')
-    deleteBtn.onclick = (e) => {
+  const videoModalBtn = document.querySelector('button[videoModalBtn]')
+  const recipeModalBtn = document.querySelector('button[recipeModalBtn]')
+  const editVideoSection = document.querySelector('div[editVideoSection]')
+  const editRecipeSection = document.querySelector('div[editRecipeSection]')
 
-      axios.post(`/profile/${profileId}/delete`, { videoId }, {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
-      })
-        .then((response) => {
-          console.log('RES:', response);
-          window.location.reload();
-        })
-        .catch((error) => {
-          console.log('ERROR', error);
-        });
+  videoModalBtn.onclick = (e) => {
+    editVideoSection.classList.toggle('edit-modal-expand')
+    editRecipeSection.classList.toggle('edit-modal-expand') 
+  }
 
+  recipeModalBtn.onclick = (e) => {
+    editRecipeSection.classList.toggle('edit-modal-expand') 
+    editVideoSection.classList.toggle('edit-modal-expand')
+
+  }
+
+  const form = document.querySelector('form[editForm]')
+  const profileId = document
+    .querySelector('div[profileId]')
+    .getAttribute('profileId')
+  const videoId = document.querySelector('div[videoId]').getAttribute('videoId')
+
+  // VIDEO
+
+  const categorySelect = document.querySelector('select[category]')
+  const category = categorySelect.getAttribute('category')
+  const categoryOptions = categorySelect.options
+
+  for (let i = 0; i < categoryOptions.length; i++) {
+    if (categoryOptions[i].textContent === category) {
+      categoryOptions[i].selected = true
+      break
     }
-    const recipeModalBtn = document.querySelector('button[recipeModalBtn]')
-    const editRecipeModal = document.querySelector('div[editRecipeModal]')
+  }
 
-    
-    recipeModalBtn.addEventListener('click', () => {
-    editRecipeModal.classList.toggle('show-recipe-modal');
-    if (editRecipeModal.classList.contains('show-edit-recipe-modal')) {
-      recipeModalBtn.textContent = 'Cancel';
+  const thumbnailInput = document.querySelector('input[thumbnailInput]')
+  const thumbnail = thumbnailInput.getAttribute('thumbnail')
+  const thumbnailPreview = document.querySelector('img[thumbnailPreview]')
+
+  thumbnailInput.value = ''
+
+  if (thumbnail !== null) {
+    thumbnailPreview.src = thumbnail
+    thumbnailPreview.style.display = 'flex'
+  } else {
+    thumbnailPreview.src = ''
+  }
+
+  thumbnailInput.addEventListener('change', function () {
+    let file = this.files[0]
+    if (file) {
+      let reader = new FileReader()
+      reader.onload = function (event) {
+        thumbnailPreview.src = event.target.result
+      }
+      reader.readAsDataURL(file)
     } else {
-      recipeModalBtn.textContent = 'Edit Recipe';
+      thumbnailPreview.src = ''
     }
   })
 
-    const recipeModalSubmit = document.querySelector('button[recipeModalSubmit]')
-    
-    recipeModalSubmit.onclick = (e) => {
-      e.preventDefault()
+  tagsArray.forEach((tag) => {
+    addNewTag(tag)
+  })
 
-      const formData = new FormData(form)
-      let needsRecipeEdit = true
+  addNewTagBtn.onclick = (e) => {
+    let newTag = newTagInput.value
+    addNewTag(newTag)
+  }
 
-      formData.append('needsRecipeEdit', JSON.stringify(needsRecipeEdit))
+  // RECIPE
+  
+  const slider = document.querySelector("input[cookTime]");
+  const sliderOutput = document.querySelector('div[sliderOutput]');
+  const possibleTimes = ['15m','30m', '45m', '1h', '1h15m','1h30m','1h45m', 'over 2h']
 
-      '/profile/{{currentUser._id}}/video/edit'
-       axios.post(`/profile/${profileId}/video/edit`, formData, {
-                headers: {
-                  'Content-Type': 'multipart/form-data'
-                }          
-            })
-            .then((response) => {
-               console.log('RES:',response.data);
-              window.location.href = `/profile/${profileId}/editFull/${videoId}`
-            })
-            .catch( (error) =>{
-                console.log('ERROR',error);
-            });
-          
+  //default value
+  slider.value = possibleTimes.indexOf(slider.getAttribute('cookingIndex'))
+  sliderOutput.innerHTML = possibleTimes[slider.value]
+  // Update the current slider value (each time you drag the slider handle)
+  slider.oninput = function() {
+    sliderOutput.innerHTML = possibleTimes[slider.value]
+  } 
+
+  const mealTypeSelect = document.querySelector('select[mealType]')
+  const mealType = mealTypeSelect.getAttribute('mealType')
+  const mealTypeOptions = mealTypeSelect.options
+
+  for (let i = 0; i < mealTypeOptions.length; i++) {
+    if (mealTypeOptions[i].textContent === mealType) {
+      mealTypeOptions[i].selected = true
+      break
     }
+  }
+
+ //INGREDIENTS INPUT
+
+  //Adding new ingredients to Recipe 
+  const addIngredientButton = document.querySelector('button[add-ingredient]')
+  
+  addIngredientButton.onclick = (e) => {
+
+  // Get current values from form
+  const ingredient = document.querySelector('input[ingredient]').value
+  const quantity = document.querySelector('input[ingredient-quantity]').value
+  const unit = document.querySelector('select[ingredient-unit]').value
+
+  //clone the first input to append to list
+  const mainIngredientsDiv = document.querySelector('div[main-ingredients-container]')
+  const firstInputDiv = mainIngredientsDiv.children[0]
+  
+  const newIngredientsInput = firstInputDiv.cloneNode(true)
+  newIngredientsInput.querySelector('select[ingredient-unit]').value = unit;
+  newIngredientsInput.setAttribute('ingredientDiv', '')
+  //Remove +btn and add -btn
+  newIngredientsInput.querySelector('button[add-ingredient]').remove()
+  
+  const newRemoveIngredientButton = document.createElement('button')
+  newRemoveIngredientButton.classList.add('btn', 'btn-danger')
+  newRemoveIngredientButton.type = 'button'
+  newRemoveIngredientButton.setAttribute('remove-ingredient', '')
+  newRemoveIngredientButton.textContent = '-'
+  
+  newRemoveIngredientButton.onclick = (e) => {
+    e.target.closest('.ingredient').remove()
+  }
+  
+  newIngredientsInput.appendChild(newRemoveIngredientButton)
+  
+    mainIngredientsDiv.appendChild(newIngredientsInput)
+    console.log(newIngredientsInput)
+    //reset firstline inputs
+    firstInputDiv.querySelector('input[ingredient]').value = ''
+    firstInputDiv.querySelector('input[ingredient-quantity]').value = ''
+    firstInputDiv.querySelector('select[ingredient-unit]').value = 'g'
+  }
+
+  const allUnitInputsDOM = document.querySelectorAll('select[ingredient-unit]')
+  const allUnitInputs = [...allUnitInputsDOM]
+  
+    
+  allUnitInputs.forEach(unitInput => {
+    let unit = unitInput.getAttribute('unit')
+     for (let i = 0; i < unitInput.options.length; i++) {
+    if (unitInput.options[i].textContent === unit) {
+      unitInput.options[i].selected = true
+      break
+    }
+  }
+  })
+
+    //add remove item functionality
+  const removeIngBtnsNodeList = document.querySelectorAll('button[remove-ingredient]')
+  const removeIngBtns = [...removeIngBtnsNodeList]
+
+  removeIngBtns.forEach(button =>{
+    button.onclick = (e) => {
+      e.target.closest('.ingredient').remove()
+    }
+  })
+
+  //STEPS INPUT
+
+  //Adding new steps to Recipe 
+  const addStepBtn = document.querySelector('button[add-step]')
+  
+  addStepBtn.onclick = (e) => {
+
+  // Get current values from form
+  const step = document.querySelector('input[newStepInput]').value
+
+  //clone the first input to append to list
+  const mainStepsContainer = document.querySelector('div[mainStepsContainer]')
+  const firstInputDiv = mainStepsContainer.children[0]  
+  const newStepsInput = firstInputDiv.cloneNode(true)
+  
+  //Remove +btn and add -btn
+  newStepsInput.querySelector('button[add-step]').remove()
+  const newRemoveStepButton = document.createElement('button')
+  newRemoveStepButton.classList.add('btn', 'btn-danger', 'w-25')
+  newRemoveStepButton.type = 'button'
+  newRemoveStepButton.setAttribute('remove-step', '')
+  newRemoveStepButton.textContent = '-'
+  
+    newRemoveStepButton.onclick = (e) => {
+      e.target.closest('.step-input').remove()
+    }
+  
+    newStepsInput.children[0].setAttribute('stepInput', step)
+    newStepsInput.appendChild(newRemoveStepButton)
+  
+    mainStepsContainer.appendChild(newStepsInput)
+    
+    //reset firstline inputs
+    firstInputDiv.querySelector('input[newStepInput]').value = ''
+
+  }
+
+  //add remove item functionality
+  const removeStepBtnsNodeList = document.querySelectorAll('button[remove-step]')
+  const removeStepBtns = [...removeStepBtnsNodeList]
+
+  removeStepBtns.forEach(button =>{
+    button.onclick = (e) => {
+      e.target.closest('.step-input').remove()
+    }
+  })
 
 
-  } --}}
+  // BUTTONS
+  const deleteBtn = document.querySelector('button[delete]')
+  deleteBtn.onclick = (e) => {
+    axios
+      .post(
+        `/profile/${profileId}/delete`,
+        { videoId },
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        }
+      )
+      .then((response) => {
+        console.log('RES:', response)
+        window.location.reload()
+      })
+      .catch((error) => {
+        console.log('ERROR', error)
+      })
+  }
+  
+  const submitBtn = document.querySelector('button[submitBtn]')
+  
+  submitBtn.onclick = (e) => {
+
+  e.preventDefault()
+
+  const tags = []
+  const tagsArray = document.querySelectorAll('button[tag]')
+  tagsArray.forEach(tag => {
+    let tagValue = tag.getAttribute('tag')
+    tags.push(tagValue)
+  })
+
+  const ingredientDivs = document.querySelectorAll('div[ingredientDiv]')
+  const ingredientsArray = [...ingredientDivs]
+
+  const ingredients = []
+  ingredientsArray.forEach(ingredientDiv =>{
+    let quantity = ingredientDiv.querySelector('input[ingredient-quantity]').value
+    let unit = ingredientDiv.querySelector('select[ingredient-unit]').value 
+    let ingredient = ingredientDiv.querySelector('input[ingredient]').value 
+    let ingredientObj = {
+      quantity,ingredient,unit
+    }
+    console.log(ingredientObj)
+    ingredients.push(ingredientObj)
+  })
+
+  let steps = []
+  const stepsArray = document.querySelectorAll('input[stepInput]')
+  console.log(stepsArray)     
+  stepsArray.forEach(step => {
+    let stepValue = step.value
+    steps.push(stepValue)
+  })
+
+
+  const formData = new FormData(form)
+  formData.append('tags', JSON.stringify(tags))
+  formData.append('ingredients', JSON.stringify(ingredients))
+  formData.append('steps', JSON.stringify(steps))
+
+  axios.post(`/profile/${profileId}/edit/${videoId}`,formData,    
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }).then(response => {
+          console.log(response)
+        }).catch(err =>{
+          console.log(err)
+        })
+  }
+  
+}
 </script>
