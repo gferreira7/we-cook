@@ -853,18 +853,7 @@ video {
   font-size: 18px;
 }
 
-.chatReturn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  border: 1px;
-  font-family: var(--button-font);
-  border-radius: 8px;
-  padding: 5px 8px;
-  cursor: pointer;
-  font-size: 18px;
-}
+
 
 .like.red {
   background-color: #ea5f5f8c;
@@ -1511,6 +1500,26 @@ table {
 }
 
 /*chat Page*/
+
+.chat {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--video-bg);
+  border-radius: 20px;
+  padding: 20px;
+  height: 100%;
+  /* min-height: calc(100% + 20px); */
+  color: #fff;
+  min-width: 100%;
+  overflow: auto;
+}
+
+.loaded-messages{
+  flex-grow: 1;
+  padding-top: 20px;
+}
+
 .chat-header {
   display: flex;
   align-items: center;
@@ -1538,32 +1547,15 @@ table {
   align-items: center;
 }
 
-.chat-stream {
-  flex-grow: 1;
-  margin-left: 30px;
-}
 
-<<<<<<< HEAD
-
-=======
->>>>>>> bccd4a59b4d427bd0c5781874260381ac711fef0
-.chat {
-  position: relative; /* adicione esta linha para tornar a posição do chat relativa */
-  background-color: var(--video-bg);
-  border-radius: 20px;
-  padding: 0 20px;
-  min-height: calc(100% + 20px);
-  color: #fff;
-  min-width: 100%;
-  overflow: auto;
-}
 .chat form {
-  position: sticky; /* adicione esta linha para tornar a posição do chat-footer absoluta */
+  position: sticky;
   bottom: 0;
   width: 100%;
 }
 .chat-footer {
-  position: sticky; /* adicione esta linha para tornar a posição do chat-footer absoluta */
+  position: sticky;
+  bottom: 0;
   display: flex;
   align-items: center;
   width: calc(100% + 20px);
@@ -1862,3 +1854,12 @@ div[sliderOutput] {
   overflow: hidden;
   min-height: 175px;
 }
+
+
+
+/* garbage bin */
+
+/* .chat-stream {
+  flex-grow: 1;
+  margin-left: 30px;
+} */
