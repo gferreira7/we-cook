@@ -147,8 +147,12 @@ a {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .container {
@@ -1370,8 +1374,6 @@ textarea {
   color: var(--body-color);
 }
 
-
-
 .added-ingredient {
   opacity: 0.6;
   margin-left: 5vw;
@@ -1541,7 +1543,10 @@ table {
   margin-left: 30px;
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> bccd4a59b4d427bd0c5781874260381ac711fef0
 .chat {
   position: relative; /* adicione esta linha para tornar a posição do chat relativa */
   background-color: var(--video-bg);
@@ -1551,13 +1556,11 @@ table {
   color: #fff;
   min-width: 100%;
   overflow: auto;
-
 }
 .chat form {
   position: sticky; /* adicione esta linha para tornar a posição do chat-footer absoluta */
-  bottom:0;
+  bottom: 0;
   width: 100%;
-
 }
 .chat-footer {
   position: sticky; /* adicione esta linha para tornar a posição do chat-footer absoluta */
@@ -1567,8 +1570,6 @@ table {
   padding-bottom: 12px;
   background-color: var(--video-bg);
   border-radius: 20px;
-
-
 }
 .chat-footer input {
   width: 100%;
@@ -1689,7 +1690,6 @@ table {
   bottom: 3vh;
 }
 
-
 /* Edit Video Page */
 .edit-videos-wrapper {
   display: flex;
@@ -1711,23 +1711,23 @@ table {
   display: flex;
 }
 
-.steps-container{
+.steps-container {
   display: flex;
   flex-direction: column;
 }
 
-.step-input{
+.step-input {
   display: flex;
 }
 /* Profile Page */
 
 /* Upload Form */
 
-.edit-videos-main{
+.edit-videos-main {
   padding: 5em 10em;
 }
 
-.edit-control-panel{
+.edit-control-panel {
   display: flex;
   justify-content: space-evenly;
   padding: 3em;
@@ -1745,26 +1745,26 @@ div[sliderOutput] {
   font-size: 1rem;
 }
 
-.edit-modal-container{
+.edit-modal-container {
   width: 0%;
   opacity: 0;
   transition: width 0.8s ease;
   display: none;
 }
-.edit-modal-container.edit-modal-expand{
+.edit-modal-container.edit-modal-expand {
   width: 100%;
   opacity: 1;
   transition: width 0.8s ease;
   display: block;
 }
 
-.edit-panel-selector{
+.edit-panel-selector {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.button-wrapper.edit-page{
+.button-wrapper.edit-page {
   display: flex;
   justify-content: space-around;
 }
@@ -1774,7 +1774,7 @@ div[sliderOutput] {
   position: relative;
   display: inline-block;
   margin-bottom: 5px;
-  color: #F9FBFF;
+  color: #f9fbff;
   font-size: rem;
   padding: 10px 10px 10px 12px;
   border-radius: 20px;
@@ -1798,6 +1798,67 @@ div[sliderOutput] {
   height: 100%;
 }
 .outgoing .bubble {
-  background: #79C7C5;
+  background: #79c7c5;
   float: right;
+}
+
+/* subscriptions page*/
+
+.sub-page-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.sub-channel-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 20px;
+}
+
+.channel-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 15vw;
+  background-color: var(--light-green-transparent);
+  border-radius: 20px;
+  margin: 1em;
+}
+
+.channel-info a{
+  cursor: pointer;
+}
+
+.sub-page-pic {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  margin-right: 10px;
+}
+
+.sub-page-channel-name {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 60px;
+}
+
+.sub-page-videos {
+  display: flex;
+  flex-direction: row;
+  overflow-x: hidden;
+  padding: 1em;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sub-page-video{
+  width:15vw
+}
+
+.sub-page-video-wrapper{
+  position: relative;
+  overflow: hidden;
+  min-height: 175px;
 }
