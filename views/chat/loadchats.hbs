@@ -15,21 +15,23 @@
             </span>
           
         </div>
+        <div class="loadMessagesContainer"> 
            {{#each chats}} 
-           <a href="/messages/{{recipient._id}}" style="margin-top:20px;">
+           <a href="/messages/{{recipient._id}}" style="padding:2px; cursor:pointer;">
               <div class="message-container">
             <div class="message anim" style="--delay: .6s">
                 <div class="author-img__wrapper video-author video-p" style="display:flex"> 
                     <img class="author-img" src="{{recipient.profilePic}}" />
                     <div class="msg-wrapper"> 
                         <div class="msg__content video-p-sub">
-                              <div class="incoming">  <h5>{{recipient.username}} </h5></div>
+                              <div class="incoming"> <span>  <h5>{{recipient.username}} </h5></span></div>
                     </div>
                 </div>
             </div>
         </div>
            </a>
       {{/each}}
+      </div>
     </div>
 
 
