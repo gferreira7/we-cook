@@ -1538,27 +1538,27 @@ table {
   align-items: center;
 }
 
-.chat-stream {
-  flex-grow: 1;
-  margin-left: 30px;
-}
 
-<<<<<<< HEAD
-
-=======
->>>>>>> bccd4a59b4d427bd0c5781874260381ac711fef0
 .chat {
-  position: relative; /* adicione esta linha para tornar a posição do chat relativa */
+  position: relative;
+  display: flex;
+  flex-direction: column;
   background-color: var(--video-bg);
   border-radius: 20px;
   padding: 0 20px;
-  min-height: calc(100% + 20px);
+  /* min-height: calc(100% + 20px); */
+  height: 100%;
   color: #fff;
   min-width: 100%;
   overflow: auto;
 }
+
+.loaded-messages{
+  flex-grow: 1;
+  padding-top: 20px;
+}
 .chat form {
-  position: sticky; /* adicione esta linha para tornar a posição do chat-footer absoluta */
+  position: sticky; 
   bottom: 0;
   width: 100%;
 }
@@ -1566,7 +1566,7 @@ table {
   position: sticky; /* adicione esta linha para tornar a posição do chat-footer absoluta */
   display: flex;
   align-items: center;
-  width: calc(100% + 20px);
+  width:100%;
   padding-bottom: 12px;
   background-color: var(--video-bg);
   border-radius: 20px;
