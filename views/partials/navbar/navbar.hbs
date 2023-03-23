@@ -88,55 +88,51 @@
 
 
 <script>
-  let filterBtn = document.getElementById("filter-btn")
-  let filtersDiv = document.querySelector(".search-filters")
 
-  filterBtn.addEventListener("click", () => {
-    if (filtersDiv.style.display == "none") {
-      filtersDiv.style.display = "flex";
-      document.getElementById("filter-img").src = "../../images/png/up_white.png"
+  let filterBtn = document.getElementById('filter-btn')
+  let filtersDiv = document.querySelector('.search-filters')
+
+  filterBtn.addEventListener('click', () => {
+    if (filtersDiv.style.display == 'none') {
+      filtersDiv.style.display = 'flex'
+      document.getElementById('filter-img').src = '../../images/png/up_white.png'
+    } else {
+      filtersDiv.style.display = 'none'
+      document.getElementById('filter-img').src =
+        '../../images/png/down_white.png'
     }
-    else {
-      filtersDiv.style.display = "none";
-      document.getElementById("filter-img").src = "../../images/png/down_white.png"
-    }
+  })
 
-  });
-window.addEventListener("DOMContentLoaded", (event) => {
- setInterval(updateNotificantion, 5000);
+  window.addEventListener('DOMContentLoaded', (event) => {
+    setInterval(updateNotificantion, 10000)
+  })
 
-});
+  const updateNotificantion = () => {
+    axios
+      .get(`/notification`, { headers: { 'Content-Type': 'application/json' } })
+      .then((response) => {
+        let dropDiv = document.getElementById('dropDiv')
+        let notiAnim = document.getElementById('notiAnim')
+        dropDiv.innerHTML = ''
+        console.log(response.data)
 
-const updateNotificantion = () => {
-  axios
-    .get(`/notification`, { headers: {'Content-Type': 'application/json'}})
-    .then((response) => {
-   let dropDiv = document.getElementById("dropDiv")
-   let notiAnim = document.getElementById("notiAnim")
-    dropDiv.innerHTML = "";
+        if (response.data.length > 0) {
+          notiAnim.classList.add('notification')
+        }
 
-if(response.data.length > 0)
-{
-    notiAnim.classList.add("notification");
-}
+        response.data.forEach((user) => {
+          let aTag = document.createElement('a')
+          aTag.setAttribute('href', `/messages/${user.sender._id}`)
+          let textNode = document.createTextNode(user.sender.username)
+          aTag.appendChild(textNode)
+          dropDiv.appendChild(aTag)
+        })
+      })
+      .catch(function (error) {
+        console.log('ERROR', error)
+      })
 
-response.data.forEach((user) => {
-   let aTag = document.createElement("a");
-    aTag.setAttribute("href", `/messages/${user.sender._id}`);  
-    let textNode = document.createTextNode(user.sender.username + " send you a new message!");
-    aTag.appendChild(textNode);
-    dropDiv.appendChild(aTag);
-});
-
-   
-
-    })
-    .catch(function (error) {
-      console.log('ERROR', error)
-    })
-
-  return true
-}
-
+    return true
+  }
 
 </script>

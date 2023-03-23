@@ -69,6 +69,7 @@ router.get('/profile/:channelName', secured, async (req, res, next) => {
       'author'
     )
 
+    console.log(videos)
     // Profile's Uploads
 
     const allUploads = videos.filter((video) => {
@@ -85,14 +86,14 @@ router.get('/profile/:channelName', secured, async (req, res, next) => {
     //subscribe
 
     let action = false
-    const subscribe = profileOwner.subscribers.find((sub) =>
-      sub._id.equals(loggedInUser._id)
-    )
-
-    if (subscribe) {
-      action = true
+    if (profileOwner.subscribers) {
+      const subscribe = profileOwner.subscribers.find((sub) =>
+        sub._id.equals(loggedInUser._id)
+      )
+      if (subscribe) {
+        action = true
+      }
     }
-
     profileOwner.follower = action
 
     res.render('profile/otherUser-profile', {
@@ -104,6 +105,7 @@ router.get('/profile/:channelName', secured, async (req, res, next) => {
       currentUser: loggedInUser,
     })
   } catch (error) {
+    console.log(error)
     res.status(500).json({ message: error })
   }
 })
@@ -302,7 +304,6 @@ router.post(
       }
       let nutritionInfo
       if (ingredients) {
-        
         nutritionInfo = await Promise.all(
           JSON.parse(ingredients).map(async (ingredient) => {
             const response = await getFoodDetails(ingredient)
@@ -314,7 +315,6 @@ router.post(
       }
 
       //MISSING CALORIE UPDATES FOR THE NEW ING
- 
 
       let updatedVideo = await Video.findByIdAndUpdate(videoId, newVideoInfo, {
         new: true,
@@ -542,17 +542,24 @@ router.post('/channel/:channelName/subscribe', async (req, res, next) => {
   const { updateCriteria } = req.body
   const currentUser = await User.findOne({ authId: req.user.id })
 
-  let channelFromDB = await User.findOne({ channelName: channelName })
-  let updatedVideo
   if (updateCriteria === 'sub') {
-    updatedVideo = await User.findByIdAndUpdate(channelFromDB._id, {
-      $addToSet: { subscribers: currentUser._id },
-    })
+    await User.updateOne(
+      { channelName: channelName },
+      {
+        $addToSet: { subscribers: currentUser._id },
+      }
+    )
+    res.status(200).json({ message: 'Subscribed successfully' })
   } else if (updateCriteria === 'unsub') {
-    updatedVideo = await User.findByIdAndUpdate(channelFromDB._id, {
-      $pull: { subscribers: currentUser._id },
-    })
-    res.json(updatedVideo)
+    await User.updateOne(
+      { channelName: channelName },
+      {
+        $pull: { subscribers: currentUser._id },
+      }
+    )
+    res.status(200).json({ message: 'Unsubscribed successfully' })
+  } else {
+    res.status(400).json({ message: 'Invalid update criteria' })
   }
 })
 
