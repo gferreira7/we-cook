@@ -1542,7 +1542,6 @@ table {
 }
 
 
-
 .chat {
   position: relative; /* adicione esta linha para tornar a posição do chat relativa */
   background-color: var(--video-bg);
