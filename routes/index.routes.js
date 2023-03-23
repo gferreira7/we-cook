@@ -112,41 +112,46 @@ router.get('/nutrition', secured, async (req, res, next) => {
 })
 
 router.get('/messages', secured, async (req, res, next) => {
-  
-  let currentUser = await User.findOne({ authId: req.user.id })
-    .populate('chat')
-    .exec()
-  let chats = []
+  try {
+    const currentUser = await User.findOne({ authId: req.user.id })
+      .populate('chat')
+      .exec();
 
-  for (let i = 0; i < currentUser.chat.length; i++) {
-    chats.push(
-      await Chat.findById(currentUser.chat[i]._id)
-        .populate('sender')
-        .populate('recipient')
-        .exec()
-    )
+    const chats = await Chat.find({
+      $or: [
+        { sender: currentUser._id },
+        { recipient: currentUser._id },
+      ],
+    })
+      .populate('sender')
+      .populate('recipient')
+      .exec();
+
+    const conversations = {};
+    chats.forEach((chat) => {
+      const otherUser = chat.sender._id.equals(currentUser._id)
+        ? chat.recipient
+        : chat.sender;
+      if (!conversations[otherUser._id]) {
+        conversations[otherUser._id] = {
+          user: otherUser,
+          messages: [],
+        };
+      }
+      conversations[otherUser._id].messages.push(chat);
+    });
+
+    const conversationList = Object.values(conversations);
+
+    res.render('chat/loadchats', {
+      title: 'messages',
+      currentUser,
+      conversations: conversationList,
+    });
+  } catch (err) {
+    next(err);
   }
-
-  const newArr = chats.filter((item, index) => {
-    const currentId = item.recipient._id.toString()
-    if (currentUser._id != currentId) {
-      return (
-        chats.findIndex(
-          (chat) => chat.recipient._id.toString() === currentId
-        ) === index
-      )
-    }
-  })
-
-  chats = newArr
-
-  console.log(chats)
-  res.render('chat/loadchats', {
-    title: 'messages',
-    currentUser,
-    chats,
-  })
-})
+});
 
 router.get('/messages/:profileId', secured, async (req, res, next) => {
   const { profileId } = req.params

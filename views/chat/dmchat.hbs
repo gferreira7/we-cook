@@ -1,171 +1,180 @@
-<div class="chat" chatID="{{otherUser._id}}">
-    <div class="chat-header anim">
-        <a class="chatReturn" href="/messages" style="margin: 0.5rem;">
-            <img style=" width: 18px;  flex-shrink: 0; margin-right: 10px;padding: 0;"
-                src="../../../images/png/back.png">
+<div class='chat' chatID='{{otherUser._id}}'>
+  <div class='chat-header anim'>
+    <a class='chatReturn' href='/messages' style='margin: 0.5rem;'>
+      <img
+        style=' width: 18px;  flex-shrink: 0; margin-right: 10px;padding: 0;'
+        src='../../../images/png/back.png'
+      />
 
-        </a>
-        <div class="author-img__wrapper video-author video-p">
-            <img class="author-img" src="{{otherUser.profilePic}}" />
-        </div>
-
-        {{otherUser.username}}<span><svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd" clip-rule="evenodd"
-                    d="M14.212 7.762c0 2.644-2.163 4.763-4.863 4.763-2.698 0-4.863-2.119-4.863-4.763C4.486 5.12 6.651 3 9.35 3c2.7 0 4.863 2.119 4.863 4.762zM2 17.917c0-2.447 3.386-3.06 7.35-3.06 3.985 0 7.349.634 7.349 3.083 0 2.448-3.386 3.06-7.35 3.06C5.364 21 2 20.367 2 17.917zM16.173 7.85a6.368 6.368 0 01-1.137 3.646c-.075.107-.008.252.123.275.182.03.369.048.56.052 1.898.048 3.601-1.148 4.072-2.95.697-2.675-1.35-5.077-3.957-5.077a4.16 4.16 0 00-.818.082c-.036.008-.075.025-.095.055-.025.04-.007.09.019.124a6.414 6.414 0 011.233 3.793zm3.144 5.853c1.276.245 2.115.742 2.462 1.467a2.107 2.107 0 010 1.878c-.531 1.123-2.245 1.485-2.912 1.578a.207.207 0 01-.234-.232c.34-3.113-2.367-4.588-3.067-4.927-.03-.017-.036-.04-.034-.055.002-.01.015-.025.038-.028 1.515-.028 3.145.176 3.747.32z" />
-            </svg>
-            <span style="color:white"> {{chatDM.length}} messages </span>
-
-        </span>
+    </a>
+    <div class='author-img__wrapper video-author video-p'>
+      <img class='author-img' src='{{otherUser.profilePic}}' />
     </div>
-    <div class="loaded-messages">
-   {{#each chatDM}}
-    {{#if this.right}}
-        <div class="message-container" style="">
-            <div class="message anim" style="--delay: .6s">
-                <div class="author-img__wrapper video-author video-p" style="display:flex ; flex-direction: row-reverse;"> 
-                    <img class="author-img" src="{{this.sender.profilePic}}" />
-                    <div class="msg-wrapper"> 
-                        <div class="msg__content video-p-sub "> 
-                            <div class=" outgoing"> 
-                               <div class="  bubble"> 
-                            {{this.message}} </div></div></div>
-                    </div>
-                </div>
+
+    {{otherUser.username}}<span><svg
+        viewBox='0 0 24 24'
+        fill='white'
+        xmlns='http://www.w3.org/2000/svg'
+      >
+        <path
+          fill-rule='evenodd'
+          clip-rule='evenodd'
+          d='M14.212 7.762c0 2.644-2.163 4.763-4.863 4.763-2.698 0-4.863-2.119-4.863-4.763C4.486 5.12 6.651 3 9.35 3c2.7 0 4.863 2.119 4.863 4.762zM2 17.917c0-2.447 3.386-3.06 7.35-3.06 3.985 0 7.349.634 7.349 3.083 0 2.448-3.386 3.06-7.35 3.06C5.364 21 2 20.367 2 17.917zM16.173 7.85a6.368 6.368 0 01-1.137 3.646c-.075.107-.008.252.123.275.182.03.369.048.56.052 1.898.048 3.601-1.148 4.072-2.95.697-2.675-1.35-5.077-3.957-5.077a4.16 4.16 0 00-.818.082c-.036.008-.075.025-.095.055-.025.04-.007.09.019.124a6.414 6.414 0 011.233 3.793zm3.144 5.853c1.276.245 2.115.742 2.462 1.467a2.107 2.107 0 010 1.878c-.531 1.123-2.245 1.485-2.912 1.578a.207.207 0 01-.234-.232c.34-3.113-2.367-4.588-3.067-4.927-.03-.017-.036-.04-.034-.055.002-.01.015-.025.038-.028 1.515-.028 3.145.176 3.747.32z'
+        ></path>
+      </svg>
+      <span style='color:white'> {{chatDM.length}} messages </span>
+
+    </span>
+  </div>
+  <div loaded-messages class='loaded-messages'>
+    {{#each chatDM}}
+      {{#if this.right}}
+        <div class='message-container' style=''>
+          <div class='message anim' style='--delay: .6s'>
+            <div
+              class='author-img__wrapper video-author video-p'
+              style='display:flex ; flex-direction: row-reverse;'
+            >
+              <img class='author-img' src='{{this.sender.profilePic}}' />
+              <div class='msg-wrapper'>
+                <div class='msg__content video-p-sub'>
+                  <div class='outgoing'>
+                    <div class='bubble'>
+                      {{this.message}}
+                    </div></div></div>
+              </div>
             </div>
+          </div>
         </div>
-   {{else }}
-    <div class="message-container">
-            <div class="message anim" style="--delay: .6s">
-                <div class="author-img__wrapper video-author video-p" style="display:flex"> 
-                    <img class="author-img" src="{{this.sender.profilePic}}" />
-                    <div class="msg-wrapper"> 
-                        <div class="msg__content video-p-sub">
-                              <div class="incoming">  <div class="  bubble"> 
-                            {{this.message}} </div> </div> </div>
+      {{else}}
+        <div class='message-container'>
+          <div class='message anim' style='--delay: .6s'>
+            <div
+              class='author-img__wrapper video-author video-p'
+              style='display:flex'
+            >
+              <img class='author-img' src='{{this.sender.profilePic}}' />
+              <div class='msg-wrapper'>
+                <div class='msg__content video-p-sub'>
+                  <div class='incoming'>
+                    <div class='bubble'>
+                      {{this.message}}
                     </div>
+                  </div>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
-   {{/if}}
-  
-{{/each}}
-</div>
-<!--
-    <form action="/messages/{{otherUser._id}}" method="POST">
-        <div class="chat-footer anim" style="--delay: .1s">
-            <input type="text" name="text_sms" placeholder="Write your message">
-        </div>
-    </form>
-    -->
-        <div class="chat-footer anim" style="--delay: .1s">
-            <input id="SubmitMessage" type="text" name="text_sms" placeholder="Write your message">
-        </div>
+      {{/if}}
+
+    {{/each}}
+  </div>
+
+  <div class='chat-footer anim' style='--delay: .1s'>
+    <input
+      id='SubmitMessage'
+      type='text'
+      name='text_sms'
+      placeholder='Write your message'
+    />
+  </div>
 
 </div>
-
 
 
 <script>
 
-    let divChat = document.querySelector("div[chatID]")
-    let OtherUserID = divChat =  divChat.getAttribute("chatID")
-    let messagesLoader = document.getElementById("messagesLoader");
-    let SubmitMessage = document.getElementById("SubmitMessage");
+      let divChat = document.querySelector('div[chatID]')
+      let OtherUserID = divChat.getAttribute('chatID')
+      let messagesLoader = document.querySelector('div[loaded-messages]')
+      let SubmitMessage = document.getElementById('SubmitMessage')
+      addEventListener('load', (event) => {
+        setInterval(updateMessages, 5000)
+      })
 
-addEventListener("load", (event) => { 
-    setInterval(updateMessages, 5000);
-});
+      SubmitMessage.addEventListener('keypress', function (event) {
+        // If the user presses the "Enter" key on the keyboard
+        if (event.key === 'Enter') {
+          let message = SubmitMessage.value
+          SendMessage(message)
+          SubmitMessage.value = ''
+          updateMessages()
+        }
+      })
 
-SubmitMessage.addEventListener("keypress", function(event) {
-  // If the user presses the "Enter" key on the keyboard
-  if (event.key === "Enter") {
-        let  message = SubmitMessage.value;
-        SendMessage(message)
-        SubmitMessage.value="";
-        updateMessages();
-  }
-});
+      const SendMessage = (message) => {
+        axios
+          .post(
+            `/messages/${OtherUserID}`,
+            { text_sms: message },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            }
+          )
+          .then((response) => {
+            console.log('sending message', response.data)
+          })
+          .catch(function (error) {
+            console.log('ERROR', error)
+          })
 
-
-
-const SendMessage = (message) => {
-  axios
-    .post(
-      `/messages/${OtherUserID}`,
-      { text_sms: message },
-      {
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        return true
       }
-    )
-    .then((response) => {
 
-      console.log(response.data)
-
-    })
-    .catch(function (error) {
-      console.log('ERROR', error)
-    })
-
-  return true
-}
-
-const updateMessages= () => {
-  axios
-    .get(`/messages/${OtherUserID}/new`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    .then((response) => {
-            messagesLoader.innerHTML ="";
-        console.log(response.data)
-       response.data.forEach((element) => { 
-
-   if (element.right == true) {
-  messagesLoader.innerHTML += `
-    <div class="message-container" style="">
-      <div class="message " style="">
-        <div class="author-img__wrapper video-author video-p" style="display:flex ; flex-direction: row-reverse;"> 
-          <img class="author-img" src="${element.sender.profilePic}" />
-          <div class="msg-wrapper"> 
-            <div class="msg__content video-p-sub "> 
-              <div class=" outgoing"> 
-                <div class="bubble"> 
-                  ${element.message}
+      const updateMessages = () => {
+        axios
+          .get(`/messages/${OtherUserID}/new`, {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+          .then((response) => {
+            messagesLoader.innerHTML = ''
+              response.data.forEach((element) => {
+              if (element.right == true) {
+                messagesLoader.innerHTML += `
+      <div class="message-container" style="">
+        <div class="message " style="">
+          <div class="author-img__wrapper video-author video-p" style="display:flex ; flex-direction: row-reverse;"> 
+            <img class="author-img" src="${element.sender.profilePic}" />
+            <div class="msg-wrapper"> 
+              <div class="msg__content video-p-sub "> 
+                <div class=" outgoing"> 
+                  <div class="bubble"> 
+                    ${element.message}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>`;
-} else {
-  messagesLoader.innerHTML += `
-    <div class="message-container">
-      <div class="message " style="--delay: .6s">
-        <div class="author-img__wrapper video-author video-p" style="display:flex"> 
-          <img class="author-img" src="${element.sender.profilePic}" />
-          <div class="msg-wrapper"> 
-            <div class="msg__content video-p-sub">
-              <div class="incoming">
-                <div class="bubble"> 
-                  ${element.message}
+      </div>`
+              } else {
+                messagesLoader.innerHTML += `
+      <div class="message-container">
+        <div class="message " style="--delay: .6s">
+          <div class="author-img__wrapper video-author video-p" style="display:flex"> 
+            <img class="author-img" src="${element.sender.profilePic}" />
+            <div class="msg-wrapper"> 
+              <div class="msg__content video-p-sub">
+                <div class="incoming">
+                  <div class="bubble"> 
+                    ${element.message}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>`;
-}
-        })
-
-    })
-    .catch((err) => res = err)
-}
-
+      </div>`
+              }
+            })
+          })
+          .catch((err) => (res = err))
+      }
 
 
  </script>
