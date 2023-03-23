@@ -41,6 +41,7 @@ const userSchema = new Schema(
     },
     description: String,
     subscribers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    watchHistory: [{ type: Schema.Types.ObjectId, ref: 'Video' }],
     channelViews: { type: Number, default: 0 },
     channelLikes: { type: Number, default: 0 },
     socialLinks: {

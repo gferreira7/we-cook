@@ -53,14 +53,37 @@ router.get('/trending', secured, async (req, res, next) => {
 })  
 
 router.get('/groups', async (req, res, next) => {
+
+  let currentUser = await User.findOne({ authId: req.user.id })
+
   res.render('test', {
     title: 'groups',
+    currentUser
   })
 })
 
-router.get('/subscriptions', async (req, res, next) => {
-  res.render('test', {
+router.get('/subscriptions',secured, async (req, res, next) => {
+
+  let currentUser = await User.findOne({ authId: req.user.id })
+  
+  let subscribers = await User.find({subscribers: currentUser._id})
+
+  console.log(subscribers)
+
+  res.render('subscriptions', {
     title: 'subscriptions',
+    currentUser,
+    subscribers
+  })
+})
+
+router.get('/history', secured, async (req, res, next) => {
+
+  let currentUser = await User.findOne({ authId: req.user.id }).populate('watchHistory')
+
+  res.render('history', {
+    title: 'history',
+    currentUser
   })
 })
 router.get('/nutrition', secured, async (req, res, next) => {

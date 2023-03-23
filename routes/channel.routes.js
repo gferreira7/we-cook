@@ -538,12 +538,6 @@ router.post(
   }
 )
 
-router.get('/history', async (req, res, next) => {
-  res.render('test', {
-    title: 'history',
-  })
-})
-
 router.post('/channel/:channelName/subscribe', async (req, res, next) => {
   const { channelName } = req.params
   const { updateCriteria } = req.body

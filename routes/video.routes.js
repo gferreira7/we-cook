@@ -172,6 +172,11 @@ router.post('/video/:videoId/update', async (req, res, next) => {
       { $inc: { views: 1 } },
       { new: true }
     )
+    const updatedUser = await User.findByIdAndUpdate(
+      currentUser._id,
+      { $addToSet: { watchHistory: videoId } },
+      { new: true }
+    ) 
     res.status(200).json(`views: ${updatedVideo.views}`)
   }
 
