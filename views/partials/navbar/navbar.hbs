@@ -102,9 +102,8 @@
     }
 
   });
-
 window.addEventListener("DOMContentLoaded", (event) => {
- setInterval(updateNotificantion, 10000);
+ setInterval(updateNotificantion, 5000);
 
 });
 
@@ -115,7 +114,6 @@ const updateNotificantion = () => {
    let dropDiv = document.getElementById("dropDiv")
    let notiAnim = document.getElementById("notiAnim")
     dropDiv.innerHTML = "";
-    console.log(response.data)  
 
 if(response.data.length > 0)
 {
@@ -125,7 +123,7 @@ if(response.data.length > 0)
 response.data.forEach((user) => {
    let aTag = document.createElement("a");
     aTag.setAttribute("href", `/messages/${user.sender._id}`);  
-    let textNode = document.createTextNode(user.sender.username);
+    let textNode = document.createTextNode(user.sender.username + " send you a new message!");
     aTag.appendChild(textNode);
     dropDiv.appendChild(aTag);
 });
@@ -140,16 +138,5 @@ response.data.forEach((user) => {
   return true
 }
 
-    filterBtn.addEventListener("click", () => {
-      if (filtersDiv.style.display == "none") {
-        filtersDiv.style.display = "flex";
-        document.getElementById("filter-img").src = "/images/png/up_white.png"
-      }
-      else {
-        filtersDiv.style.display = "none";
-        document.getElementById("filter-img").src = "/images/png/down_white.png"
-      }
 
-
-    }
 </script>

@@ -22,13 +22,13 @@
       <div class='author-detail' >
 
         <div class='author-name'  >  
-         
+         <div follower="{{follower}}"> 
           {{#if follower}}
-           <button class="like green" id="subscribe" action="unsub">  Subscribed</button>         
+           <button class="like green" id="unsub" action="unsub" >  Subscribed</button>         
           {{else}}
-           <button class="like red" id="subscribe" action="sub" > Subscribe  </button>         
+           <button class="like red" id="sub" action="sub" > Subscribe  </button>         
          {{/if}}
-       
+       </div>
         
         <h5> {{this.channelName}} </h5>
      </div>
@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class='main-blog__time'  >
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">Send Message</button>
+      <a type="button" class="btn btn-primary" href="/messages/{{this._id}}">Send Message</a>
 
       <a href='{{socialLinks.instagram}}' style="cursor:pointer;">
         <img src='../../images/png/instagram_c.png' />
@@ -62,31 +62,5 @@
 
 
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form action="/messages" method="POST">
-          <div class="mb-3">
-            <input name="recipient" value="{{this._id}}" style="display: none;"> 
-            <label for="recipient-name" class="col-form-label">Recipient: {{this.channelName}} | {{this.username}}  </label>
-          </div>
-          <div class="mb-3">
-            <label for="message-text" class="col-form-label">Message:</label>
-            <textarea class="form-control" id="text_sms" name="text_sms"></textarea>
-          </div>
-             <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" id="send_sms">Send message</button>
-      </div>
-        </form>
-      </div>
-   
-    </div>
-  </div>
-</div>
+
 {{/with}}

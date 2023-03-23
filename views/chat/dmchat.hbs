@@ -1,6 +1,6 @@
 
 
-<div class="chat">
+<div class="chat" chatID="{{otherUser._id}}">
     <div class="chat-header anim">
         <a class="chatReturn" href="/messages" style="margin: 0.5rem;">
             <img style=" width: 18px;  flex-shrink: 0; margin-right: 10px;padding: 0;"
@@ -19,6 +19,7 @@
 
         </span>
     </div>
+    <div id="messagesLoader">
    {{#each chatDM}}
     {{#if this.right}}
         <div class="message-container" style="">
@@ -50,20 +51,123 @@
    {{/if}}
   
 {{/each}}
-<!-- 
-   <div class="incoming">
-          <div class="bubble">Hey, Father's Day is coming up..</div>
-          <div class="bubble">What are you getting.. Oh, oops sorry dude.</div>
-        </div>
-        <div class="outgoing">
-          <div class="bubble lower">Nah, it's cool.</div>
-          <div class="bubble">Well you should get your Dad a cologne. Here smell it. Oh wait! ...</div>
-        </div>
-        -->
-
+</div>
+<!--
     <form action="/messages/{{otherUser._id}}" method="POST">
         <div class="chat-footer anim" style="--delay: .1s">
             <input type="text" name="text_sms" placeholder="Write your message">
         </div>
     </form>
+    -->
+        <div class="chat-footer anim" style="--delay: .1s">
+            <input id="SubmitMessage" type="text" name="text_sms" placeholder="Write your message">
+        </div>
+
 </div>
+
+
+
+<script>
+
+    let divChat = document.querySelector("div[chatID]")
+    let OtherUserID = divChat =  divChat.getAttribute("chatID")
+    let messagesLoader = document.getElementById("messagesLoader");
+    let SubmitMessage = document.getElementById("SubmitMessage");
+
+addEventListener("load", (event) => { 
+    setInterval(updateMessages, 5000);
+});
+
+SubmitMessage.addEventListener("keypress", function(event) {
+  // If the user presses the "Enter" key on the keyboard
+  if (event.key === "Enter") {
+        let  message = SubmitMessage.value;
+        SendMessage(message)
+        SubmitMessage.value="";
+        updateMessages();
+  }
+});
+
+
+
+const SendMessage = (message) => {
+  axios
+    .post(
+      `/messages/${OtherUserID}`,
+      { text_sms: message },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    )
+    .then((response) => {
+
+      console.log(response.data)
+
+    })
+    .catch(function (error) {
+      console.log('ERROR', error)
+    })
+
+  return true
+}
+
+const updateMessages= () => {
+  axios
+    .get(`/messages/${OtherUserID}/new`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((response) => {
+            messagesLoader.innerHTML ="";
+        console.log(response.data)
+       response.data.forEach((element) => { 
+
+   if (element.right == true) {
+  messagesLoader.innerHTML += `
+    <div class="message-container" style="">
+      <div class="message " style="">
+        <div class="author-img__wrapper video-author video-p" style="display:flex ; flex-direction: row-reverse;"> 
+          <img class="author-img" src="${element.sender.profilePic}" />
+          <div class="msg-wrapper"> 
+            <div class="msg__content video-p-sub "> 
+              <div class=" outgoing"> 
+                <div class="bubble"> 
+                  ${element.message}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+} else {
+  messagesLoader.innerHTML += `
+    <div class="message-container">
+      <div class="message " style="--delay: .6s">
+        <div class="author-img__wrapper video-author video-p" style="display:flex"> 
+          <img class="author-img" src="${element.sender.profilePic}" />
+          <div class="msg-wrapper"> 
+            <div class="msg__content video-p-sub">
+              <div class="incoming">
+                <div class="bubble"> 
+                  ${element.message}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+}
+        })
+
+    })
+    .catch((err) => res = err)
+}
+
+
+
+ </script>

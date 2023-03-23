@@ -310,7 +310,6 @@ router.post(
           })
         )
         newRecipeInfo.ingredients = nutritionInfo
-       console.log(newRecipeInfo.ingredients)
       
       }
 
@@ -549,12 +548,11 @@ router.post('/channel/:channelName/subscribe', async (req, res, next) => {
     updatedVideo = await User.findByIdAndUpdate(channelFromDB._id, {
       $addToSet: { subscribers: currentUser._id },
     })
-    res.status(200).json(updatedVideo)
   } else if (updateCriteria === 'unsub') {
     updatedVideo = await User.findByIdAndUpdate(channelFromDB._id, {
       $pull: { subscribers: currentUser._id },
     })
-    res.status(200).json(updatedVideo)
+    res.json(updatedVideo)
   }
 })
 

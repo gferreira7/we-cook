@@ -68,7 +68,6 @@ router.get('/subscriptions',secured, async (req, res, next) => {
   
   let subscribers = await User.find({subscribers: currentUser._id})
 
-  console.log(subscribers)
 
   res.render('subscriptions', {
     title: 'subscriptions',
@@ -116,13 +115,13 @@ router.get('/messages', secured, async (req, res, next) => {
   chats
   })
   })
-router.get('/messages/:id', secured ,async (req, res, next) => {
 
+
+router.get('/messages/:id', secured ,async (req, res, next) => {
   const { id } = req.params
   let currentUser = await User.findOne({ authId: req.user.id }).populate('chat').exec()
   let objID = new mongoose.Types.ObjectId(id)
   let otherUser = await User.findById(objID).exec()
-  console.log(objID)
   let chatDM = await Chat.find({
     $or: [{ sender: objID }, { recipient: objID }],
     $and: [{ $or: [{ sender: currentUser._id }, { recipient: currentUser._id }] }]
@@ -130,7 +129,6 @@ router.get('/messages/:id', secured ,async (req, res, next) => {
   .populate('sender')
   .lean()
   .exec();
-  console.log(currentUser._id)
   chatDM = chatDM.map(function(item) {
 
     if (new mongoose.Types.ObjectId(item.sender._id).equals(currentUser._id)) {
@@ -153,7 +151,6 @@ router.get('/messages/:id', secured ,async (req, res, next) => {
     
   });
 
-  console.log(chatDM)
 
   res.render('chat/dmchat', {
     title: 'messages',
@@ -162,15 +159,61 @@ router.get('/messages/:id', secured ,async (req, res, next) => {
     otherUser
 
   })
-  
 })
+
+router.get('/messages/:id/new', secured ,async (req, res, next) => {
+  const { id } = req.params
+  try { 
+
+ 
+  let currentUser = await User.findOne({ authId: req.user.id }).populate('chat').exec()
+  let objID = new mongoose.Types.ObjectId(id)
+  let otherUser = await User.findById(objID).exec()
+  let chatDM = await Chat.find({
+    $or: [{ sender: objID }, { recipient: objID }],
+    $and: [{ $or: [{ sender: currentUser._id }, { recipient: currentUser._id }] }]
+  })
+  .populate('sender')
+  .lean()
+  .exec();
+  chatDM = chatDM.map(function(item) {
+
+    if (new mongoose.Types.ObjectId(item.sender._id).equals(currentUser._id)) {
+      return {
+        ...item,
+        right: true
+      };
+    } else {
+      return {
+        ...item,
+        right: false
+      };
+    }
+  });
+
+  chatDM.forEach(async (chat) => {
+    
+    if(new mongoose.Types.ObjectId(currentUser._id).equals(chat.recipient) ) { 
+      let view = await Chat.findByIdAndUpdate(chat._id, { viewed: true });
+    }
+    
+  });
+
+  res.json(chatDM)
+}catch(error)
+{
+  console.log(error)
+}
+})
+
+
+
 router.get('/notification', secured ,async (req, res, next) => { 
   let currentUser = await User.findOne({ authId: req.user.id }).populate('chat').exec();
   let notification = await Chat.find({ recipient: currentUser._id, viewed: false })
     .populate('sender')
     .lean()
     .exec();
-    console.log(notification)
 
     res.json(notification)
 })
@@ -183,8 +226,6 @@ router.post('/messages/:recipient', secured, async (req, res, next) => {
 
   let currentUser = await User.findOne({ authId: req.user.id }).exec()
 
-  console.log(text_sms)
-  console.log(recipient)
 
   let obj = {
     sender: currentUser._id,
@@ -201,7 +242,8 @@ router.post('/messages/:recipient', secured, async (req, res, next) => {
       $addToSet: { chat: SendSMS._id },
     })
 
-    res.redirect(`/messages/${recipient}`)
+    res.json(SendSMS)
+
   }catch(error)
   {
     console.log(error)
@@ -213,8 +255,6 @@ router.post('/messages', secured, async (req, res, next) => {
   const {text_sms , recipient} = req.body
   let currentUser = await User.findOne({ authId: req.user.id }).exec()
 
-  console.log(text_sms)
-  console.log(recipient)
 
   let obj = {
     sender: currentUser._id,
@@ -242,7 +282,6 @@ router.post('/user/find', secured, async (req, res, next) => {
   let currentUser = await User.findOne({ authId: req.user.id }).exec()
 
   let chatWith = await User.findOne({ username: { $regex: `${search_dm}`, $options: 'i'} });
-  console.log(chatWith)
   if(chatWith === null)
   {
     res.redirect(`/messages`)
