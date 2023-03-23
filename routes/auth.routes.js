@@ -22,6 +22,7 @@ router.get(
   '/login',
   passport.authenticate('auth0', {
     scope: 'openid email profile',
+    prompt: 'login'
   }),
   (req, res) => {
     res.redirect('/')
