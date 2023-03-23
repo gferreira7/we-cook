@@ -13,10 +13,9 @@ router.get('/', (req, res, next) => {
 
 /* GET home page */
 router.get('/home', async (req, res, next) => {
-
   let currentUser
   let videos = await Video.find().populate('author')
-  
+
   try {
     currentUser = await User.findOne({ authId: req.user.id })
 
@@ -30,7 +29,6 @@ router.get('/home', async (req, res, next) => {
       title: 'Home',
       videos,
     })
-    
   }
 })
 
@@ -50,40 +48,61 @@ router.get('/trending', secured, async (req, res, next) => {
     videos: trendingVideos,
     currentUser,
   })
-})  
+})
 
 router.get('/groups', async (req, res, next) => {
-
   let currentUser = await User.findOne({ authId: req.user.id })
 
   res.render('test', {
     title: 'groups',
-    currentUser
+    currentUser,
   })
 })
 
-router.get('/subscriptions',secured, async (req, res, next) => {
-
+router.get('/subscriptions', secured, async (req, res, next) => {
   let currentUser = await User.findOne({ authId: req.user.id })
+  let subscriptions = []
+
+  try {
+    let subIds = await User.find({ subscribers: currentUser._id })
   
-  let subscribers = await User.find({subscribers: currentUser._id})
+  for (const subId of subIds) {
+      let subscription = {}
+      const videos = await Video.find({ author: subId })
+        .sort({ createdAt: 'desc' })
+        .limit(3)
+      subscription.videos = videos
+      subscription.channelName = subId.channelName
+      subscription.profilePic = subId.profilePic
+      subscriptions.push(subscription)
+    }
+    res.render('subscriptions', {
+      title: 'subscriptions',
+      currentUser,
+      subscriptions,
+    })
+  } catch (error) {
+    console.log(error)
+  }
+})
 
-  console.log(subscribers)
+router.get('/subscriptions/:subId', secured, async (req, res, next) => {
+  const { subId } = req.params
+  let currentUser = await User.findOne({ authId: req.user.id })
 
-  res.render('subscriptions', {
-    title: 'subscriptions',
-    currentUser,
-    subscribers
-  })
+  let videos = await Video.find({ author: subId })
+
+  res.status(200).json(videos)
 })
 
 router.get('/history', secured, async (req, res, next) => {
-
-  let currentUser = await User.findOne({ authId: req.user.id }).populate('watchHistory')
+  let currentUser = await User.findOne({ authId: req.user.id }).populate(
+    'watchHistory'
+  )
 
   res.render('history', {
     title: 'history',
-    currentUser
+    currentUser,
   })
 })
 router.get('/nutrition', secured, async (req, res, next) => {
@@ -93,65 +112,76 @@ router.get('/nutrition', secured, async (req, res, next) => {
 })
 
 router.get('/messages', secured, async (req, res, next) => {
-  let currentUser = await User.findOne({ authId: req.user.id }).populate('chat').exec()
-  let chats = [];
-  
-  for (let i = 0; i < currentUser.chat.length; i++) {
-  chats.push(await Chat.findById(currentUser.chat[i]._id).populate('sender').populate('recipient').exec());
-  }
-  
-  const newArr = chats.filter((item, index) => {
-  const currentId = item.recipient._id.toString();
-  if(currentUser._id != currentId)
-  {
-  return chats.findIndex((chat) => chat.recipient._id.toString() === currentId) === index;
-  }
-  });
-  
-  chats = newArr;
-  
-  res.render('chat/loadchats', {
-  title: 'messages',
-  currentUser,
-  chats
-  })
-  })
-router.get('/messages/:id', secured ,async (req, res, next) => {
+  let currentUser = await User.findOne({ authId: req.user.id })
+    .populate('chat')
+    .exec()
+  let chats = []
 
+  for (let i = 0; i < currentUser.chat.length; i++) {
+    chats.push(
+      await Chat.findById(currentUser.chat[i]._id)
+        .populate('sender')
+        .populate('recipient')
+        .exec()
+    )
+  }
+
+  const newArr = chats.filter((item, index) => {
+    const currentId = item.recipient._id.toString()
+    if (currentUser._id != currentId) {
+      return (
+        chats.findIndex(
+          (chat) => chat.recipient._id.toString() === currentId
+        ) === index
+      )
+    }
+  })
+
+  chats = newArr
+
+  res.render('chat/loadchats', {
+    title: 'messages',
+    currentUser,
+    chats,
+  })
+})
+router.get('/messages/:id', secured, async (req, res, next) => {
   const { id } = req.params
-  let currentUser = await User.findOne({ authId: req.user.id }).populate('chat').exec()
+  let currentUser = await User.findOne({ authId: req.user.id })
+    .populate('chat')
+    .exec()
   let objID = new mongoose.Types.ObjectId(id)
   let otherUser = await User.findById(objID).exec()
   console.log(objID)
   let chatDM = await Chat.find({
     $or: [{ sender: objID }, { recipient: objID }],
-    $and: [{ $or: [{ sender: currentUser._id }, { recipient: currentUser._id }] }]
+    $and: [
+      { $or: [{ sender: currentUser._id }, { recipient: currentUser._id }] },
+    ],
   })
-  .populate('sender')
-  .lean()
-  .exec();
+    .populate('sender')
+    .lean()
+    .exec()
   console.log(currentUser._id)
-  chatDM = chatDM.map(function(item) {
-
+  chatDM = chatDM.map(function (item) {
     if (new mongoose.Types.ObjectId(item.sender._id).equals(currentUser._id)) {
       return {
         ...item,
-        right: true
-      };
+        right: true,
+      }
     } else {
       return {
         ...item,
-        right: false
-      };
+        right: false,
+      }
     }
-  });
+  })
 
   chatDM.forEach(async (chat) => {
-    if(currentUser._id == chat.recipient ) { 
-      let view = await Chat.findByIdAndUpdate(chat._id, { viewed: true });
+    if (currentUser._id == chat.recipient) {
+      let view = await Chat.findByIdAndUpdate(chat._id, { viewed: true })
     }
-    
-  });
+  })
 
   console.log(chatDM)
 
@@ -159,27 +189,27 @@ router.get('/messages/:id', secured ,async (req, res, next) => {
     title: 'messages',
     currentUser,
     chatDM,
-    otherUser
-
+    otherUser,
   })
-  
 })
-router.get('/notification', secured ,async (req, res, next) => { 
-  let currentUser = await User.findOne({ authId: req.user.id }).populate('chat').exec();
-  let notification = await Chat.find({ recipient: currentUser._id, viewed: false })
+router.get('/notification', secured, async (req, res, next) => {
+  let currentUser = await User.findOne({ authId: req.user.id })
+    .populate('chat')
+    .exec()
+  let notification = await Chat.find({
+    recipient: currentUser._id,
+    viewed: false,
+  })
     .populate('sender')
     .lean()
-    .exec();
-    console.log(notification)
+    .exec()
 
-    res.json(notification)
+  res.json(notification)
 })
 
-
-
 router.post('/messages/:recipient', secured, async (req, res, next) => {
-  const {text_sms} = req.body
-  const {recipient} = req.params
+  const { text_sms } = req.body
+  const { recipient } = req.params
 
   let currentUser = await User.findOne({ authId: req.user.id }).exec()
 
@@ -188,11 +218,11 @@ router.post('/messages/:recipient', secured, async (req, res, next) => {
 
   let obj = {
     sender: currentUser._id,
-    recipient:recipient,
-    message: text_sms
-    }
+    recipient: recipient,
+    message: text_sms,
+  }
 
-  try{
+  try {
     let SendSMS = await Chat.create(obj)
     let addSMSsender = await User.findByIdAndUpdate(currentUser._id, {
       $addToSet: { chat: SendSMS._id },
@@ -202,15 +232,13 @@ router.post('/messages/:recipient', secured, async (req, res, next) => {
     })
 
     res.redirect(`/messages/${recipient}`)
-  }catch(error)
-  {
+  } catch (error) {
     console.log(error)
   }
 })
 
-
 router.post('/messages', secured, async (req, res, next) => {
-  const {text_sms , recipient} = req.body
+  const { text_sms, recipient } = req.body
   let currentUser = await User.findOne({ authId: req.user.id }).exec()
 
   console.log(text_sms)
@@ -218,11 +246,11 @@ router.post('/messages', secured, async (req, res, next) => {
 
   let obj = {
     sender: currentUser._id,
-    recipient:recipient,
-    message: text_sms
-    }
+    recipient: recipient,
+    message: text_sms,
+  }
 
-  try{
+  try {
     let SendSMS = await Chat.create(obj)
     let addSMSsender = await User.findByIdAndUpdate(currentUser._id, {
       $addToSet: { chat: SendSMS._id },
@@ -232,30 +260,23 @@ router.post('/messages', secured, async (req, res, next) => {
     })
 
     res.redirect(`/messages`)
-  }catch(error)
-  {
+  } catch (error) {
     console.log(error)
   }
 })
 router.post('/user/find', secured, async (req, res, next) => {
-  const {search_dm} = req.body
+  const { search_dm } = req.body
   let currentUser = await User.findOne({ authId: req.user.id }).exec()
 
-  let chatWith = await User.findOne({ username: { $regex: `${search_dm}`, $options: 'i'} });
+  let chatWith = await User.findOne({
+    username: { $regex: `${search_dm}`, $options: 'i' },
+  })
   console.log(chatWith)
-  if(chatWith === null)
-  {
+  if (chatWith === null) {
     res.redirect(`/messages`)
-
-  }
-  else {
+  } else {
     res.redirect(`/messages/${chatWith._id}`)
-
   }
-
 })
-
-
-
 
 module.exports = router

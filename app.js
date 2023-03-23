@@ -12,15 +12,16 @@ const express = require("express");
 // Handles the handlebars
 // https://www.npmjs.com/package/hbs
 
+const fs = require('fs')
 const path = require('path')
 const hbs = require("hbs");
+
 const partialsDir = path.join(__dirname, 'views', 'partials');
 
 hbs.registerPartials(partialsDir);
 hbs.registerPartials(path.join(partialsDir, 'videos'));
 hbs.registerPartials(path.join(partialsDir, 'navbar'));
 hbs.registerPartials(path.join(partialsDir, 'channel'));
-
 
 
 const app = express();
