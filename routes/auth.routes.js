@@ -96,7 +96,8 @@ router.get('/logout', (req, res, next) => {
     })
     logoutURL.search = searchString
 
-    res.redirect(logoutURL)
+    // res.redirect(logoutURL)
+    res.redirect('https://wecook.cyclic.app')
   })
 })
 
