@@ -382,13 +382,11 @@ img.logo-expand {
   font-weight: 900;
 }
 
-
 /* .drop-div a{
   display: flex;
   align-items: center;
   justify-content: space-evenly;
 } */
-
 
 .user-settings svg {
   width: 10px;
@@ -449,25 +447,22 @@ img.logo-expand {
   }
 }
 
-.btn-group > *:hover{
+.btn-group > *:hover {
   box-shadow: 0 0 0 1px rgba(134, 140, 160, 0.2);
 }
 
-
-.dropdown-menu{
+.dropdown-menu {
   background-color: var(--input-color);
   padding: 10px 7px;
 }
-.dropdown-item{
+.dropdown-item {
   margin-bottom: 4px;
-  
 }
-.dropdown-menu>li>a:hover{
+.dropdown-menu > li > a:hover {
   background-color: transparent;
   width: 78%;
   box-shadow: 0 0 0 1px rgba(134, 140, 160, 0.2);
 }
-
 
 /* for hbs templates  */
 .main-container {
@@ -521,7 +516,7 @@ img.logo-expand {
   flex-shrink: 0;
   gap: 10px;
 }
-.author-img__wrapper{
+.author-img__wrapper {
   position: relative;
 }
 .author-img__wrapper svg {
@@ -1185,15 +1180,13 @@ button.vjs-play-control.vjs-control.vjs-button {
     flex-wrap: wrap;
   }
 
-  
-  .dashboard{
+  .dashboard {
     width: 100%;
   }
 
   .videos-grid {
     grid-template-columns: 1fr;
   }
-
 }
 @media screen and (max-width: 475px) {
   .main-blog__title {
@@ -1207,7 +1200,6 @@ button.vjs-play-control.vjs-control.vjs-button {
   .dashboard_author {
     flex-direction: column-reverse;
     align-items: flex-start;
-
   }
 
   .author-detail {
@@ -1256,18 +1248,28 @@ button.vjs-play-control.vjs-control.vjs-button {
 }
 
 #upload-form {
-  margin: 3em 15em;
+  margin: 5em 2em;
 }
 
 #upload-video {
   width: 100%;
 }
 
+#upload-video > div {
+  margin-bottom: 10px;
+}
+
+.upload-title {
+  font-weight: 400;
+  font-size: 19px;
+}
+
 .select {
   position: relative;
   display: inline-block;
-  margin-bottom: 15px;
   width: 100%;
+  height: 100%;
+
 }
 .select select {
   display: inline-block;
@@ -1284,8 +1286,8 @@ button.vjs-play-control.vjs-control.vjs-button {
   font-weight: 700;
   padding: 0 40px 0 16px;
   box-shadow: 0 0 0 2px rgba(134, 140, 160, 0.02);
-  color: whitesmoke;
-  height: 2rem;
+  color: #fff;
+  height: 2.5rem;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -1295,7 +1297,7 @@ button.vjs-play-control.vjs-control.vjs-button {
 }
 .select select:hover,
 .select select:focus {
-  color: whitesmoke;
+  color: #fff;
   background-color: var(--button-bg);
   height: 2rem;
 }
@@ -1335,7 +1337,7 @@ button.vjs-play-control.vjs-control.vjs-button {
   transition: 0.2s;
 }
 .file-drop-area.is-active {
-  background-color: #3f4069;
+  background-color: #aa9675;
 }
 
 .fake-btn {
@@ -1381,8 +1383,8 @@ textarea {
   background-color: var(--input-color);
   border-radius: 8px;
   font-family: var(--body-font);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 400;
   padding: 10px;
   box-shadow: 0 0 0 2px rgba(134, 140, 160, 0.02);
   background-size: 14px;
@@ -1391,9 +1393,17 @@ textarea {
   color: var(--body-color);
 }
 
+.new-ingredient {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 .added-ingredient {
-  opacity: 0.6;
-  margin-left: 5vw;
+  display: flex;
+  width: 30%;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .dashboard-container {
@@ -1408,7 +1418,7 @@ textarea {
   width: 100%;
   background-color: rgba(0, 0, 0, 0.8);
   padding: 2em;
-  border-radius: 20px ;
+  border-radius: 20px;
 }
 .dashboard_author.tips {
   flex-direction: column-reverse;
@@ -1440,7 +1450,6 @@ textarea {
   background-repeat: no-repeat;
 }
 
-
 .dashboard_social-links {
   color: #fff;
   padding: 3px 8px;
@@ -1449,11 +1458,10 @@ textarea {
   display: flex;
 }
 
-.dashboard-description{
+.dashboard-description {
   color: #fff;
   margin-left: 20px;
   max-width: 25vw;
-
 }
 .author-name {
   font-size: 15px;
@@ -1470,7 +1478,6 @@ textarea {
   margin-left: 16px;
 }
 
-
 @media screen and (max-width: 1500px) {
   .dashboard {
     background-size: cover;
@@ -1485,20 +1492,16 @@ textarea {
     background-blend-mode: overlay;
   }
 
-  .dashboard_social-links{
+  .dashboard_social-links {
     flex-direction: column;
     width: 15%;
   }
 
-  .author-info__wrapper{
+  .author-info__wrapper {
     flex-direction: column;
     text-align: center;
   }
-
-
-
 }
-
 
 /*  RECIPE TABLE LAYOUT */
 
@@ -1769,14 +1772,8 @@ table {
   flex-wrap: wrap;
 }
 
-.cooking-time {
-  display: flex;
-  align-items: center;
-  padding: 0 3vw;
-}
-
 div[sliderOutput] {
-  padding: 0 2em;
+  margin: 10px;
   font-size: 1rem;
 }
 

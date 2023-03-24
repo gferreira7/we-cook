@@ -6,120 +6,145 @@
     enctype='multipart/form-data'
   >
 
-    <label>Title </label>
-    <div class='video-input'>
-      <textarea name='title' type='text' placeholder='Video title'> </textarea>
-    </div>
-
-    <span>Description</span>
-    <div class='video-input'>
-      <textarea name='description' placeholder='Add a description'></textarea>
-    </div>
-
-    <span>Cooking time</span>
-    <div class='video-input cooking-time'>
-      <input cookTime type="range" min="0" max="7" value="3" name="cookTime">
-      <div sliderOutput></div>
-    </div>   
-    <span>Meal Type</span>
-    <div class='video-input'>
-      <div class='select'>
-        <select name='mealType'>
-          <option active>Breakfast</option>
-          <option>Main Course</option>
-          <option>Side Dish</option>
-          <option>Snack</option>
-          <option>Soup</option>
-          <option>Appettizer</option>
-          <option>Salad</option>
-          <option>Drink</option>
-        </select>
-        <div class='select__arrow'></div>
+    <div>
+      <label class="upload-title">Title </label>
+      <div class='video-input'>
+        <textarea name='title' type='text' placeholder='Video title'> </textarea>
       </div>
     </div>
-    <span>Number of servings?</span>
-    <div class='video-input'>
-      <input type='number' name='portions' />
+
+    <div>
+      <span class="upload-title">Description</span>
+      <div class='video-input'>
+        <textarea name='description' placeholder='Add a description'></textarea>
+      </div>
     </div>
 
-    <span>Ingredients</span>
-    <div main-ingredients-container>
-      <div class='video-input ingredients-input'>
-        <small>Qty</small>
-        <input
-          ingredient-quantity
-          placeholder='150'
-          name='ingredient-quantity'
-          type='number'
-        />
-        <div class='select'>
-          <select ingredient-unit name='ingredient-unit'>
-            <option>unit</option>
-            <option>ml</option>
-            <option>cl</option>
-            <option>dl</option>
-            <option>L</option>
-            <option selected>g</option>
-            <option>kg</option>
-            <option>tsp</option>
-            <option>tbsp</option>
-            <option>cup</option>
-          </select>
-          <div class='select__arrow'></div>
+   <div class="d-flex justify-content-evenly align-items-center px-2 mt-2">
+     <div class="d-flex flex-column justify-content-between align-items-center w-50 h-100">
+        <span class="upload-title pb-2">Cooking time</span>
+        <div class='video-input cooking-time d-flex justify-content-between '>
+          <input cookTime type="range" min="0" max="7" value="3" name="cookTime">
+          <div sliderOutput></div>
         </div>
-        <input
-          ingredient
-          name='ingredient'
-          type='text'
-          placeholder='brown sugar'
-        />
-        <button class='btn btn-success' type='button' add-ingredient>+</button>
-        <button
-          class='btn btn-danger'
-          type='button'
-          remove-ingredient
-        >-</button>
       </div>
-    </div>
 
+      <div class="d-flex flex-column align-items-center justify-content-between w-50 h-100">
+        <span class="upload-title mb-2">Portions</span>
+        <div class='video-input'>
+          <input type='number' name='portions' />
+        </div>
+      </div>
+   </div>
+
+
+   
+      <div class="upload-title py-2">Ingredients</div>
+      <div main-ingredients-container class="d-flex flex-column  px-2">
+        <div class='video-input ingredients-input d-flex justify-content-evenly align-items-center'>
+            <input
+            class="w-25 me-2"
+            ingredient
+            name='ingredient'
+            type='text'
+            placeholder='Ingredient name'
+          />
+          
+          <input
+            class="w-25 me-2"
+            ingredient-quantity
+            placeholder='Quantity'
+            name='ingredient-quantity'
+            type='number'
+          />
+          <div class='select w-25 h-100 me-2'>
+            <select ingredient-unit name='ingredient-unit'>
+              <option>unit</option>
+              <option>ml</option>
+              <option>cl</option>
+              <option>dl</option>
+              <option>L</option>
+              <option selected>g</option>
+              <option>kg</option>
+              <option>tsp</option>
+              <option>tbsp</option>
+              <option>cup</option>
+            </select>
+            <div class='select__arrow'></div>
+          </div>
+          <button class='btn btn-success px-4' type='button' add-ingredient>+</button>
+          <button
+            class='btn btn-secondary d-none'
+            type='button'
+
+            remove-ingredient
+          >X</button>
+        </div>
+        <div newIngredientsDiv class="py-4">
+          <ul newIngredientsUl></ul>
+
+        </div>
+      </div>
+   
     <div main-steps-container>
-      <div>Steps</div>
+      <div class="upload-title">Steps</div>
       <div class='video-input d-flex'>
         <input step-input name='step-input' />
         <button class='btn btn-success w-25' type='button' add-step>+</button>
       </div>
       <div
         new-step-wrapper
-        class='d-flex justify-content-center align-items-center pb-3'
+        class='d-flex flex-column justify-content-start align-items-start pb-3'
       >
-        <div new-steps-container class='video-input'></div>
+        <div new-steps-container class='d-flex flex-column justify-content-start align-items-start pb-3'></div>
       </div>
     </div>
 
-    <span>Category</span>
-    <div class='select'>
-      <select name='category'>
-        <option>Healthy</option>
-        <option>Cheat Meal</option>
-      </select>
-      <div class='select__arrow'></div>
+    <div class="d-flex align-items-center justify-content-evenly">
+      <div class="d-flex flex-column align-items-center justify-content-between w-50">
+        <span class="upload-title">Category</span>
+        <div class='select'>
+          <select name='category'>
+            <option>Healthy</option>
+            <option>Cheat Meal</option>
+          </select>
+          <div class='select__arrow'></div>
+        </div>
+      </div>
+     <div class="d-flex flex-column align-items-center justify-content-between w-50">
+        <span class="upload-title">Meal Type</span>
+        
+          <div class='select'>
+            <select name='mealType'>
+              <option active>Breakfast</option>
+              <option>Main Course</option>
+              <option>Side Dish</option>
+              <option>Snack</option>
+              <option>Soup</option>
+              <option>Appettizer</option>
+              <option>Salad</option>
+              <option>Drink</option>
+            </select>
+            <div class='select__arrow'></div>
+          </div>
+      </div>
     </div>
     <div main-tags-container>
-      <div>Tags</div>
+      <div class="upload-title">Tags</div>
       <div class='video-input d-flex'>
         <input tag-input name='tag-input' />
         <button class='btn btn-success w-25' type='button' add-tag>+</button>
       </div>
       <div
         new-tags-wrapper
-        class='d-flex justify-content-center align-items-center pb-3'
+        class='d-flex flex-column justify-content-start align-items-start pb-3'
       >
         <div new-tags-container class='video-input'></div>
       </div>
     </div>
 
-    <div class='d-flex justify-content-center align-items-center pb-3 w-100'>
-      <span>Upload Video file and Thumbnail</span>
+    <div class='d-flex justify-content-center align-items-start pb-3 w-100'>
+      <span class="upload-title">Upload Video file and Thumbnail</span>
     </div>
 
     <div class='file-drop-area'>
@@ -139,8 +164,7 @@
       </div>
     </center>
 
-    <div class='modal-footer' style='display:flex'>
-
+    <div class='modal-footer d-flex'>
       <button
         closeModalBtn
         class='btn btn-secondary me-4'
@@ -155,10 +179,7 @@
 <script>
 
   window.addEventListener("load", (event) => {
-    //Global Vars
-    const ingredientsList = []
-    const tagsList = []
-    const stepsList = []
+  
   
     //Open and close Upload Form 
     let uploadModal = document.querySelector("div[uploadModal]")
@@ -196,6 +217,8 @@
 
     //Adding new ingredients to Recipe 
     const addIngredientButton = document.querySelector('button[add-ingredient]')
+    const newIngredientsUl = document.querySelector('ul[newIngredientsUl]')
+    
     addIngredientButton.onclick = (e) => {
     
     // Get current values from form
@@ -208,18 +231,22 @@
     const newIngredientsInput = ingredientsInput.cloneNode(true)
     
     const removeIngredientButton = newIngredientsInput.querySelector('button[remove-ingredient]')
-    
+    removeIngredientButton.classList.remove('d-none')
     removeIngredientButton.onclick = (e) => {
-      e.target.closest('.ingredients-input').remove()
+      e.target.closest('.new-ingredient').remove()
     }
     
-    const newListItem = document.createElement('div')
-    newListItem.classList.add("ingredients-input")
-    newListItem.style.flexDirection = 'row-reverse' 
-    newListItem.innerHTML = `<div class="added-ingredient">${ingredient} - ${quantity} ${unit==='unit'?'':unit}</div>`
+    const newListItem = document.createElement('li')
+    newListItem.classList.add('new-ingredient')
+    newListItem.setAttribute('quantity', quantity)
+    newListItem.setAttribute('newIng', '')
+    newListItem.setAttribute('unit', unit)
+    newListItem.setAttribute('ingredient', ingredient)
+
+    newListItem.innerHTML = `<div class="added-ingredient"> 🔸${quantity} ${unit==='unit'?' ': unit + ' of '} ${ingredient}</div>`
     newListItem.appendChild(removeIngredientButton)
-    
-    ingredientsList.push({ingredient, quantity, unit})
+    newIngredientsUl.appendChild(newListItem)
+
 
     //reset firstline inputs
     const firstInputDiv = document.querySelector('div[main-ingredients-container]').children[0]
@@ -227,13 +254,14 @@
     firstInputDiv.querySelector('input[ingredient-quantity]').value = ''
     firstInputDiv.querySelector('select[ingredient-unit]').value = 'g'
 
-    ingredientsInput.parentNode.appendChild(newListItem)
   } 
     
     //TAGS
 
     //Adding new TAGS to Recipe 
     const addTagButton= document.querySelector('button[add-tag]')
+
+    
     addTagButton.onclick = (e) => {
     
     // Get current values from form
@@ -242,16 +270,17 @@
         
     //append to the new tags container just below and add remove button   
     const newTagsDiv = document.querySelector('div[new-tags-container]')
-    newTagsDiv.classList.add('d-flex', 'justify-content-center', 'align-items-center', 'flex-wrap', 'w-50')
+    newTagsDiv.classList.add('d-flex', 'justify-content-start', 'align-items-center', 'flex-wrap', 'w-50')
 
 
     const newTagItem = document.createElement('div')
-    newTagItem.classList.add('new-tag', 'p-2')
-    newTagItem.innerHTML = newTag
+    newTagItem.classList.add('new-tag', 'p-2', 'w-25', 'fst-italic')
+    newTagItem.setAttribute('tag', newTag)
+    newTagItem.innerHTML = '#' + newTag
 
     const removeTagBtn = document.createElement('button')
     removeTagBtn.type = 'button'
-    removeTagBtn.classList.add('btn', 'btn-secondary')
+    removeTagBtn.classList.add('btn')
     removeTagBtn.innerHTML = 'X'
     
     removeTagBtn.onclick = (e) => {
@@ -259,9 +288,6 @@
     }
        
     newTagItem.appendChild(removeTagBtn)
-
-    //add to array to post with axios
-    tagsList.push(newTag)
 
     //reset tag input
     tagInputDiv.value = ''
@@ -274,7 +300,7 @@
 
     //Adding new Steps to Recipe 
     const addStepButton= document.querySelector('button[add-step]')
-    
+
     addStepButton.onclick = (e) => {
     
     // Get current values from form
@@ -283,16 +309,11 @@
         
     //append to the new tags container just below and add remove button   
     const newStepsDiv = document.querySelector('div[new-steps-container]')
-    newStepsDiv.classList.add('d-flex', 'justify-content-center', 'align-items-center', 'flex-wrap', 'w-50')
+    newStepsDiv.classList.add('d-flex', 'flex-column', 'justify-content-start', 'align-items-start', 'w-50')
 
     const newStepItem = document.createElement('div')
-    newStepItem.classList.add('new-step', 'p-2')
+    newStepItem.classList.add('new-step', 'p-2', 'w-100', 'justify-content-between', 'd-flex')
     newStepItem.setAttribute('step', newStep )
-
-    //add to array to post with axios
-    stepsList.push(newStep)
-
-
 
     newStepItem.innerHTML = newStep
 
@@ -304,11 +325,7 @@
     newStepItem.appendChild(removeStepBtn)
 
     removeStepBtn.onclick = (e) => {
-            let stepToRemove = e.target.closest('.new-step').getAttribute('step')
-            stepsList.splice(stepsList.indexOf(stepToRemove), 1)
             e.target.closest('.new-step').remove()
-
-            console.log(stepsList)
     }
        
     //reset tag input
@@ -354,7 +371,52 @@
         uploadBtn.onclick = (e) => {
 
           e.preventDefault()
-          console.log(form)
+
+          const ingredientsList = []
+
+          const allIngredientsDOM = document.querySelectorAll('li[newIng]')
+          
+          allIngs = [...allIngredientsDOM]
+
+          console.log(allIngs )
+
+          allIngs.forEach(ing => {
+            
+            let ingredient ={}
+            ingredient.unit = ing.getAttribute('unit')
+            ingredient.quantity = ing.getAttribute('quantity')
+            ingredient.ingredient = ing.getAttribute('ingredient')
+            
+            ingredientsList.push(ingredient)
+            console.log(ingredientsList)
+          })
+
+          
+          const stepsList = []
+          
+          const allStepsDOM = document.querySelectorAll('div[step]')
+          let allSteps = [...allStepsDOM]
+
+
+
+          allSteps.forEach(step => {
+            stepsList.push(step.getAttribute('step'))
+            console.log(stepsList)
+          })
+
+          const tagsList = []
+          
+          const allTagsDOM = document.querySelectorAll('div[tag]')
+          let allTags = [...allTagsDOM]
+
+
+
+          allTags.forEach(tag => {
+            tagsList.push(tag.getAttribute('tag'))
+            console.log(allTags)
+          })
+
+
           let formData = new FormData(form)
 
           formData.append('ingredientsList', JSON.stringify(ingredientsList));
@@ -372,8 +434,8 @@
             })
             .catch( (error) =>{
                 console.log('ERROR',error);
-            });
-          } 
+            })
+          }  
           
 
      } else {
