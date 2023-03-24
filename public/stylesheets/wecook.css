@@ -1588,7 +1588,7 @@ table {
 .chat-footer input {
   width: 100%;
   border: 0;
-  background-color: var(--button-bg:);
+  background-color: var(--button-bg);
   border-radius: 20px;
   font-size: 12px;
   color:  var(--logo-color) ;
