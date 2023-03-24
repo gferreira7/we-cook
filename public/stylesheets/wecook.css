@@ -1543,10 +1543,6 @@ table {
   margin-left: 30px;
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> bccd4a59b4d427bd0c5781874260381ac711fef0
 .chat {
   position: relative; /* adicione esta linha para tornar a posição do chat relativa */
   background-color: var(--video-bg);
