@@ -33,22 +33,22 @@ img {
   --delay: 0s;
   --text-color: #ffff;
 }~
-*/
+4D331F*/
 :root {
   /* --body-font: "Inter", sans-serif; */
-  --title-font: 'Playfair Display', serif;
+  --title-font: 'Buenard', serif;
   --body-font: 'Lato', sans-serif;
   --handwritten-font: 'Yellowtail', cursive;
   --button-font: 'Buenard', serif;
   --logo-color: #263238;
-  --input-color: #c8e6c9;
+  --input-color: #FFFFE8;
   --light-green-transparent: rgba(200, 230, 201, 0.5);
   --light-green: rgba(200, 230, 201, 1);
-  --theme-bg: #a5d6a7;
+  --theme-bg: #FAEDCD;
   --body-color: #333333;
   --button-bg: #d1b26f;
   --border-color: rgba(0, 0, 0, 0.24);
-  --video-bg: #99c89b;
+  --video-bg: #FFFFE8;
   --delay: 0s;
   --text-color: #ffff;
 }
@@ -195,12 +195,16 @@ a {
 .sidebar .logo-expand {
   text-decoration: none;
   color: #fff;
-  font-size: 19px;
-  font-weight: 600;
+  font-size: 12px;
   line-height: 34px;
   position: sticky;
   top: 0;
 }
+
+img.logo-expand{
+  width: 130px;
+}
+
 .sidebar .logo-expand:before {
   content: '';
   position: absolute;
@@ -574,7 +578,9 @@ a {
   position: relative;
 }
 .video-name {
-  color: #fff;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--body-color);
   font-size: 16px;
   line-height: 1.4em;
   padding: 12px 20px 0;
@@ -1243,6 +1249,11 @@ button.vjs-play-control.vjs-control.vjs-button {
   border-radius: 10px;
 }
 
+#upload-form {
+
+  margin: 3em 15em;
+}
+
 #upload-video {
   width: 100%;
 }
@@ -1264,8 +1275,8 @@ button.vjs-play-control.vjs-control.vjs-button {
   background-color: var(--button-bg);
   border-radius: 8px;
   font-family: var(--body-font);
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 700;
   padding: 0 40px 0 16px;
   box-shadow: 0 0 0 2px rgba(134, 140, 160, 0.02);
   color: whitesmoke;
@@ -1706,7 +1717,7 @@ table {
 }
 
 .ingredients-input {
-  display: block;
+  display: flex;
 }
 .ingredients-input > * {
   display: flex;

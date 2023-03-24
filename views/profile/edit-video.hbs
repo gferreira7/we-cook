@@ -486,7 +486,7 @@
       )
       .then((response) => {
         console.log('RES:', response)
-        window.location.reload()
+          window.location.href= `/profile/${profileId}`
       })
       .catch((error) => {
         console.log('ERROR', error)
