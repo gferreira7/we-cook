@@ -64,16 +64,16 @@
   <div class='main-header anim' style='--delay: 0.8s font-weight:700;'>
     My Videos
   </div>
-  {{> videos/uploadedVideos}}
 
-  <a href='/profile/{{userProfile._id}}/uploadedVideos'>
-    <button class='btn btn-primary btn' type='button'>See All</button>
-  </a>
-  <div class='anim' style='--delay: 0.5s'>
+  {{#if uploadedVideos.length}}
+  {{> videos/uploadedVideos}}
+  {{/if}}
+
+    {{#if likedVideos.length}}
+  <div class='main-header anim' style='--delay: 0.8s font-weight:700;'>
     Liked Videos
   </div>
   {{> videos/likedVideos}}
-  <a href='/profile/{{userProfile._id}}/likedVideos'>
-    <button class='btn btn-primary btn' type='button'>See All</button>
-  </a>
+ 
+     {{/if}}
 </div>
