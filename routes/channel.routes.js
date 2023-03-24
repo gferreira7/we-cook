@@ -311,7 +311,6 @@ router.post(
           })
         )
         newRecipeInfo.ingredients = nutritionInfo
-      
       }
 
       //MISSING CALORIE UPDATES FOR THE NEW ING
@@ -539,27 +538,28 @@ router.post(
 
 router.post('/channel/:channelName/subscribe', async (req, res, next) => {
   const { channelName } = req.params
-  const { updateCriteria } = req.body
-  const currentUser = await User.findOne({ authId: req.user.id })
 
-  if (updateCriteria === 'sub') {
-    await User.updateOne(
-      { channelName: channelName },
-      {
-        $addToSet: { subscribers: currentUser._id },
-      }
-    )
-    res.status(200).json({ message: 'Subscribed successfully' })
-  } else if (updateCriteria === 'unsub') {
+  const currentUser = await User.findOne({ authId: req.user.id })
+  const channel = await User.findOne({ channelName })
+  if(!channel){
+    res.status(500).json({message: 'No channel with that name'})
+  }
+  if (channel.subscribers.includes(currentUser._id)) {
     await User.updateOne(
       { channelName: channelName },
       {
         $pull: { subscribers: currentUser._id },
       }
     )
-    res.status(200).json({ message: 'Unsubscribed successfully' })
+    res.status(200).json({ subbed: false })
   } else {
-    res.status(400).json({ message: 'Invalid update criteria' })
+    await User.updateOne(
+      { channelName: channelName },
+      {
+        $addToSet: { subscribers: currentUser._id },
+      }
+    )
+    res.status(200).json({ subbed: true })
   }
 })
 

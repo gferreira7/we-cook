@@ -1538,31 +1538,36 @@ table {
   align-items: center;
 }
 
-.chat-stream {
-  flex-grow: 1;
-  margin-left: 30px;
-}
 
 .chat {
-  position: relative; /* adicione esta linha para tornar a posição do chat relativa */
+  position: relative;
+  display: flex;
+  flex-direction: column;
   background-color: var(--video-bg);
   border-radius: 20px;
   padding: 0 20px;
-  min-height: calc(100% + 20px);
+  /* min-height: calc(100% + 20px); */
+  height: 100%;
   color: #fff;
   min-width: 100%;
   overflow: auto;
 }
+
+.loaded-messages{
+  flex-grow: 1;
+  padding-top: 20px;
+}
 .chat form {
-  position: sticky; /* adicione esta linha para tornar a posição do chat-footer absoluta */
+  position: sticky; 
   bottom: 0;
   width: 100%;
 }
 .chat-footer {
-  position: sticky; /* adicione esta linha para tornar a posição do chat-footer absoluta */
   display: flex;
+  position: sticky;
+  bottom: 0;
   align-items: center;
-  width: calc(100% + 20px);
+  width:100%;
   padding-bottom: 12px;
   background-color: var(--video-bg);
   border-radius: 20px;
@@ -1574,7 +1579,7 @@ table {
   border-radius: 20px;
   font-size: 12px;
   color: #fff;
-  margin-left: -10px;
+
   padding: 12px 40px;
   font-weight: 500;
   font-family: var(--body-font);

@@ -1,11 +1,8 @@
-<div>
-    {{> dashboard }}
-  {{#with userProfile}}
-    <span style="display: none;" id="userId">{{channelName}} </span>
-    <div class='author-info'>   {{description}}
- </div>
-
-    {{/with}}
+{{> dashboard }}
+{{#with userProfile}}
+<div channelName="{{channelName}}">
+    <div class='author-info'>{{description}}</div>
+{{/with}}
 
   <div class="main-header anim" style="--delay: 0.8s font-weight:700;">
     My Videos
@@ -33,46 +30,38 @@
 
     window.onload = () => {
 
-    let subBtn = document.getElementById("subscribe");
-    let action = subBtn.getAttribute("action")
-    let id = document.getElementById("userId").textContent;
-
-       let divSUB = document.querySelector("div[follower]")
-       let divSUBAction =  divSUB.getAttribute("follower")
-
-     console.log( divSUBAction)
-
-      if(divSUBAction ) {
-      divSUB.innerHTML = `<button class="like red" id="subscribe" action="unsub">  Subscribed</button>  `;
-      }
-      else {
-      divSUB.innerHTML = ` <button class="like green" id="subscribe" action="sub">  Subscribe</button>  `;
-      }
-/*  if(action == "unsub")
-      {
-        console.log("unsub")
-        subbtn.removeAttribute("action");
-        subbtn.setAttribute("action", "sub");
-        subbtn.classList.remove('green');
-        subbtn.classList.add('red');
-        subbtn.textContent= "Subscribe";
-      }
-      else if(action == "sub") {
-        console.log("sub")
-        subbtn.removeAttribute("action");
-        subbtn.setAttribute("action", "unsub");
-         subbtn.classList.remove('red');
-        subbtn.classList.add('green');
-        subbtn.textContent="Subscribed"
-      } */
-   subBtn.onclick = () => {
-      submitSubscribe(id , { updateCriteria: action }).then(response => {
-        console.log("action : " + action)
+    let subBtn = document.querySelector("button[subBtn]");
+    let channelName = document.querySelector("div[channelName]").getAttribute('channelName')
     
+    updateSubscribe(channelName).then(response => {
+        if(response.data.subbed)
+        {
+          subBtn.classList.remove('red')
+          subBtn.classList.add('green')
+          subBtn.textContent= "Subscribed";
 
-      }).catch(err => console.log(err))
-    } 
-    */
+        } else{
+          subBtn.classList.remove('green')
+          subBtn.classList.add('red')
+          subBtn.textContent= "Subscribe";
+        }
+      })
+   
+
+   subBtn.onclick = () => {
+      updateSubscribe(channelName).then(response => {
+        if(response.data.subbed)
+        {
+          subBtn.classList.remove('red')
+          subBtn.classList.add('green')
+          subBtn.textContent= "Subscribed";
+
+        } else{
+          subBtn.classList.remove('green')
+          subBtn.classList.add('red')
+          subBtn.textContent= "Subscribe";
+        }
+      })
+  }
 }
-
 </script>

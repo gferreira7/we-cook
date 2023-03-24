@@ -1,6 +1,6 @@
-  {{#with userProfile}}
 
-<div class='main-blogs'>
+<div userId={{currentUser._id}} profileId="{{userProfile._id}}" class='main-blogs'>
+  {{#with userProfile}}
   <div class='main-blog anim' style='--delay: .1s; background-image: url({{bannerImage}}); opacity: 0.4;' >
     <div class="main-blog__title"> </div> 
 
@@ -22,15 +22,9 @@
       <div class='author-detail' >
 
         <div class='author-name'  >  
-         <div follower="{{follower}}"> 
-          {{#if follower}}
-           <button class="like green" id="unsub" action="unsub" >  Subscribed</button>         
-          {{else}}
-           <button class="like red" id="sub" action="sub" > Subscribe  </button>         
-         {{/if}}
-       </div>
-        
-        <h5> {{this.channelName}} </h5>
+            <button class="like green" subBtn >  Subscribe</button>                  
+         
+        <h5> {{channelName}} </h5>
      </div>
         <div class='author-info'>{{subscribers.length}}
           subscribers
@@ -38,7 +32,7 @@
       </div>
     </div>
     <div class='main-blog__time'  >
-      <a type="button" class="btn btn-primary" href="/messages/{{this._id}}">Send Message</a>
+      <a type="button" class="btn btn-primary" href="/messages/{{_id}}">Send Message</a>
 
       <a href='{{socialLinks.instagram}}' style="cursor:pointer;">
         <img src='../../images/png/instagram_c.png' />
@@ -60,7 +54,18 @@
 
 </div>
 
-
-
-
 {{/with}}
+
+<script>
+
+  window.onload = () =>{
+
+    let subBtn = document.querySelector("button[subBtn]");
+    let profileId = document.querySelector("div[profileId]").getAttribute('profileId')
+    let userId = document.querySelector("div[userId]").getAttribute('userId')
+
+    if(profileId===userId){
+      subBtn.remove()
+    }
+  }
+</script>

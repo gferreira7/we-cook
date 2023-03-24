@@ -1,8 +1,7 @@
-const submitSubscribe = async (channelName, updateCriteria) => {
+const updateSubscribe = async (channelName) => {
   try {
     let response = await axios.post(
-      `/channel/${channelName}/subscribe`,
-      updateCriteria,
+      `/channel/${channelName}/subscribe`,{},
       {
         headers: {
           'Content-Type': 'application/json',
