@@ -1,15 +1,12 @@
 ## TODO List
 
-# CYCLIC ERRORS
-    -   HOME - filterBtn
-             - VideoStream
-             - likebtn = uploader
+
 # Backend
 ✅CRUD => Edit Page => Delete Video
 ✅Recipe Model
 - CRUD REVIEWS (gui) - delete video should delete recipe
 ✅ Add Reviews
-- CRUD RECIPE
+✅ CRUD RECIPE
 
 # Search
 ✅ Search results by tag

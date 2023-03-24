@@ -32,7 +32,7 @@
       </div>
     </div>
     <div class='main-blog__time'  >
-      <a type="button" class="btn btn-primary" href="/messages/{{_id}}">Send Message</a>
+      <a sendMessage type="button" class="btn btn-primary" href="/messages/{{_id}}">Send Message</a>
 
       <a href='{{socialLinks.instagram}}' style="cursor:pointer;">
         <img src='../../images/png/instagram_c.png' />
@@ -61,11 +61,13 @@
   window.onload = () =>{
 
     let subBtn = document.querySelector("button[subBtn]");
+    let sendMessage = document.querySelector("a[sendMessage]");
     let profileId = document.querySelector("div[profileId]").getAttribute('profileId')
     let userId = document.querySelector("div[userId]").getAttribute('userId')
 
     if(profileId===userId){
       subBtn.remove()
+      sendMessage.remove()
     }
   }
 </script>

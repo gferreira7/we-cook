@@ -120,7 +120,8 @@ router.get(
 
     res.render('profile/account-settings', {
       title: 'Account Settings',
-      currentUser,
+      userProfile:currentUser,
+      currentUser
     })
   }
 )
