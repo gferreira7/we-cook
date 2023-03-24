@@ -1,10 +1,9 @@
 
-<div userId={{currentUser._id}} profileId="{{userProfile._id}}" class='main-blogs'>
+<div userId={{currentUser._id}} profileId="{{userProfile._id}}" class='dashboard-container'>
   {{#with userProfile}}
-  <div class='main-blog anim' style='--delay: .1s; background-image: url({{bannerImage}}); opacity: 0.4;' >
-    <div class="main-blog__title"> </div> 
+  <div class='dashboard anim' style='--delay: .1s; background-image: url({{bannerImage}}); opacity: 0.4;' >
 
-    <div class='main-blog__author ' style="width: 100%;">
+    <div class='dashboard_author'>
       <div class='author-img__wrapper'>
         <svg
           viewBox='0 0 24 24'
@@ -18,20 +17,20 @@
           <path d='M20 6L9 17l-5-5'></path>
         </svg>
         <img class='author-img' src='{{profilePic}}' />
-      </div>
       <div class='author-detail' >
 
         <div class='author-name'  >  
             <button class="like green" subBtn >  Subscribe</button>                  
          
         <h5> {{channelName}} </h5>
-     </div>
+        </div>
         <div class='author-info'>{{subscribers.length}}
           subscribers
-          <span class='seperate'></span>{{channelViews}}   </div>  
+        </div>  
       </div>
-    </div>
-    <div class='main-blog__time'  >
+      <div>{{description}}</div>
+      </div>
+    <div class='dashboard_social-links'  >
       <a sendMessage type="button" class="btn btn-primary" href="/messages/{{_id}}">Send Message</a>
 
       <a href='{{socialLinks.instagram}}' style="cursor:pointer;">
@@ -49,6 +48,7 @@
       <a href='{{socialLinks.discord}}'style="cursor:pointer;" >
         <img src='../../images/png/discord_c.png' />
       </a>
+    </div>
     </div>
   </div>
 
