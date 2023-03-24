@@ -1,48 +1,58 @@
 <div class='main-header'>
   Subscriptions
 </div>
-
+{{#unless subscriptions}}
+  <div class='empty-subscriptions'>
+    <div>You haven't Subscribed to anyone</div> 
+    <div class="visit-home-page">
+      Have a look in our
+      <button type="button" class="btn btn-outline-success" href='/home'>Discover Page</button>
+    </div>   
+      <div class='visit-home-page-image'> 
+      </div>
+  </div>
+{{/unless}}
 <div class='sub-page-container'>
-    {{#each subscriptions}}
-  <div class="sub-channel-wrapper">
-        <div class="channel-info" subscriptionId='{{channelId}}'>
-        <a href="/profile/{{channelName}}">
-        <div
-          class='sub-page-pic'
-          style='background-image: url({{profilePic}});'
-        ></div>
-        <div class='sub-page-channel-name'>{{channelName}}</div>
-      </a>
+  {{#each subscriptions}}
+    <div class='sub-channel-wrapper'>
+      <div class='channel-info' subscriptionId='{{channelId}}'>
+        <a href='/profile/{{channelName}}'>
+          <div
+            class='sub-page-pic'
+            style='background-image: url({{profilePic}});'
+          ></div>
+          <div class='sub-page-channel-name'>{{channelName}}</div>
+        </a>
       </div>
       <div sub-page-videos class='sub-page-videos'>
         {{#each videos}}
-        <a href='/watch/{{_id}}'>
-          <div
-            class='video anim sub-page-video'
-            style='--delay: .4s ; padding-bottom:0px; cursor:pointer;'
-          >
-            <div class='video-time'>{{averageRating}}⭐</div>
-            <div class='video-wrapper sub-page-video-wrapper'>
-              <video muted=''>
-                <source src='{{url}}#t=1' type='video/mp4' />
-
-              </video>
-             
-            </div>
-            <div class='video-by'>{{author.channelName}}</div>
-            <div class='video-name'>{{title}} </div>
+          <a href='/watch/{{_id}}'>
             <div
-              class='video-view'
-              style='display:flex; flex-direction: row ; justify-content: space-between; padding-bottom:0px;'
-            >{{views}}
-              views
-              <p style='font-weight: 100 ;'>
-                {{uploadedDate.day}}/{{uploadedDate.month}}/{{uploadedDate.year}}</p></div>
-          </div>
-        </a>
+              class='video anim sub-page-video'
+              style='--delay: .4s ; padding-bottom:0px; cursor:pointer;'
+            >
+              <div class='video-time'>{{averageRating}}⭐</div>
+              <div class='video-wrapper sub-page-video-wrapper'>
+                <video muted=''>
+                  <source src='{{url}}#t=1' type='video/mp4' />
+
+                </video>
+
+              </div>
+              <div class='video-by'>{{author.channelName}}</div>
+              <div class='video-name'>{{title}} </div>
+              <div
+                class='video-view'
+                style='display:flex; flex-direction: row ; justify-content: space-between; padding-bottom:0px;'
+              >{{views}}
+                views
+                <p style='font-weight: 100 ;'>
+                  {{uploadedDate.day}}/{{uploadedDate.month}}/{{uploadedDate.year}}</p></div>
+            </div>
+          </a>
         {{/each}}
 
       </div>
-  </div>
-    {{/each}}
+    </div>
+  {{/each}}
 </div>

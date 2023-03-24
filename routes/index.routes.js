@@ -53,8 +53,8 @@ router.get('/trending', secured, async (req, res, next) => {
 router.get('/groups', async (req, res, next) => {
   let currentUser = await User.findOne({ authId: req.user.id })
 
-  res.render('test', {
-    title: 'groups',
+  res.render('under-construction', {
+    title: 'Groups',
     currentUser,
   })
 })
@@ -76,11 +76,20 @@ router.get('/subscriptions', secured, async (req, res, next) => {
       subscription.profilePic = subId.profilePic
       subscriptions.push(subscription)
     }
-    res.render('subscriptions', {
-      title: 'subscriptions',
-      currentUser,
-      subscriptions,
-    })
+
+    if(subscriptions.length!==0){
+      res.render('subscriptions', {
+        title: 'subscriptions',
+        currentUser,
+        subscriptions,
+      })
+
+    } else{
+      res.render('subscriptions', {
+        title: 'subscriptions',
+        currentUser,
+      })
+    }
   } catch (error) {
     console.log(error)
   }
@@ -106,8 +115,12 @@ router.get('/history', secured, async (req, res, next) => {
   })
 })
 router.get('/nutrition', secured, async (req, res, next) => {
-  res.render('nutrition/chatpage', {
-    title: 'nutrition',
+
+  let currentUser = await User.findOne({ authId: req.user.id })
+
+  res.render('under-construction', {
+    title: 'Nutrition',
+    currentUser
   })
 })
 
