@@ -873,7 +873,8 @@ video {
 }
 
 .like.red {
-  background-color: #ea5f5f8c;
+  
+  background-color: #d16b64;
 }
 .like.green {
   background-color: #27a849;
@@ -1334,7 +1335,7 @@ button.vjs-play-control.vjs-control.vjs-button {
 }
 
 .fake-btn {
-  background-color: #3f4069;
+  background-color:  var(--button-bg);
   border: 1px solid #9e9ec4;
   border-radius: 3px;
   padding: 8px 15px;
@@ -1362,6 +1363,7 @@ button.vjs-play-control.vjs-control.vjs-button {
   width: 100%;
   cursor: pointer;
   opacity: 0;
+  color: var(--button-bg);
 }
 .file-input:focus {
   outline: none;
@@ -1528,7 +1530,7 @@ table {
   padding: 10px 0;
   font-size: 16px;
   font-weight: 600;
-  color: #fff;
+  color: var(--logo-color) ;
   position: sticky;
   top: 0;
   background-color: var(--video-bg);
@@ -1543,7 +1545,7 @@ table {
 }
 .chat-header span {
   margin-left: auto;
-  color: var(--body-color);
+  color:  var(--logo-color) ;
   font-size: 12px;
   display: flex;
   align-items: center;
@@ -1559,7 +1561,7 @@ table {
   padding: 0 20px;
   /* min-height: calc(100% + 20px); */
   height: 100%;
-  color: #fff;
+  color: var(--logo-color) ;
   min-width: 100%;
   overflow: auto;
 }
@@ -1586,11 +1588,10 @@ table {
 .chat-footer input {
   width: 100%;
   border: 0;
-  background-color: var(--input-color);
+  background-color: var(--button-bg:);
   border-radius: 20px;
   font-size: 12px;
-  color: #fff;
-
+  color:  var(--logo-color) ;
   padding: 12px 40px;
   font-weight: 500;
   font-family: var(--body-font);
