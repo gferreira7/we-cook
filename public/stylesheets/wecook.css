@@ -513,10 +513,16 @@ img.logo-expand {
   -o-object-fit: cover;
   object-fit: cover;
 }
-.author-img__wrapper {
+.author-info__wrapper {
   position: relative;
   display: flex;
+  align-items: center;
+  justify-content: flex-start;
   flex-shrink: 0;
+  gap: 10px;
+}
+.author-img__wrapper{
+  position: relative;
 }
 .author-img__wrapper svg {
   width: 16px;
@@ -1179,6 +1185,7 @@ button.vjs-play-control.vjs-control.vjs-button {
     flex-wrap: wrap;
   }
 
+  
   .dashboard{
     width: 100%;
   }
@@ -1398,10 +1405,10 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* position: absolute;
-  bottom: 5vh;
-  left: 5vh; */
   width: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 2em;
+  border-radius: 20px ;
 }
 .dashboard_author.tips {
   flex-direction: column-reverse;
@@ -1422,6 +1429,7 @@ textarea {
   background-size: 100%;
   /* aspect-ratio: 16 / 9; */
   display: flex;
+  padding-top: 2em;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
@@ -1432,38 +1440,23 @@ textarea {
   background-repeat: no-repeat;
 }
 
-@media screen and (max-width: 1500px) {
-  .dashboard {
-    background-size: cover;
-  }
-}
-@media screen and (max-width: 905px) {
-  .dashboard {
-    width: 50%;
-    padding: 30px;
-    background-size: cover;
-    background-position-x: center;
-    background-blend-mode: overlay;
-  }
-}
 
 .dashboard_social-links {
-  /* background: rgba(21, 13, 13, 0.44); */
   color: #fff;
   padding: 3px 8px;
-  font-size: 12px;
+  max-width: 20%;
   border-radius: 6px;
-  /* position: absolute;
-  right: 0vh;
-  bottom: 0vh; */
-}
-.dashboard_social-links img {
-  max-width: 15%;
+  display: flex;
 }
 
+.dashboard-description{
+  color: #fff;
+  margin-left: 20px;
+  max-width: 25vw;
+
+}
 .author-name {
   font-size: 15px;
-  /* color: var(--body-color); */
   color: #fff;
   font-weight: 500;
   margin-bottom: 8px;
@@ -1476,6 +1469,36 @@ textarea {
 .author-detail {
   margin-left: 16px;
 }
+
+
+@media screen and (max-width: 1500px) {
+  .dashboard {
+    background-size: cover;
+  }
+}
+@media screen and (max-width: 905px) {
+  .dashboard {
+    /* width: 50%; */
+    padding: 30px;
+    background-size: cover;
+    background-position-x: center;
+    background-blend-mode: overlay;
+  }
+
+  .dashboard_social-links{
+    flex-direction: column;
+    width: 15%;
+  }
+
+  .author-info__wrapper{
+    flex-direction: column;
+    text-align: center;
+  }
+
+
+
+}
+
 
 /*  RECIPE TABLE LAYOUT */
 
