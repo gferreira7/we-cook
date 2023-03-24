@@ -1613,7 +1613,7 @@ table {
 .chat-footer input {
   width: 100%;
   border: 0;
-  background-color: var(--button-bg);
+  background-color: var(--theme-bg);
   border-radius: 20px;
   font-size: 12px;
   color: var(--logo-color);
@@ -1818,7 +1818,7 @@ div[sliderOutput] {
   padding: 10px;
 }
 .incoming .bubble {
-  background: #b2b2b2;
+  background: #0aa0f7;
 }
 .outgoing {
   position: absolute;
@@ -1830,7 +1830,7 @@ div[sliderOutput] {
   height: 100%;
 }
 .outgoing .bubble {
-  background: #79c7c5;
+  background: #63b8e9;
   float: right;
 }
 
