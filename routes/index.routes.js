@@ -105,10 +105,16 @@ router.get('/subscriptions/:subId', secured, async (req, res, next) => {
 })
 
 router.get('/history', secured, async (req, res, next) => {
-  let currentUser = await User.findOne({ authId: req.user.id }).populate(
-    'watchHistory'
-  )
-
+ 
+  let currentUser = await User.findOne({ authId: req.user.id })
+  .populate({
+    path: 'watchHistory',
+    populate: {
+      path: 'author',
+      select: 'channelName profilePic',
+    },
+  })
+  console.log(currentUser)
   res.render('history', {
     title: 'history',
     currentUser,
