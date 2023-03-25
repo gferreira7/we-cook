@@ -46,7 +46,7 @@
     </div>
     <div class="notify btn-group">
       <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false" i>
-        <img  width="35%" id="notiAnim" src="../images/png/notification.png">
+        <img  width="35%" id="notiAnim" src="/images/png/notification.png">
        
       </button>
       <div class="dropdown-menu" id="dropDiv">
@@ -94,11 +94,11 @@
     filterBtn.addEventListener('click', () => {
       if (filtersDiv.style.display == 'none') {
         filtersDiv.style.display = 'flex'
-        document.getElementById('filter-img').src = '../../images/icons/arrow-up.png'
+        document.getElementById('filter-img').src = '/images/icons/arrow-up.png'
     } else {
         filtersDiv.style.display = 'none'
         document.getElementById('filter-img').src =
-        '../../images/icons/arrow-down.png'
+        '/images/icons/arrow-down.png'
       }
     })
   })
