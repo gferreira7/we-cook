@@ -34,7 +34,7 @@
     let subBtn = document.querySelector("button[subBtn]");
     let channelName = document.querySelector("div[channelName]").getAttribute('channelName')
     
-    updateSubscribe(channelName).then(response => {
+    checkSubscribe(channelName).then(response => {
         if(response.data.subbed)
         {
           subBtn.classList.remove('red')

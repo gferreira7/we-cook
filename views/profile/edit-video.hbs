@@ -15,8 +15,8 @@
         <div class="edit-control-panel">
              
           <div class="edit-panel-selector">
-            <button videoModalBtn type="button"  class='btn btn-success'>Video</button>
-            <button recipeModalBtn type="button" class='btn btn-outline-success'>Recipe</button>   
+            <button videoModalBtn type="button"  class='btn like green p-2'>Video</button>
+            <button recipeModalBtn type="button" class='btn like p-2'>Recipe</button>   
           </div>
          
           <div
@@ -37,7 +37,7 @@
               Save Changes
             </button>
 
-            <button delete type='button' class='like red' style='margin: 0.5rem;'>
+            <button delete type='button' class='like red ' style='margin: 0.5rem;'>
 
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -83,12 +83,13 @@
           <div class='video-input'>
             <label class="edit-title">Description</label>
             <textarea
+              class="pb-2"
               id='edit-video-description'
               name='description'
             >{{description}}</textarea>
           </div>
 
-          <span class="edit-title">Category</span>
+          <div class="edit-title">Category</div>
 
           <div class='select'>
             <select category='{{category}}' name="category">
@@ -98,13 +99,14 @@
           </div>
           <div class='select__arrow'></div>
 
-          <div class='file-drop-area' style='margin: 0.5rem; padding:1rem; '>
-            <span class='fake-btn edit-title'>Thumbnail</span>
-            <span class='file-msg js-set-number'>or drag and drop files here</span>
+          <div class="d-flex justify-content-evenly align-items-center pt-4">
+                 <div class='file-drop-area mt-2 pt-2 w-50' style='margin: 0.5rem; padding:1rem; '>
+            <div class='fake-btn'>Thumbnail</div>
+            <div class='file-msg js-set-number'>Or drag and drop.</div>
             <input
               thumbnail='{{thumbnail}}'
               thumbnailInput
-              class='file-input'
+              class='file-input pb-2'
               id='edit-video-thumbnail'
               name='thumbnail'
               type='file'
@@ -117,12 +119,13 @@
             alt='Thumbnail Preview'
             style='max-width: 200px; max-height: 200px; margin-top: 10px; display:none;'
           />
+          </div>
 
           <div class="edit-tags video-input" tags="{{tags}}">
             <div class="edit-title">Tags</div>
-            <div class="newTagWrapper">
+            <div class="newTagWrapper d-flex pb-2 gap-2">
               <input class="" newTagInput type="text">
-              <button type="button" addNewTagBtn>ADD</button>
+              <button type="button" class="btn btn-success" addNewTagBtn>ADD</button>
             </div>
           </div>
         </div>
@@ -168,10 +171,15 @@
           <div>
             <div main-ingredients-container class='video-input ingredients-input edit-ingredients'>
               <div newIngredient>
-                <small>Qty</small>
+                <input
+                  ingredient
+                  name='ingredient'
+                  type='text'
+                  placeholder='Ingredient Name'
+                />
                 <input
                   ingredient-quantity
-                  placeholder='150'
+                  placeholder='Quantity'
                   name='ingredient-quantity'
                   type='number'
                 />
@@ -190,21 +198,22 @@
                   </select>
                   <div class='select__arrow'></div>
                 </div>
-                <input
-                  ingredient
-                  name='ingredient'
-                  type='text'
-                  placeholder='brown sugar'
-                />
+                
                 <button class='btn btn-success' type='button' add-ingredient>+</button>
               </div>
     
               {{#each recipe.ingredients}}
               <div ingredientDiv class="ingredient">
-                  <small>Qty</small>
+                <input
+                  ingredient
+                  name='ingredient'
+                  type='text'
+                  placeholder='Ingredient Name'
+                  value="{{ingredient}}"
+                />
                 <input
                   ingredient-quantity
-                  placeholder='150'
+                  placeholder='Quantity'
                   name='ingredient-quantity'
                   type='number'
                   value={{quantity}}
@@ -224,13 +233,7 @@
                   </select>
                   <div class='select__arrow'></div>
                 </div>
-                <input
-                  ingredient
-                  name='ingredient'
-                  type='text'
-                  placeholder='brown sugar'
-                  value="{{ingredient}}"
-                />
+                
                 <button
                   class='btn btn-danger'
                   type='button'
@@ -277,7 +280,8 @@
 
   videoModalBtn.onclick = (e) => {
     editVideoSection.classList.toggle('edit-modal-expand')
-    editRecipeSection.classList.toggle('edit-modal-expand') 
+    editRecipeSection.classList.toggle('edit-modal-expand')
+
   }
 
   recipeModalBtn.onclick = (e) => {

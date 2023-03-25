@@ -537,6 +537,23 @@ router.post(
   }
 )
 
+router.get('/channel/:channelName/subscribe', async (req, res, next) => {
+  const { channelName } = req.params
+
+  const currentUser = await User.findOne({ authId: req.user.id })
+  const channel = await User.findOne({ channelName })
+  if(!channel){
+    res.status(500).json({message: 'No channel with that name'})
+  }
+  if (channel.subscribers.includes(currentUser._id)) {
+    
+    res.status(200).json({ subbed: true })
+  } else {
+    res.status(200).json({ subbed: false })
+  }
+})
+
+
 router.post('/channel/:channelName/subscribe', async (req, res, next) => {
   const { channelName } = req.params
 
