@@ -505,8 +505,10 @@ router.post(
       } catch (error) {
         console.error(error)
       }
-      recipeToDB.ingredients = nutritionInfo
+      
+      console.log(recipeToDB.ingredients)
 
+      console.log(nutritionInfo)
       const recipeId = await Recipe.create(recipeToDB)
 
       const now = new Date()
