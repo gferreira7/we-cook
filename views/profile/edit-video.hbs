@@ -470,7 +470,7 @@
     }
   })
 
-
+  
   // BUTTONS
   const deleteBtn = document.querySelector('button[delete]')
   deleteBtn.onclick = (e) => {
@@ -486,7 +486,7 @@
       )
       .then((response) => {
         console.log('RES:', response)
-          window.location.href= `/profile/${profileId}`
+          window.location.href= `/profile/`
       })
       .catch((error) => {
         console.log('ERROR', error)
