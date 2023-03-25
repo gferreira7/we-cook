@@ -82,11 +82,15 @@
   <div class='video-info-footer anim'>
     <div class='video-info'>
       <div class='video-p-title' style='--delay: .2s'>{{title}}</div>
+        {{#each tags}}
+        <span class="fst-italic">#{{this}}</span>
+        {{/each}}
       <div class='video-description-wrapper' style='--delay: .3s'>
         <span class='video-description'>{{description}}</span>
+         {{#each tags}}
+        <span class="fst-italic">#{{this}}</span>
+        {{/each}}
       </div>
-        <button class='btn btn-outline-success read-more-btn'>Expand</button>
-
     </div>
     
   </div>
@@ -94,17 +98,7 @@
 
 <script>
   
-  const description = document.querySelector('.video-description-wrapper');
-  const readMoreBtn = document.querySelector('.read-more-btn');
 
-  readMoreBtn.addEventListener('click', () => {
-    description.classList.toggle('text-ellipsis');
-    if (description.classList.contains('text-ellipsis')) {
-      readMoreBtn.textContent = 'Collapse';
-    } else {
-      readMoreBtn.textContent = 'Expand';
-    }
-  })
 
   const reviewsContainer = document.querySelector('.reviews-container')
   const reviewModalBtn = document.querySelector('.review-modal');

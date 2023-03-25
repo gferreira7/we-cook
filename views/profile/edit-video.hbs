@@ -71,7 +71,7 @@
  <div editVideoSection class='edit-modal-container edit-modal-expand'>
 
           <div class='video-input'>
-            <label>Title</label>
+            <label class="edit-title">Title</label>
             <input
               id='edit-video-title'
               name='title'
@@ -81,14 +81,14 @@
           </div>
 
           <div class='video-input'>
-            <label>Description</label>
+            <label class="edit-title">Description</label>
             <textarea
               id='edit-video-description'
               name='description'
             >{{description}}</textarea>
           </div>
 
-          <span>Category</span>
+          <span class="edit-title">Category</span>
 
           <div class='select'>
             <select category='{{category}}' name="category">
@@ -99,7 +99,7 @@
           <div class='select__arrow'></div>
 
           <div class='file-drop-area' style='margin: 0.5rem; padding:1rem; '>
-            <span class='fake-btn'>Thumbnail</span>
+            <span class='fake-btn edit-title'>Thumbnail</span>
             <span class='file-msg js-set-number'>or drag and drop files here</span>
             <input
               thumbnail='{{thumbnail}}'
@@ -119,7 +119,7 @@
           />
 
           <div class="edit-tags video-input" tags="{{tags}}">
-            <div>Tags</div>
+            <div class="edit-title">Tags</div>
             <div class="newTagWrapper">
               <input class="" newTagInput type="text">
               <button type="button" addNewTagBtn>ADD</button>
@@ -128,37 +128,45 @@
         </div>
     
         <div editRecipeSection class='edit-modal-container'>
-          <span>Cooking time</span>
-          <div class='video-input cooking-time'>
-            <input cookTime cookingIndex="{{recipe.cookTime.stringFormat}}" type="range" min="0" max="7" name="cookTime">
-            <div sliderOutput></div>
-          </div> 
-          
-          <span>Number of servings?</span>
-          <div class='video-input'>
-            <input portions={{recipe.portions}} type='number' name='portions' min="1" value="{{recipe.portions}}"/>
-          </div>
-          
-          <span>Meal Type</span>
-          <div class='video-input'> 
-            <div class='select'>
-              <select mealType="{{recipe.mealType}}" name='mealType'>
-                <option value="Breakfast">Breakfast</option>
-                <option value="Main Course">Main Course</option>
-                <option value="Side Dish">Side Dish</option>
-                <option value="Snack">Snack</option>
-                <option value="Soup">Soup</option>
-                <option value="Appettizer">Appettizer</option>
-                <option value="Salad">Salad</option>
-                <option value="Drink">Drink</option>
-              </select>
-              <div class='select__arrow'></div>
+        
+          <div class="d-flex justify-content-evenly align-items-center p-2">
+            <div class="d-flex flex-column justify-content-between align-items-center p-2">
+                <span class="pb-2 edit-title">Cooking time</span>
+                <div class='cooking-time d-flex'>
+                  <input cookTime cookingIndex="{{recipe.cookTime.stringFormat}}" type="range" min="0" max="7" name="cookTime">
+                  <div class="text-center" sliderOutput></div>
+                </div> 
+            </div>
+            <div class="d-flex flex-column justify-content-between align-items-center p-2">
+              <span class="pb-2 edit-title">Portions</span>
+              <div class='video-input'>
+                <input portions={{recipe.portions}} type='number' name='portions' min="1" value="{{recipe.portions}}"/>
+              </div>
+            </div>
+            
+            <div class="d-flex flex-column justify-content-between align-items-center p-2">
+              <span class="pb-2 edit-title">Meal Type</span>
+              <div class='video-input'> 
+                <div class='select'>
+                  <select mealType="{{recipe.mealType}}" name='mealType'>
+                    <option value="Breakfast">Breakfast</option>
+                    <option value="Main Course">Main Course</option>
+                    <option value="Side Dish">Side Dish</option>
+                    <option value="Snack">Snack</option>
+                    <option value="Soup">Soup</option>
+                    <option value="Appettizer">Appettizer</option>
+                    <option value="Salad">Salad</option>
+                    <option value="Drink">Drink</option>
+                  </select>
+                  <div class='select__arrow'></div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <span>Ingredients</span>
+          <span class="edit-title">Ingredients</span>
           <div>
-            <div main-ingredients-container class='video-input ingredients-input'>
+            <div main-ingredients-container class='video-input ingredients-input edit-ingredients'>
               <div newIngredient>
                 <small>Qty</small>
                 <input
@@ -233,7 +241,7 @@
             </div>
           </div>
           <div>
-            <div>Steps</div>
+            <div class="edit-title">Steps</div>
             <div mainStepsContainer>
                 <div class="video-input step-input">
                   <input newStepInput name='step-input' />
