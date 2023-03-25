@@ -378,8 +378,7 @@
           
           allIngs = [...allIngredientsDOM]
 
-          console.log(allIngs )
-
+          console.log(allIngs)
           allIngs.forEach(ing => {
             
             let ingredient ={}
@@ -388,7 +387,6 @@
             ingredient.ingredient = ing.getAttribute('ingredient')
             
             ingredientsList.push(ingredient)
-            console.log(ingredientsList)
           })
 
           
@@ -397,11 +395,11 @@
           const allStepsDOM = document.querySelectorAll('div[step]')
           let allSteps = [...allStepsDOM]
 
+                    console.log(allSteps)
 
 
           allSteps.forEach(step => {
             stepsList.push(step.getAttribute('step'))
-            console.log(stepsList)
           })
 
           const tagsList = []
@@ -410,19 +408,19 @@
           let allTags = [...allTagsDOM]
 
 
+          console.log(allTags)
 
           allTags.forEach(tag => {
             tagsList.push(tag.getAttribute('tag'))
-            console.log(allTags)
           })
 
 
           let formData = new FormData(form)
-
           formData.append('ingredientsList', JSON.stringify(ingredientsList));
           formData.append('tagsList', JSON.stringify(tagsList));
           formData.append('stepsList', JSON.stringify(stepsList));
           console.log("Form Sent to DB", formData)
+
           axios.post(`/upload`, formData, {
                 headers: {
                   'Content-Type': 'multipart/form-data'

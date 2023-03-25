@@ -67,9 +67,11 @@
   <div class='video-info-footer anim'>
     <div class='video-info'>
       <div class='video-p-title' style='--delay: .2s'>{{title}}</div>
+        {{#each tags}}
+        <span class="fst-italic">#{{this}}</span>
+        {{/each}}
       <div class='video-description-wrapper' style='--delay: .3s'>
         <span class='video-description'>{{description}}</span>
-  
       </div>
 
 

@@ -474,7 +474,7 @@ router.post(
         recipeToDB.portions = parseInt(portions)
       }
       if (tagsList) {
-        videoToDB.tagsList = JSON.parse(tagsList)
+        videoToDB.tags = JSON.parse(tagsList)
       }
       if (category) {
         videoToDB.category = category
@@ -482,9 +482,11 @@ router.post(
 
       //Recipe Info
       if (stepsList) {
+        console.log(JSON.parse(stepsList))
         recipeToDB.steps = JSON.parse(stepsList)
       }
       if (ingredientsList) {
+        console.log(JSON.parse(ingredientsList))
         recipeToDB.ingredients = JSON.parse(ingredientsList)
       }
       // save recipe ID to video Document
