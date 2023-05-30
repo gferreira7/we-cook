@@ -14,26 +14,7 @@ html {
 img {
   max-width: 100%;
 }
-/*
-:root {
- --body-font: "Inter", sans-serif; 
-  --title-font: 'Playfair Display', serif;
-  --body-font: 'Lato', sans-serif;
-  --handwritten-font: 'Yellowtail', cursive;
-  --button-font: 'Buenard', serif;
-  --logo-color: #263238;
-  --input-color: #c8e6c9;
-  --light-green-transparent: rgba(200, 230, 201, 0.5);
-  --light-green: rgba(200, 230, 201, 1);
-  --theme-bg: #a5d6a7;
-  --body-color: #333333;
-  --button-bg: #d1b26f;
-  --border-color: rgba(0, 0, 0, 0.24);
-  --video-bg: #99c89b;
-  --delay: 0s;
-  --text-color: #ffff;
-}~
-4D331F*/
+
 :root {
   /* --body-font: "Inter", sans-serif; */
   --body-font: 'Lato', sans-serif;
@@ -54,16 +35,7 @@ img {
 body {
   font-family: var(--body-font);
   color: var(--body-color);
-  /* background-image: radial-gradient(
-    circle,
-    #98ff98,
-    #befba1,
-    #d9f8b0,
-    #ebf6c4,
-    #f5f5dc
-  );
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite; */
+
   background-color: #e9f1fa;
   display: flex;
   justify-content: center;
@@ -80,14 +52,7 @@ body:before {
   top: 0;
   width: 100%;
   height: 100%;
-  /* background-image: radial-gradient(
-    circle,
-    #4dc83b,
-    #42b030,
-    #379826,
-    #2d811c,
-    #226b13
-  );*/
+
   opacity: 0.4;
   content: '';
 }
@@ -224,7 +189,6 @@ img.logo-expand {
 }
 .sidebar-link:hover,
 .sidebar-link.is-active {
-  /* font-weight: 700; */
   background: var(--input-color);
   border-radius: 5px;
 }
@@ -353,7 +317,6 @@ img.logo-expand {
   align-items: center;
   position: absolute;
   z-index: 200;
-  /* background-color: var(--input-color); */
   border-radius: 20px;
   width: 100%;
 }
@@ -381,12 +344,6 @@ img.logo-expand {
   margin-left: auto;
   font-weight: 900;
 }
-
-/* .drop-div a{
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-} */
 
 .user-settings svg {
   width: 10px;
@@ -864,7 +821,6 @@ video {
   font-size: 18px;
 }
 
-
 .chatReturn {
   display: flex;
   align-items: center;
@@ -878,10 +834,9 @@ video {
   font-size: 18px;
 }
 
-.like.review{
+.like.review {
   background-color: var(--input-color);
   color: var(--logo-color);
-
 }
 
 .like.red {
@@ -917,14 +872,12 @@ video {
   overflow: scroll;
 }
 
-
 .reviews-container {
   margin: 20px;
   display: none;
-
-} 
+}
 .reviews-container textarea {
- background-color: #f7e8c3;
+  background-color: #f7e8c3;
 }
 .reviews-container.expand {
   display: flex;
@@ -1284,7 +1237,6 @@ button.vjs-play-control.vjs-control.vjs-button {
   position: relative;
   display: inline-block;
   width: 100%;
-
 }
 .select select {
   display: inline-block;
@@ -1913,7 +1865,6 @@ div[sliderOutput] {
   display: flex;
   align-items: center;
   justify-content: center;
-
 }
 
 .sub-page-pic {
@@ -1959,4 +1910,26 @@ div[sliderOutput] {
   background-repeat: no-repeat;
   height: 100%;
   opacity: 0.7;
+}
+
+
+
+
+/* until Cloudinary upload is back online I'm using youtube embeds */
+.iframe-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
+}
+
+/* Then style the iframe to fit in the container div with full height and width */
+.responsive-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
 }
