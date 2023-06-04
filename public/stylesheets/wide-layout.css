@@ -35,14 +35,13 @@ img {
 body {
   font-family: var(--body-font);
   color: var(--body-color);
+  background-color: var(--theme-bg);
 
-  background-color: #e9f1fa;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding: 1em 2em;
-  width: 100%;
+
   height: 100vh;
   overflow: hidden;
 }
@@ -52,6 +51,7 @@ body:before {
   top: 0;
   width: 100%;
   height: 100%;
+  background-color: var(--theme-bg);
 
   opacity: 0.4;
   content: '';
@@ -102,7 +102,6 @@ a {
 
 .loader {
   display: none;
-
   border: 16px solid #f3f3f3; /* Light grey */
   border-top: 16px solid #3498db; /* Blue */
   border-radius: 50%;
@@ -120,17 +119,15 @@ a {
   }
 }
 
-.container {
+.body-container {
   background-color: var(--theme-bg);
-  max-width: 90vw;
-  height: 95vh;
-  display: flex;
-  overflow: hidden;
+
   width: 100%;
-  border-radius: 20px;
+  height: 100vh;
+  display: flex;
   font-size: 15px;
   font-weight: 500;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+
   position: relative;
 }
 
@@ -150,7 +147,6 @@ a {
   display: none;
   width: 30px;
   height: 30px;
-  background-color: var(--logo-color);
   flex-shrink: 0;
   color: var(--logo-color);
   align-items: center;
@@ -210,6 +206,7 @@ img.logo-expand {
 .sidebar.collapse .side-title {
   display: none;
 }
+
 .sidebar.collapse .logo {
   display: flex;
 }
@@ -444,9 +441,6 @@ img.logo-expand {
   z-index: 11;
   background-color: var(--theme-bg);
 }
-.main-header.home-page {
-  border-bottom: 1px solid var(--border-color);
-}
 
 .section-header {
   font-size: 30px;
@@ -519,7 +513,7 @@ img.logo-expand {
 .videos-grid {
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-column-gap: 20px;
   grid-row-gap: 20px;
 }
@@ -529,7 +523,11 @@ img.logo-expand {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-
+@media screen and (max-width: 1300px) {
+  .videos-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
 
 .video {
   display: flex;
@@ -551,7 +549,7 @@ img.logo-expand {
   font-size: 16px;
   line-height: 1.4em;
   padding: 12px 20px 2px;
-  overflow-x: hidden;
+  overflow: hidden;
   background-color: var(--video-bg);
   z-index: 9;
   position: relative;
@@ -560,9 +558,6 @@ img.logo-expand {
   -webkit-box-orient: vertical;
 }
 
-.bottom-video-info{
-  align-self: flex-end;
-}
 .video-view {
   font-size: 12px;
   padding: 12px 20px 20px;
@@ -610,7 +605,7 @@ img.logo-expand {
   bottom: -65px;
   transform: scale(0.6);
   right: -3px;
-  z-index: 10;
+  z-index: 100;
 }
 .video:hover .video-by {
   opacity: 0;
@@ -662,6 +657,7 @@ video {
 .show .single-video-page {
   display: flex;
 }
+
 .show .main-header,
 .show .dashboard-container,
 .show .small-header,
@@ -1160,8 +1156,10 @@ button.vjs-play-control.vjs-control.vjs-button {
 
   .videos-grid {
     grid-template-columns: 1fr;
+  }
 
-  
+  #navbar-channel-name{
+    display: none;
   }
 }
 @media screen and (max-width: 475px) {
@@ -1205,12 +1203,6 @@ button.vjs-play-control.vjs-control.vjs-button {
 
   body {
     padding: 0;
-  }
-
-  .container {
-    height: 100vh;
-    border-radius: 0;
-    max-height: 100%;
   }
 }
 ::-webkit-scrollbar {
@@ -1842,7 +1834,7 @@ div[sliderOutput] {
 .visit-home-page-image {
   display: flex;
   align-items: center;
-  background-image: url(https://res.cloudinary.com/diwm3fp0o/image/upload/v1679667492/Screenshot_2023-03-24_093055_dejhgh.png);
+  background-image: url(https://res.cloudinary.com/dqg2mwo9o/image/upload/v1685916636/Captura_de_ecr%C3%A3_2023-06-04_230900_ehrw3s.png);
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -1915,7 +1907,7 @@ div[sliderOutput] {
 .under-construction {
   display: flex;
   align-items: center;
-  background-image: url(https://res.cloudinary.com/diwm3fp0o/image/upload/v1679665752/pexels-pixabay-209717_brx8cj.jpg);
+  background-image: url(https://res.cloudinary.com/dqg2mwo9o/image/upload/v1685916346/pexels-pixabay-209717_1_aeh378.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -1923,21 +1915,6 @@ div[sliderOutput] {
   opacity: 0.7;
 }
 
-/* until Cloudinary upload is back online I'm using youtube embeds */
-.iframe-container {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  padding-top: 56.25%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
-}
-
-/* Then style the iframe to fit in the container div with full height and width */
-.responsive-iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
+.bottom-video-info {
+  z-index: 90;
 }

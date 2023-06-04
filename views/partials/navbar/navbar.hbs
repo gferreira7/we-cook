@@ -36,7 +36,7 @@
         <a href="/profile">
           <img class='user-img' src={{currentUser.profilePic}} alt='profile-pic' />
         </a>      
-    <div class="btn-group">
+    <div class="btn-group" id="navbar-channel-name">
       <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
         {{currentUser.channelName}}      
       </button>
@@ -89,9 +89,9 @@
   let filtersDiv = document.querySelector('.search-filters')
 
 
-  {{!-- window.addEventListener('DOMContentLoaded', (event) => {
+  window.addEventListener('DOMContentLoaded', (event) => {
     
-    setInterval(updateNotification, 5000)
+    {{!-- setInterval(updateNotification, 5000) --}}
 
     filterBtn.addEventListener('click', () => {
       if (filtersDiv.style.display == 'none') {
@@ -140,6 +140,6 @@
       })
 
     return true
-  } --}}
+  }
 
 </script>

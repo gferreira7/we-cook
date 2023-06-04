@@ -23,15 +23,24 @@ pages.forEach((page) => {
 
 const sidebarLinks = document.querySelectorAll('.sidebar-link')
 
-// Add resize event listener to window
-window.addEventListener('resize', () => {
+const hideSidebar = () => {
+  console.log('here',window.innerWidth)
   const sidebar = document.querySelector('.sidebar')
   if (window.innerWidth > 1090) {
     sidebar.classList.remove('collapse')
+    sidebar.classList.add('show')
   } else {
     sidebar.classList.add('collapse')
+    sidebar.classList.add('show')
+
   }
-})
+}
+
+window.addEventListener('load', hideSidebar)
+
+// Add resize event listener to window
+window.addEventListener('resize', hideSidebar)
+
 window.dispatchEvent(new Event('resize'))
 
 // Add mouseover and mouseleave event listeners to each video
