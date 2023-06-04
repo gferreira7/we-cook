@@ -519,22 +519,27 @@ img.logo-expand {
 .videos-grid {
   display: grid;
   width: 100%;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-column-gap: 20px;
   grid-row-gap: 20px;
 }
+
 @media screen and (max-width: 980px) {
   .videos-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
+
 .video {
+  display: flex;
+  flex-direction: column;
   position: relative;
   background-color: var(--video-bg);
   border-radius: 20px;
   overflow: hidden;
   transition: 0.4s;
+  height: 100%;
 }
 .video-wrapper {
   position: relative;
@@ -545,20 +550,24 @@ img.logo-expand {
   color: var(--body-color);
   font-size: 16px;
   line-height: 1.4em;
-  padding: 12px 20px 0;
-  overflow: hidden;
+  padding: 12px 20px 2px;
+  overflow-x: hidden;
   background-color: var(--video-bg);
   z-index: 9;
   position: relative;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
+}
+
+.bottom-video-info{
+  align-self: flex-end;
 }
 .video-view {
   font-size: 12px;
   padding: 12px 20px 20px;
   background-color: var(--video-bg);
-  position: relative;
+  justify-self: end;
 }
 .video-by {
   transition: 0.3s;
@@ -954,6 +963,7 @@ video {
   max-height: 444px;
   margin-bottom: 30px;
   overflow: auto;
+  width: 100%;
 }
 .recipe-header {
   display: flex;
@@ -994,7 +1004,7 @@ video {
   background-color: var(--video-bg);
   border-radius: 20px;
   padding: 0 20px;
-  height: 268px;
+  min-height: 268px;
   overflow: auto;
   width: 100%;
 }
@@ -1150,6 +1160,8 @@ button.vjs-play-control.vjs-control.vjs-button {
 
   .videos-grid {
     grid-template-columns: 1fr;
+
+  
   }
 }
 @media screen and (max-width: 475px) {
