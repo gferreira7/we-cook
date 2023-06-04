@@ -32,12 +32,17 @@ router.get('/watch/:videoId', secured, async (req, res, next) => {
     if (video.recipe) {
       nutritionInfo = await Promise.all(
         video.recipe.ingredients.map(async (ingredient) => {
-          console.log(ingredient)
           const response = await getFoodDetails(ingredient)
           return response
         })
       )
     }
+    // Add nutritionInfo to the recipe object
+    video.recipe.ingredients = nutritionInfo
+
+    // Save the updated video object
+    await video.save()
+    console.log(video.ingredients)
 
     const isUploader = req.user.id === video.author.authId
 
@@ -53,7 +58,6 @@ router.get('/watch/:videoId', secured, async (req, res, next) => {
     }
 
     const reviews = await Review.find({ video: videoId }).populate('author')
-    console.log(reviews)
 
     if (isUploader) {
       res.render('watch-page-uploader', {
@@ -64,16 +68,15 @@ router.get('/watch/:videoId', secured, async (req, res, next) => {
         timeSinceUpload,
         relatedVideos,
       })
-    } else{
-         
-    res.render('watch-page-viewer', {
-      title: video.title,
-      currentUser,
-      video,
-      reviews,
-      timeSinceUpload,
-      relatedVideos,
-    })
+    } else {
+      res.render('watch-page-viewer', {
+        title: video.title,
+        currentUser,
+        video,
+        reviews,
+        timeSinceUpload,
+        relatedVideos,
+      })
     }
   } catch (error) {
     console.log(error)
@@ -176,7 +179,7 @@ router.post('/video/:videoId/update', async (req, res, next) => {
       currentUser._id,
       { $addToSet: { watchHistory: videoId } },
       { new: true }
-    ) 
+    )
     res.status(200).json(`views: ${updatedVideo.views}`)
   }
 
@@ -256,6 +259,5 @@ router.post('/video/:videoId/submitReview', async (req, res, next) => {
     res.status(500).send('Error creating review')
   }
 })
-
 
 module.exports = router

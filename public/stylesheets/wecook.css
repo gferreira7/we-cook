@@ -951,8 +951,8 @@ video {
   background-color: var(--video-bg);
   border-radius: 20px;
   padding: 0 20px;
-  max-height: 414px;
-  margin-bottom: 50px;
+  max-height: 444px;
+  margin-bottom: 30px;
   overflow: auto;
 }
 .recipe-header {
@@ -994,12 +994,13 @@ video {
   background-color: var(--video-bg);
   border-radius: 20px;
   padding: 0 20px;
-  max-height: 414px;
+  height: 268px;
   overflow: auto;
+  width: 100%;
 }
 .related-video {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   padding: 20px;
   border-bottom: 1px solid #263238;
@@ -1619,9 +1620,7 @@ table {
   color: #fff;
   font-size: 18px;
 }
-.chat-vid__container {
-  margin-top: 40px;
-}
+
 .chat-vid__wrapper {
   display: flex;
   align-items: center;
@@ -1911,9 +1910,6 @@ div[sliderOutput] {
   height: 100%;
   opacity: 0.7;
 }
-
-
-
 
 /* until Cloudinary upload is back online I'm using youtube embeds */
 .iframe-container {
