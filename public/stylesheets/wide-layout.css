@@ -1000,7 +1000,7 @@ video {
   background-color: var(--video-bg);
   border-radius: 20px;
   padding: 0 20px;
-  min-height: 268px;
+  height: 400px;
   overflow: auto;
   width: 100%;
 }
@@ -1908,7 +1908,7 @@ div[sliderOutput] {
   display: flex;
   align-items: center;
   background-image: url(https://res.cloudinary.com/dqg2mwo9o/image/upload/v1685916346/pexels-pixabay-209717_1_aeh378.jpg);
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
   height: 100%;

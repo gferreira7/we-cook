@@ -77,14 +77,13 @@ router.get('/subscriptions', secured, async (req, res, next) => {
       subscriptions.push(subscription)
     }
 
-    if(subscriptions.length!==0){
+    if (subscriptions.length !== 0) {
       res.render('subscriptions', {
         title: 'subscriptions',
         currentUser,
         subscriptions,
       })
-
-    } else{
+    } else {
       res.render('subscriptions', {
         title: 'subscriptions',
         currentUser,
@@ -105,9 +104,7 @@ router.get('/subscriptions/:subId', secured, async (req, res, next) => {
 })
 
 router.get('/history', secured, async (req, res, next) => {
- 
-  let currentUser = await User.findOne({ authId: req.user.id })
-  .populate({
+  let currentUser = await User.findOne({ authId: req.user.id }).populate({
     path: 'watchHistory',
     populate: {
       path: 'author',
@@ -121,12 +118,11 @@ router.get('/history', secured, async (req, res, next) => {
   })
 })
 router.get('/nutrition', secured, async (req, res, next) => {
-
   let currentUser = await User.findOne({ authId: req.user.id })
 
   res.render('under-construction', {
     title: 'Nutrition',
-    currentUser
+    currentUser,
   })
 })
 
@@ -134,43 +130,40 @@ router.get('/messages', secured, async (req, res, next) => {
   try {
     const currentUser = await User.findOne({ authId: req.user.id })
       .populate('chat')
-      .exec();
+      .exec()
 
     const chats = await Chat.find({
-      $or: [
-        { sender: currentUser._id },
-        { recipient: currentUser._id },
-      ],
+      $or: [{ sender: currentUser._id }, { recipient: currentUser._id }],
     })
       .populate('sender')
       .populate('recipient')
-      .exec();
+      .exec()
 
-    const conversations = {};
+    const conversations = {}
     chats.forEach((chat) => {
       const otherUser = chat.sender._id.equals(currentUser._id)
         ? chat.recipient
-        : chat.sender;
+        : chat.sender
       if (!conversations[otherUser._id]) {
         conversations[otherUser._id] = {
           user: otherUser,
           messages: [],
-        };
+        }
       }
-      conversations[otherUser._id].messages.push(chat);
-    });
+      conversations[otherUser._id].messages.push(chat)
+    })
 
-    const conversationList = Object.values(conversations);
+    const conversationList = Object.values(conversations)
 
     res.render('chat/loadchats', {
       title: 'messages',
       currentUser,
       conversations: conversationList,
-    });
+    })
   } catch (err) {
-    next(err);
+    next(err)
   }
-});
+})
 
 router.get('/messages/:profileId', secured, async (req, res, next) => {
   const { profileId } = req.params
