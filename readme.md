@@ -2,6 +2,9 @@
 
 weCook is a web application that allows food lovers to easily share and discover new recipes. With weCook, you can upload your favorite recipes, browse recipes from other users, save your favorites, and connect with other food enthusiasts.
 
+![Untitled video - Made with Clipchamp](https://github.com/gferreira7/we-cook/assets/104030930/e3746a44-2b7e-4b89-8c5f-81d381867d5d)
+
+
 ## Key Features
 
 - **Upload and Share:** Easily upload and share your favorite recipes with other users.
