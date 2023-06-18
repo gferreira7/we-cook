@@ -23,9 +23,9 @@ pages.forEach((page) => {
 const sidebarLinks = document.querySelectorAll('.sidebar-link')
 
 const hideSidebar = () => {
-  console.log('here', window.screen.innerWidth)
+  console.log('here', window.innerWidth)
   const sidebar = document.querySelector('.sidebar')
-  if (window.screen.innerWidth > 1090) {
+  if (window.innerWidth > 1090) {
     sidebar.classList.remove('collapse')
     sidebar.classList.add('show')
   } else {
