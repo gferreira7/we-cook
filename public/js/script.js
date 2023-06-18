@@ -15,7 +15,6 @@ pages.forEach((page) => {
   const element = document.getElementById(page)
   if (pageFound) {
     element.classList.add('is-active')
-  
   } else {
     element.classList.remove('is-active')
   }
@@ -24,15 +23,14 @@ pages.forEach((page) => {
 const sidebarLinks = document.querySelectorAll('.sidebar-link')
 
 const hideSidebar = () => {
-  console.log('here',window.innerWidth)
+  console.log('here', window.screen.innerWidth)
   const sidebar = document.querySelector('.sidebar')
-  if (window.innerWidth > 1090) {
+  if (window.screen.innerWidth > 1090) {
     sidebar.classList.remove('collapse')
     sidebar.classList.add('show')
   } else {
     sidebar.classList.add('collapse')
     sidebar.classList.add('show')
-
   }
 }
 
@@ -50,7 +48,6 @@ allVideos.forEach((video) => {
 
   video.addEventListener('mouseover', () => v.play())
   video.addEventListener('mouseleave', () => v.pause())
-
 })
 
 // Add click event listeners to logo, logo-expand, and discover
@@ -81,8 +78,7 @@ trending.addEventListener('click', () => {
   trending.classList.add('is-active')
 })
 
-if(!window.location.href.includes('profile')){
-
+if (!window.location.href.includes('profile')) {
   videoLinks.forEach((video) => {
     video.addEventListener('click', () => {
       const source = video.querySelector('source').getAttribute('src')

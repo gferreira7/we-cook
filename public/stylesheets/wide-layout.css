@@ -518,16 +518,23 @@ img.logo-expand {
   grid-row-gap: 20px;
 }
 
-@media screen and (max-width: 980px) {
-  .videos-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
 @media screen and (max-width: 1300px) {
   .videos-grid {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+@media screen and (max-width: 980px) {
+  .videos-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media screen and (max-width: 640px) {
+  .videos-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+
 
 .video {
   display: flex;
@@ -1154,11 +1161,7 @@ button.vjs-play-control.vjs-control.vjs-button {
     width: 100%;
   }
 
-  .videos-grid {
-    grid-template-columns: 1fr;
-  }
-
-  #navbar-channel-name{
+  #navbar-channel-name {
     display: none;
   }
 }

@@ -6,7 +6,7 @@ const User = require('../models/User.model.js')
 const Chat = require('../models/Chat.model.js')
 
 const secured = require('../middleware/route-guard')
-
+ 
 router.get('/', (req, res, next) => {
   res.redirect('/home')
 })
